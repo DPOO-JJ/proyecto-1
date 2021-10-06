@@ -8,7 +8,7 @@ public class App {
 	{
 		
 		System.out.println("auxilio");
-		
+		System.out.println("auxilio x2");
 	}
 
 }
