@@ -1,0 +1,5 @@
+﻿codigoBarras,nombre,numUnidadesMedida,unidadMedida,categoria,almacenamiento,empacado
+1,Crema dental Colgate,150,gramos,Higiene dental,s/o,true
+2,Pan tajado Bimbo,500,gramos,Horneados,s/o,true
+3,Lechuga,100,gramos,Hortaliza,s/o,true
+4,Tomate,1,gramos,Hortaliza,s/o,false
