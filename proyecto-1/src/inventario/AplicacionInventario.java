@@ -11,7 +11,6 @@ public class AplicacionInventario {
 		int option = 0;
 		
 		inventario = new Inventario();
-		inventario.cargarDatos();
 		
 		boolean condition = true;
 		while (condition) {
@@ -42,7 +41,7 @@ public class AplicacionInventario {
 	{	
 		if (opcionSeleccionada == 1)
 		{
-			System.out.println("Opción 1");
+			
 		}
 		else if (opcionSeleccionada == 2)
 		{

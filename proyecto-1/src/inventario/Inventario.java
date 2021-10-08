@@ -10,6 +10,11 @@ import java.util.ArrayList;
 
 public class Inventario {
 	
+	public Inventario() {
+		super();
+		this.cargarDatos();
+	}
+
 	ArrayList<Producto> productos = new ArrayList<Producto>();
 	ArrayList<Lote> lotes = new ArrayList<Lote>();
 	ArrayList<Categoria> categorias = new ArrayList<Categoria>();
@@ -158,6 +163,10 @@ public class Inventario {
 		}
 		
 		return result;
+	}
+	
+	void cargarInventario() {
+		
 	}
 	
 	void addLineToCSV(String file, String line){
