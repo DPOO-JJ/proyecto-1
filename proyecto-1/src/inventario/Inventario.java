@@ -9,15 +9,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Inventario {
+
+	ArrayList<Producto> productos = new ArrayList<Producto>();
+	ArrayList<Lote> lotes = new ArrayList<Lote>();
+	ArrayList<Categoria> categorias = new ArrayList<Categoria>();
 	
 	public Inventario() {
 		super();
 		this.cargarDatos();
 	}
-
-	ArrayList<Producto> productos = new ArrayList<Producto>();
-	ArrayList<Lote> lotes = new ArrayList<Lote>();
-	ArrayList<Categoria> categorias = new ArrayList<Categoria>();
 	
 	void cargarProductos() {
 		try (BufferedReader br = new BufferedReader(new FileReader("data/productos.csv"))) {
@@ -165,8 +165,80 @@ public class Inventario {
 		return result;
 	}
 	
-	void cargarInventario() {
-		
+	int cargarInventario(String nombreArchivo) {
+		int result = 0;
+		try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
+			
+		    String line;
+		    boolean loadingProductos = false;
+		    boolean loadingLotes = false;
+		    while ((line = br.readLine()) != null) {
+		        if (line.equals("---Productos---")) {
+		        	loadingProductos = true;
+		        	br.readLine();
+		        	continue;
+		        }
+		        else if (line.equals("---Lotes---")) {
+		        	loadingLotes = true;
+		        	loadingProductos = false;
+		        	br.readLine();
+		        	continue;
+		        }
+		        
+		        if (loadingProductos) {
+		        	String[] values = line.split(",");
+
+			        Producto nuevoProducto = new Producto(
+			        		Integer.parseInt(values[0]),
+			        		values[1],
+			        		Integer.parseInt(values[2]),
+			        		values[3],
+			        		values[5],
+			        		Boolean.parseBoolean(values[6])
+			        );
+
+	        		
+	        		for(Categoria categoria: categorias) {
+			        	if (categoria.getNombre().equals(values[4])){
+			        		nuevoProducto.setCategoria(categoria);
+			        		break;
+			        	}
+			        }
+			        
+			        productos.add(nuevoProducto);
+					addLineToCSV("data/productos.csv",line);
+		        }
+		        else if (loadingLotes) {
+		        	String[] values = line.split(",");
+
+			        Lote nuevoLote = new Lote(
+			        		values[0],
+			        		values[1],
+			        		Integer.parseInt(values[2]),
+			        		Boolean.parseBoolean(values[3]),
+			        		Integer.parseInt(values[4]),
+			        		Integer.parseInt(values[5]));
+			        
+			        for(Producto producto: productos) {
+			        	if (producto.getCodigoBarras()==Integer.parseInt(values[6])){
+			        		nuevoLote.setProductoAsociado(producto);
+			        		break;
+			        	}
+			        }
+			        
+			        lotes.add(nuevoLote);
+					addLineToCSV("data/lotes.csv",line);
+		        }
+		    }
+		    
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			result = 1;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			result = 2;
+		}
+		return result;
 	}
 	
 	void addLineToCSV(String file, String line){

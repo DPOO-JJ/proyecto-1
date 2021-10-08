@@ -1,4 +1,6 @@
-﻿fechaVencimiento,fechaRecibido,precioCompra,ventaPorMedida,precioVenta,unidades,productoAsociado
-5/12/20,1/10/20,50000,false,5000,40,1
-5/12/20,30/12/2020,16000,false,1000,20,3
-5/12/20,25/12/2020,4500,true,10,15,4
+﻿fechaRecibido,fechaVencimiento,precioCompra,ventaPorMedida,precioVenta,unidades,productoAsociado
+5/12/20,1/02/21,50000,false,5000,40,1
+5/12/20,30/02/21,16000,false,1000,20,3
+5/12/20,25/01/21,4500,true,10,15,4
+7/10/21,1/12/21,40000,false,4000,35,10
+7/10/21,31/10/21,14000,false,500,18,12

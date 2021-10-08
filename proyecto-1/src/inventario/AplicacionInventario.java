@@ -15,7 +15,7 @@ public class AplicacionInventario {
 		boolean condition = true;
 		while (condition) {
 			System.out.println("------------------------------------------------");
-			System.out.println("1. Cargar inventario\n"
+			System.out.println("1. Cargar nuevo lote de productos\n"
 					+ "2. Añadir categorías\n"
 					+ "3. Revisar desempeño producto\n"
 					+ "4. Chequear existencia de productos\n"
@@ -41,7 +41,22 @@ public class AplicacionInventario {
 	{	
 		if (opcionSeleccionada == 1)
 		{
-			
+			@SuppressWarnings("resource")
+			Scanner scanner = new Scanner(System.in);  
+
+		    System.out.println("\nIngrese el nombre del archivo:");
+
+		    String nombreArchivo = scanner.nextLine();
+		    
+		    nombreArchivo = "data/nuevolote.txt";
+		    
+			int result = inventario.cargarInventario(nombreArchivo);
+			if (result==0) {
+				System.out.println("Lote de productos cargados exitosamente.");
+			}
+			else if (result==1) {
+				System.out.println("El archivo no existe.");
+			}
 		}
 		else if (opcionSeleccionada == 2)
 		{

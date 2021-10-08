@@ -10,11 +10,11 @@ public class Lote {
 	private int unidades;
 	private Producto productoAsociado;
 	
-	public Lote(String fechaVencimiento, String fechaRecibido, int precioCompra, boolean ventaPorMedida, int precioVenta,
+	public Lote(String fechaRecibido, String fechaVencimiento, int precioCompra, boolean ventaPorMedida, int precioVenta,
 			int unidades) {
 		super();
-		this.fechaVencimiento = fechaVencimiento;
 		this.fechaRecibido = fechaRecibido;
+		this.fechaVencimiento = fechaVencimiento;
 		this.precioCompra = precioCompra;
 		this.ventaPorMedida = ventaPorMedida;
 		this.precioVenta = precioVenta;
