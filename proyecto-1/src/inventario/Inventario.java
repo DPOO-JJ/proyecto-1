@@ -1,8 +1,10 @@
 package inventario;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -128,8 +130,76 @@ public class Inventario {
 		this.cargarCategorias();
 		this.cargarProductos();
 		this.cargarLotes();
-		
-		//periodt
 	}
 	
+	int anadirCategoria(String nombreCategoria, String superCategoria) {
+
+		int result = -1;
+		
+		Categoria nuevaCategoria = new Categoria(nombreCategoria);
+		
+		if(superCategoria.equals("null")) {
+			result = 0;
+		}
+		else {
+			for(Categoria categoria: categorias) {
+	        	if (categoria.getNombre().equals(superCategoria)){
+	        		nuevaCategoria.setSuperCategoria(categoria);
+	        		result = 0;
+	        	}
+	        }
+		}
+		
+		if (result==0) {
+			categorias.add(nuevaCategoria);
+			
+			String toAdd = nombreCategoria+","+superCategoria;
+			addLineToCSV("data/categorias.csv",toAdd);
+		}
+		
+		return result;
+	}
+	
+	void addLineToCSV(String file, String line){
+ 
+		FileWriter fstream;
+		try {
+			fstream = new FileWriter(file, true);
+			BufferedWriter out = new BufferedWriter(fstream);
+			 
+			out.newLine();
+			out.write(line);
+	 
+			//close buffer writer
+			out.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(ArrayList<Producto> productos) {
+		this.productos = productos;
+	}
+
+	public ArrayList<Lote> getLotes() {
+		return lotes;
+	}
+
+	public void setLotes(ArrayList<Lote> lotes) {
+		this.lotes = lotes;
+	}
+
+	public ArrayList<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(ArrayList<Categoria> categorias) {
+		this.categorias = categorias;
+	}
 }
