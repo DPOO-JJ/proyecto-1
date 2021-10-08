@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class POS {
 	
 	ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+	Compra compra = new Compra();
 	
 	void cargarClientes() {
 		
@@ -47,6 +48,14 @@ public class POS {
 		for (Cliente cliente: clientes) {
 			System.out.println(cliente.getNombres());
 		}
+	}
+	
+	void hacerCompra(ArrayList<Integer> codigos)
+	{
+		for (Integer codigo: codigos) {
+			if (compra.addProduct(codigo)) {};
+		}
+		
 	}
 
 }

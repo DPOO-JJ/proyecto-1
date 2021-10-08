@@ -15,11 +15,7 @@ public class AplicacionPOS {
 		boolean condition = true;
 		while (condition) {
 			System.out.println("------------------------------------------------");
-			System.out.println("1. Cargar inventario\n"
-					+ "3. Añadir categorías\n"
-					+ "3. Revisar desempeño producto\n"
-					+ "4. Chequear existencia de productos\n"
-					+ "5. Salir de la aplicación");
+			System.out.println("1. Hacer una compra");
 			
 			@SuppressWarnings("resource")
 			Scanner scanner = new Scanner(System.in);
@@ -29,7 +25,6 @@ public class AplicacionPOS {
 		    option = scanner.nextInt();
 		    
 		    pos.cargarClientes();
-		    pos.imprimirClientes();
 		    
 		    ejecutarOpcion(option);
 		}
