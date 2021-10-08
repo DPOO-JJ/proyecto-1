@@ -128,6 +128,8 @@ public class Inventario {
 		this.cargarCategorias();
 		this.cargarProductos();
 		this.cargarLotes();
+		
+		//periodt
 	}
 	
 }
