@@ -19,7 +19,6 @@ public class Lote {
 		this.ventaPorMedida = ventaPorMedida;
 		this.precioVenta = precioVenta;
 		this.unidades = unidades;
-		this.productoAsociado = productoAsociado;
 	}
 	
 	public String getFechaVencimiento() {
