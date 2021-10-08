@@ -1,0 +1,8 @@
+﻿categoria,superCategoria
+Aseo personal,null
+Panaderia,null
+Vegetal,null
+Higiene dental,Aseo personal
+Horneados,Panaderia
+Hortaliza,Vegetal
+Lechuguita,Hortaliza
