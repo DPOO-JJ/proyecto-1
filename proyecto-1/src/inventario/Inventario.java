@@ -74,25 +74,39 @@ public class Inventario {
 		}
 	}
 	
-	void cargarCategorias() {
+	void cargarCategorias() { //TODO NO FUNCIONA BIEN PARA SUB SUB SUB
 		try (BufferedReader br = new BufferedReader(new FileReader("data/categorias.csv"))) {
 		    String line;
 		    br.readLine();
+		    
+		    ArrayList<String[]> lines = new ArrayList<String[]>();
+		    
 		    while ((line = br.readLine()) != null) {
 		        String[] values = line.split(",");
-
-		        Categoria nuevaCategoria = new Categoria(values[0]);
-		        if (!values[1].equals("null")) {
-		        	for(Categoria categoria: categorias) {
-			        	if (categoria.getNombre().equals(values[1])){
+		        lines.add(values);
+		    }
+		    
+		    for(String[] lineRead:lines) {
+		    	if (lineRead[1].equals("null")) {
+		    		Categoria nuevaCategoria = new Categoria(lineRead[0]);
+		    		categorias.add(nuevaCategoria);
+		    	}
+		    }
+		    
+		    for(String[] lineRead:lines) {
+		    	if (!lineRead[1].equals("null")) {
+		    		for(Categoria categoria: categorias) {
+			        	if (categoria.getNombre().equals(lineRead[1])){
+			        		Categoria nuevaCategoria = new Categoria(lineRead[0]);
 			        		nuevaCategoria.setSuperCategoria(categoria);
+				    		categorias.add(nuevaCategoria);
 			        		break;
 			        	}
 			        }
-		        }
-		        categorias.add(nuevaCategoria);
-		        
+		    	}
 		    }
+	        
+		    
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -106,14 +120,6 @@ public class Inventario {
 		this.cargarProductos();
 		this.cargarLotes();
 		this.cargarCategorias();
-		
-		for(Categoria categoria: categorias) {
-			System.out.println(categoria.getNombre());
-			if (categoria.getSuperCategoria()!=null) {
-				System.out.println("Y tiene supercategoria:");
-				System.out.println(categoria.getSuperCategoria().getNombre());
-			}
-        }
 	}
 	
 }
