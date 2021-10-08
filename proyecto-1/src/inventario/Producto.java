@@ -6,18 +6,17 @@ public class Producto {
 	private String nombre;
 	private int numUnidadesMedida;
 	private String unidadMedida;
-	private String categoria;
+	private Categoria categoria;
 	private String almacenamiento;
 	private boolean empacado;
 	
-	public Producto(int codigoBarras, String nombre, int numUnidadesMedida, String unidadMedida, String categoria,
+	public Producto(int codigoBarras, String nombre, int numUnidadesMedida, String unidadMedida,
 			String almacenamiento, boolean empacado) {
 		super();
 		this.codigoBarras = codigoBarras;
 		this.nombre = nombre;
 		this.numUnidadesMedida = numUnidadesMedida;
 		this.unidadMedida = unidadMedida;
-		this.categoria = categoria;
 		this.almacenamiento = almacenamiento;
 		this.empacado = empacado;
 	}
@@ -48,10 +47,10 @@ public class Producto {
 	public void setUnidadMedida(String unidadMedida) {
 		this.unidadMedida = unidadMedida;
 	}
-	public String getCategoria() {
+	public Categoria getCategoria() {
 		return categoria;
 	}
-	public void setCategoria(String categoria) {
+	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
 	public String getAlmacenamiento() {

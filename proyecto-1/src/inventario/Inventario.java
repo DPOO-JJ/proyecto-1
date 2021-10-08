@@ -24,10 +24,18 @@ public class Inventario {
 		        		values[1],
 		        		Integer.parseInt(values[2]),
 		        		values[3],
-		        		values[4],
 		        		values[5],
 		        		Boolean.parseBoolean(values[6])
 		        );
+
+        		
+        		for(Categoria categoria: categorias) {
+		        	if (categoria.getNombre().equals(values[4])){
+		        		nuevoProducto.setCategoria(categoria);
+		        		break;
+		        	}
+		        }
+		        
 		        productos.add(nuevoProducto);
 		        
 		    }
@@ -117,9 +125,9 @@ public class Inventario {
 	}
 	
 	void cargarDatos() {
+		this.cargarCategorias();
 		this.cargarProductos();
 		this.cargarLotes();
-		this.cargarCategorias();
 	}
 	
 }
