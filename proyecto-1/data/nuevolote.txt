@@ -1,0 +1,6 @@
+﻿Nuevo carga de lotes de productos
+---Productos---
+codigoBarras,nombre,numUnidadesMedida,unidadMedida,categoria,almacenamiento,empacado
+---Lotes---
+fechaRecibido,fechaVencimiento,precioCompra,precioVenta,unidades,productoAsociado
+9/10/21,25/10/21,true,10,15,4
