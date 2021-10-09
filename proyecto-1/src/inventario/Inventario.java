@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Inventario {
 
@@ -66,12 +67,13 @@ public class Inventario {
 		        		values[0],
 		        		values[1],
 		        		Integer.parseInt(values[2]),
-		        		Boolean.parseBoolean(values[3]),
+		        		Integer.parseInt(values[3]),
 		        		Integer.parseInt(values[4]),
-		        		Integer.parseInt(values[5]));
+		        		Boolean.parseBoolean(values[6]),
+		        		Integer.parseInt(values[7]));
 		        
 		        for(Producto producto: productos) {
-		        	if (producto.getCodigoBarras()==Integer.parseInt(values[6])){
+		        	if (producto.getCodigoBarras()==Integer.parseInt(values[5])){
 		        		nuevoLote.setProductoAsociado(producto);
 		        		break;
 		        	}
@@ -165,7 +167,7 @@ public class Inventario {
 		return result;
 	}
 	
-	int cargarInventario(String nombreArchivo) {
+	int cargarNuevosLotes(String nombreArchivo) {
 		int result = 0;
 		try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
 			
@@ -215,19 +217,22 @@ public class Inventario {
 			        		values[0],
 			        		values[1],
 			        		Integer.parseInt(values[2]),
-			        		Boolean.parseBoolean(values[3]),
+			        		Integer.parseInt(values[3]),
 			        		Integer.parseInt(values[4]),
-			        		Integer.parseInt(values[5]));
+			        		false,
+			        		Integer.parseInt(values[4]));
 			        
 			        for(Producto producto: productos) {
-			        	if (producto.getCodigoBarras()==Integer.parseInt(values[6])){
+			        	if (producto.getCodigoBarras()==Integer.parseInt(values[5])){
 			        		nuevoLote.setProductoAsociado(producto);
 			        		break;
 			        	}
 			        }
 			        
+			        String toSave = nuevoLote.toFileLine();
+			        
 			        lotes.add(nuevoLote);
-					addLineToCSV("data/lotes.csv",line);
+					addLineToCSV("data/lotes.csv",toSave);
 		        }
 		    }
 		    
@@ -254,6 +259,118 @@ public class Inventario {
 			//close buffer writer
 			out.close();
 			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	int revisarExistencia(Producto productoSeleccionado) {
+		int unidadesRestantes = 0;
+		
+		for (Lote lote:lotes) {
+			if (lote.getProductoAsociado().equals(productoSeleccionado)
+					&& !lote.isLoteEliminado()) {
+				unidadesRestantes+=lote.getUnidadesRestantes();
+			}
+		}
+		
+		return unidadesRestantes;
+	}
+	
+	HashMap<String,Integer> revisarDesempeno(Producto productoSeleccionado) {
+		HashMap<String,Integer> desempeno = new HashMap<String,Integer>();
+		int ganancias = 0;
+		int perdidas = 0;
+		
+		for (Lote lote:lotes) {
+			if (lote.getProductoAsociado().equals(productoSeleccionado)) {
+				int precioCompraPorUnidad=(int)lote.getPrecioCompra()/lote.getUnidades();
+
+				ganancias+= (lote.getPrecioVenta()-precioCompraPorUnidad)*(lote.getUnidades()-lote.getUnidadesRestantes());
+				
+				if(lote.isLoteEliminado()) {
+					perdidas+= precioCompraPorUnidad*lote.getUnidadesRestantes();
+				}
+			}
+		}
+		
+		desempeno.put("ganancias",ganancias);
+		desempeno.put("perdidas",perdidas);
+		
+		return desempeno;
+	}
+	
+	ArrayList<Lote> obtenerLotesProducto(Producto productoSeleccionado) {
+		
+		ArrayList<Lote> lotesFiltrados = new ArrayList<Lote>();
+		
+		for (Lote lote:lotes) {
+			if (lote.getProductoAsociado().equals(productoSeleccionado)) {
+				lotesFiltrados.add(lote);
+			}
+		}
+		
+		return lotesFiltrados;
+	}
+	
+	void eliminarLote(Lote loteAEliminar) {
+		for (int i = 0;i<lotes.size();i++) {
+			if (lotes.get(i).equals(loteAEliminar)) {
+				Lote newLote = lotes.get(i);
+				String oldFileLine = newLote.toFileLine();
+				newLote.setLoteEliminado(true);
+				String newFileLine = newLote.toFileLine();
+				lotes.set(i,newLote);
+				this.cambiarLineaArchivo("data/lotes.csv",oldFileLine,newFileLine);
+				break;
+			}
+		}
+	}
+	
+	boolean venderUnidad(Producto productoAVender) {
+		boolean sold = false;
+		for (int i = 0;i<lotes.size();i++) {
+			Lote newLote = lotes.get(i);
+			if (newLote.getProductoAsociado().equals(productoAVender)
+					&& newLote.getUnidadesRestantes()>0
+					&& !newLote.isLoteEliminado()) {
+				String oldFileLine = newLote.toFileLine();
+				newLote.setUnidadesRestantes(newLote.getUnidadesRestantes()-1);
+				String newFileLine = newLote.toFileLine();
+				lotes.set(i,newLote);
+				this.cambiarLineaArchivo("data/lotes.csv",oldFileLine,newFileLine);
+				sold = true;
+				break;
+			}
+		}
+		return sold;
+	}
+	
+	void cambiarLineaArchivo(String path, String oldFileLine, String newFileLine) {
+		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+		    String line;
+		    ArrayList<String> lines = new ArrayList<String>();
+		    while ((line = br.readLine()) != null) {
+		    	if (line.equals(oldFileLine)) {
+		    		line = newFileLine;
+		    	}
+		        lines.add(line);
+		    }
+		    
+		    FileWriter writer = new FileWriter(path); 
+		    for (int i=0;i<lines.size();i++) {
+		    	String toSave = lines.get(i);
+		    	if (i!=lines.size()-1) {
+		    		toSave+=System.lineSeparator();
+		    	}
+		    	writer.write(toSave);
+		    }
+		    writer.close();
+		    
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

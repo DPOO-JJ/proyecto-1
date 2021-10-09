@@ -23,6 +23,26 @@ public class Producto {
 	
 	public Producto() {}
 	
+	boolean equals(Producto otroProducto) {
+		if (this.codigoBarras==otroProducto.getCodigoBarras()) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		String loteStr = "";
+		loteStr+=this.codigoBarras+"\t";
+		loteStr+=this.nombre+"\t";
+		loteStr+=this.numUnidadesMedida+"\t";
+		loteStr+=this.unidadMedida+"\t";
+		loteStr+=this.categoria.getNombre()+"\t";
+		loteStr+=this.almacenamiento+"\t";
+		loteStr+=this.empacado+"\t";
+		return loteStr;
+	}
+	
 	public int getCodigoBarras() {
 		return codigoBarras;
 	}

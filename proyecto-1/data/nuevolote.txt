@@ -1,9 +1,6 @@
 ﻿Nuevo carga de lotes de productos
 ---Productos---
 codigoBarras,nombre,numUnidadesMedida,unidadMedida,categoria,almacenamiento,empacado
-10,Pan tajado Carulla,500,gramos,Horneados,s/o,true
-12,Crema dental Carulla,155,gramos,Higiene dental,s/o,true
 ---Lotes---
-fechaRecibido,fechaVencimiento,precioCompra,ventaPorMedida,precioVenta,unidades,productoAsociado
-7/10/21,1/12/21,40000,false,4000,35,10
-7/10/21,31/10/21,14000,false,500,18,12
+fechaRecibido,fechaVencimiento,precioCompra,precioVenta,unidades,productoAsociado
+9/10/21,25/10/21,true,10,15,4
