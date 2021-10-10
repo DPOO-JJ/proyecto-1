@@ -1,8 +1,10 @@
-package pos;
+package processing;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -10,10 +12,11 @@ import java.util.ArrayList;
 
 public class POS {
 	
-	ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-	Compra compra = new Compra();
+	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+	public Compra compra = new Compra();
+	public Inventario inventario = new Inventario();
 	
-	void cargarClientes() {
+	public void cargarClientes() {
 		
 		try (BufferedReader br = new BufferedReader(new FileReader("data/clientes.csv"))) {
 		    String line;
@@ -27,8 +30,7 @@ public class POS {
 		        		values[2], 
 		        		Integer.parseInt(values[3]), 
 		        		values[4],
-		        		values[5],
-		        		Integer.parseInt(values[6]));
+		        		values[5]);
 		        
 		        clientes.add(cliente);
 		        
@@ -56,6 +58,41 @@ public class POS {
 			if (compra.addProduct(codigo)) {};
 		}
 		
+	}
+	
+	public int anadirCliente(int cedula, String nombres, String apellidos, int edad, String idenGenero, String situacionLaboral) {
+
+		int result = -1;
+		
+		Cliente cliente = new Cliente(cedula, nombres, apellidos, edad, idenGenero, situacionLaboral);
+		
+		clientes.add(cliente);
+		
+		
+		String toAdd = cedula+","+nombres+","+apellidos+","+edad+","+idenGenero+","+situacionLaboral+","+"0";
+		addLineToCSV("data/clientes.csv",toAdd);
+		
+		
+		return result;
+	}
+
+	private void addLineToCSV(String file, String line){
+ 
+		FileWriter fstream;
+		try {
+			fstream = new FileWriter(file, true);
+			BufferedWriter out = new BufferedWriter(fstream);
+			 
+			out.newLine();
+			out.write(line);
+	 
+			//close buffer writer
+			out.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

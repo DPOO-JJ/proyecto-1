@@ -1,9 +1,6 @@
-package pos;
+package processing;
 
 import java.util.ArrayList;
-
-import inventario.Inventario;
-import inventario.Producto;
 
 public class Compra {
 	

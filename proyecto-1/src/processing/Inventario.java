@@ -1,4 +1,4 @@
-package inventario;
+package processing;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -139,7 +139,7 @@ public class Inventario {
 		this.cargarLotes();
 	}
 	
-	int anadirCategoria(String nombreCategoria, String superCategoria) {
+	public int anadirCategoria(String nombreCategoria, String superCategoria) {
 
 		int result = -1;
 		
@@ -167,7 +167,7 @@ public class Inventario {
 		return result;
 	}
 	
-	int cargarNuevosLotes(String nombreArchivo) {
+	public int cargarNuevosLotes(String nombreArchivo) {
 		int result = 0;
 		try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
 			
@@ -265,7 +265,7 @@ public class Inventario {
 		}
 	}
 	
-	int revisarExistencia(Producto productoSeleccionado) {
+	public int revisarExistencia(Producto productoSeleccionado) {
 		int unidadesRestantes = 0;
 		
 		for (Lote lote:lotes) {
@@ -278,7 +278,7 @@ public class Inventario {
 		return unidadesRestantes;
 	}
 	
-	HashMap<String,Integer> revisarDesempeno(Producto productoSeleccionado) {
+	public HashMap<String,Integer> revisarDesempeno(Producto productoSeleccionado) {
 		HashMap<String,Integer> desempeno = new HashMap<String,Integer>();
 		int ganancias = 0;
 		int perdidas = 0;
@@ -301,7 +301,7 @@ public class Inventario {
 		return desempeno;
 	}
 	
-	ArrayList<Lote> obtenerLotesProducto(Producto productoSeleccionado) {
+	public ArrayList<Lote> obtenerLotesProducto(Producto productoSeleccionado) {
 		
 		ArrayList<Lote> lotesFiltrados = new ArrayList<Lote>();
 		
@@ -314,7 +314,7 @@ public class Inventario {
 		return lotesFiltrados;
 	}
 	
-	void eliminarLote(Lote loteAEliminar) {
+	public void eliminarLote(Lote loteAEliminar) {
 		for (int i = 0;i<lotes.size();i++) {
 			if (lotes.get(i).equals(loteAEliminar)) {
 				Lote newLote = lotes.get(i);
@@ -328,7 +328,7 @@ public class Inventario {
 		}
 	}
 	
-	boolean venderUnidad(Producto productoAVender) {
+	public boolean venderUnidad(Producto productoAVender) {
 		boolean sold = false;
 		for (int i = 0;i<lotes.size();i++) {
 			Lote newLote = lotes.get(i);

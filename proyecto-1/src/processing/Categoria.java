@@ -1,4 +1,4 @@
-package inventario;
+package processing;
 
 public class Categoria {
 	

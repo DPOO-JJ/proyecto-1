@@ -1,8 +1,13 @@
-package inventario;
+package console;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import processing.Categoria;
+import processing.Inventario;
+import processing.Lote;
+import processing.Producto;
 
 public class AplicacionInventario {
 	
@@ -169,30 +174,7 @@ public class AplicacionInventario {
 		    inventario.eliminarLote(loteSeleccionado);
 		    System.out.println("\nLote eliminado satisfactoriamente.");
 		}
-		else if (opcionSeleccionada == 10)
-		{
-			@SuppressWarnings("resource")
-			Scanner scanner = new Scanner(System.in);  
-
-		    System.out.println("\nSeleccione el producto a vender:");
-		    
-		    int i = 0;
-		    
-		    for(Producto producto: inventario.getProductos()) {
-				System.out.println((i+1)+". "+producto.getNombre());
-				i++;
-			}
-		    
-		    Producto productoSeleccionado = inventario.getProductos().get(scanner.nextInt()-1);
-		    boolean resultado = inventario.venderUnidad(productoSeleccionado);
-		    if (resultado) {
-		    	System.out.println("La unidad se pudo vender.");
-		    }
-		    else {
-		    	System.out.println("No se encontró unidad disponible para vender.");
-		    }
-		    
-		}
+		
 	}
 	
 	public static void main(String[] args)

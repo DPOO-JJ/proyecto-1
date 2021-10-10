@@ -1,4 +1,6 @@
-package pos;
+package processing;
+
+import java.util.ArrayList;
 
 public class Cliente {
 	
@@ -8,20 +10,19 @@ public class Cliente {
 	private String apellidos;
 	private int edad;
 	private String idenGenero;
-	private String situacionLaboraL; 
+	private String situacionLaboral; 
 	public int puntos;
+	public ArrayList<Compra> compras;
 	
 	
-	public Cliente(int cedula, String nombres, String apellidos, int edad, String idenGenero, String situacionLaboraL,
-			int puntos) {
+	public Cliente(int cedula, String nombres, String apellidos, int edad, String idenGenero, String situacionLaboral) {
 		super();
 		this.cedula = cedula;
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.edad = edad;
 		this.idenGenero = idenGenero;
-		this.situacionLaboraL = situacionLaboraL;
-		this.puntos = puntos;
+		this.situacionLaboral = situacionLaboral;
 	}
 	
 	
@@ -55,11 +56,11 @@ public class Cliente {
 	public void setIdenGenero(String idenGenero) {
 		this.idenGenero = idenGenero;
 	}
-	public String getSituacionLaboraL() {
-		return situacionLaboraL;
+	public String getsituacionLaboral() {
+		return situacionLaboral;
 	}
-	public void setSituacionLaboraL(String situacionLaboraL) {
-		this.situacionLaboraL = situacionLaboraL;
+	public void setsituacionLaboral(String situacionLaboral) {
+		this.situacionLaboral = situacionLaboral;
 	}
 	public int getPuntos() {
 		return puntos;
