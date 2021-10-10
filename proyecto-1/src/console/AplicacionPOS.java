@@ -89,7 +89,7 @@ public class AplicacionPOS {
 			}
 		    
 		}
-		else if (opcionSeleccionada == 2) // TODO CAMBIAR EL CSV
+		else if (opcionSeleccionada == 2)
 		{
 			
 			System.out.println("\n----NUEVO REGISTRO DE CLIENTE----");
