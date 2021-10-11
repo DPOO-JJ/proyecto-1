@@ -24,4 +24,5 @@ public class Compra {
 		return false;
 	}
 	
+	// generar factura
 }
