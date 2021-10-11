@@ -328,23 +328,61 @@ public class Inventario {
 		}
 	}
 	
-	public boolean venderUnidad(Producto productoAVender) {
-		boolean sold = false;
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public int venderUnidad(Producto productoAVender, int unidadesAVender) {
+		int price = 0;
+		int unidadesRestantes = unidadesAVender; //unidades que faltan por vender
+		
+		HashMap<Integer, ArrayList> tempChanges = new HashMap<Integer, ArrayList>();
+		
 		for (int i = 0;i<lotes.size();i++) {
 			Lote newLote = lotes.get(i);
 			if (newLote.getProductoAsociado().equals(productoAVender)
 					&& newLote.getUnidadesRestantes()>0
 					&& !newLote.isLoteEliminado()) {
+				
+				int unidadesVendidas = unidadesRestantes;
+				
 				String oldFileLine = newLote.toFileLine();
-				newLote.setUnidadesRestantes(newLote.getUnidadesRestantes()-1);
-				String newFileLine = newLote.toFileLine();
-				lotes.set(i,newLote);
-				this.cambiarLineaArchivo("data/lotes.csv",oldFileLine,newFileLine);
-				sold = true;
-				break;
+				newLote.setUnidadesRestantes(newLote.getUnidadesRestantes()-unidadesRestantes);
+				
+				if (newLote.getUnidadesRestantes()<0) {
+					unidadesVendidas -= Math.abs(newLote.getUnidadesRestantes());
+					unidadesRestantes = Math.abs(newLote.getUnidadesRestantes());
+					newLote.setUnidadesRestantes(0);
+				}
+				else {
+					unidadesRestantes = 0;
+				}
+				
+				ArrayList tempArray = new ArrayList();
+				tempArray.add(newLote);
+				tempArray.add(oldFileLine);
+				tempChanges.put(i,tempArray);
+				
+				price += newLote.getPrecioVenta()*unidadesVendidas;
+				
+				if(unidadesRestantes==0) {
+					break;
+				}
 			}
 		}
-		return sold;
+		
+		if(unidadesRestantes>0) {
+			price = 0;
+		}
+		else if(unidadesRestantes==0) {
+			for (int key : tempChanges.keySet()) {
+				
+				ArrayList tempArray = tempChanges.get(key);
+				Lote newLote = (Lote)tempArray.get(0);
+				String oldFileLine = (String)tempArray.get(1);
+				lotes.set(key,newLote);
+				this.cambiarLineaArchivo("data/lotes.csv",oldFileLine,newLote.toFileLine());
+			}
+		}
+		
+		return price;
 	}
 	
 	void cambiarLineaArchivo(String path, String oldFileLine, String newFileLine) {

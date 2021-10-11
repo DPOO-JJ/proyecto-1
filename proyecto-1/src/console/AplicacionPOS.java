@@ -62,8 +62,10 @@ public class AplicacionPOS {
 			
 			for (Cliente cliente : pos.clientes) {
 				if (cliente.getCedula() == cedula)
-				{System.out.println("\nCliente: " + cliente.getApellidos() + cliente.getNombres());
-				currentCliente = cliente;}
+				{
+					System.out.println("\nCliente: " + cliente.getApellidos() + cliente.getNombres());
+					currentCliente = cliente;
+				}
 				
 			}
 			
@@ -79,9 +81,13 @@ public class AplicacionPOS {
 				}
 			    
 			    Producto productoSeleccionado = pos.inventario.getProductos().get(scanner.nextInt()-1);
-			    boolean resultado = pos.inventario.venderUnidad(productoSeleccionado);
-			    if (resultado) {
+			    
+			    int unidadesAVender = 35;
+			    
+			    int resultado = pos.inventario.venderUnidad(productoSeleccionado,unidadesAVender);
+			    if (resultado>0) {
 			    	System.out.println("La unidad se pudo vender.");
+			    	System.out.println("A este precio "+resultado);
 			    }
 			    else {
 			    	System.out.println("No se encontró unidad disponible para vender.");
