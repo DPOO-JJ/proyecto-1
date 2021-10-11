@@ -1,12 +1,11 @@
 package console;
 
+import java.io.File;
 import java.util.Scanner;
 
 import processing.Cliente;
-
+import processing.Compra;
 import processing.POS;
-
-import processing.Producto;
 
 
 
@@ -63,37 +62,57 @@ public class AplicacionPOS {
 			for (Cliente cliente : pos.clientes) {
 				if (cliente.getCedula() == cedula)
 				{
-					System.out.println("\nCliente: " + cliente.getApellidos() + cliente.getNombres());
+					System.out.println("\nCliente: " + cliente.getApellidos() + " " + cliente.getNombres());
 					currentCliente = cliente;
 				}
 				
 			}
 			
-			if (currentCliente == null)
+			Compra compra = new Compra();
+			
+			
+				
+			Boolean ejecutando = true;
+			System.out.println("-- Inicio de proceso de compra--"+"\n Digite los códigos de los productos");
+			while (ejecutando)
 			{
-			    System.out.println("\nSeleccione el producto a vender:");
-			    
-			    int i = 0;
-			    
-			    for(Producto producto: pos.inventario.getProductos()) {
-					System.out.println((i+1)+". "+producto.getNombre());
-					i++;
+				System.out.println("Código");
+				int prod = scanner.nextInt();
+				System.out.println("Digite el peso del producto, si no aplica digite 0");
+				int peso = scanner.nextInt();
+				Boolean seHizo = pos.hacerCompra(prod, peso, currentCliente);
+				
+				if (seHizo)
+				{
+					System.out.println("Producto agregado");
 				}
-			    
-			    Producto productoSeleccionado = pos.inventario.getProductos().get(scanner.nextInt()-1);
-			    
-			    int unidadesAVender = 35;
-			    
-			    int resultado = pos.inventario.venderUnidad(productoSeleccionado,unidadesAVender);
-			    if (resultado>0) {
-			    	System.out.println("La unidad se pudo vender.");
-			    	System.out.println("A este precio "+resultado);
-			    }
-			    else {
-			    	System.out.println("No se encontró unidad disponible para vender.");
-			    }
+				else
+				{
+					System.out.println("Imposible agregar producto");
+				}
+				
+				System.out.println("Continuar? Digite cualquier tecla, de lo contrario digite 1");
+				@SuppressWarnings("resource")
+				Scanner scanner2 = new Scanner(System.in);
+				String opt = scanner2.nextLine();
+				
+				if (opt.equals("1"))
+				{
+					ejecutando = false;
+					File file = new File("data/UltimaFactura.txt");
+					compra.guardarFactura(file);
+				}
+			}
+			
+			if (currentCliente != null)
+			{
+				currentCliente.setPuntos(compra.getPuntos());
+				
+				System.out.println("Puntos para " + currentCliente.getApellidos() +" "+ compra.getPuntos());
 			}
 		    
+			
+			
 		}
 		else if (opcionSeleccionada == 2)
 		{

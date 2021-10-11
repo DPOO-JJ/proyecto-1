@@ -16,6 +16,8 @@ public class POS {
 	public Compra compra = new Compra();
 	public Inventario inventario = new Inventario();
 	
+	
+	
 	public void cargarClientes() {
 		
 		try (BufferedReader br = new BufferedReader(new FileReader("data/clientes.csv"))) {
@@ -45,18 +47,19 @@ public class POS {
 		
 	}
 	
-	void imprimirClientes()
-	{
-		for (Cliente cliente: clientes) {
-			System.out.println(cliente.getNombres());
-		}
-	}
 	
-	void hacerCompra(ArrayList<Integer> codigos)
+	public Boolean hacerCompra(int codigo, int peso, Cliente cliente)
 	{
-		for (Integer codigo: codigos) {
-			if (compra.addProduct(codigo)) {};
-		}
+		if (compra.makePurchase(codigo, peso))
+			{
+				cambiarLineaArchivo("data/clientes.csv", cliente.lineCSV(), cliente.lineForUpdate() + compra.getPuntos());
+				return true;
+			}
+		else
+			{
+				return false;
+			}
+		
 		
 	}
 	
@@ -89,6 +92,36 @@ public class POS {
 			//close buffer writer
 			out.close();
 			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	void cambiarLineaArchivo(String path, String oldFileLine, String newFileLine) {
+		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+		    String line;
+		    ArrayList<String> lines = new ArrayList<String>();
+		    while ((line = br.readLine()) != null) {
+		    	if (line.equals(oldFileLine)) {
+		    		line = newFileLine;
+		    	}
+		        lines.add(line);
+		    }
+		    
+		    FileWriter writer = new FileWriter(path); 
+		    for (int i=0;i<lines.size();i++) {
+		    	String toSave = lines.get(i);
+		    	if (i!=lines.size()-1) {
+		    		toSave+=System.lineSeparator();
+		    	}
+		    	writer.write(toSave);
+		    }
+		    writer.close();
+		    
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

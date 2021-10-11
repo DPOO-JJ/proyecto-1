@@ -69,5 +69,33 @@ public class Cliente {
 		this.puntos = puntos;
 	}
 
+	public String lineCSV() 
+	{
+		String line = "";
+		line += this.cedula + ",";
+		line += this.nombres + ",";
+		line += this.apellidos + ",";
+		line += this.edad + ",";
+		line += this.idenGenero + ",";
+		line += this.situacionLaboral + ",";
+		line += this.puntos;
+		
+		return line;
+		
+	}
+	
+	public String lineForUpdate() 
+	{
+		String line = "";
+		line += this.cedula + ",";
+		line += this.nombres + ",";
+		line += this.apellidos + ",";
+		line += this.edad + ",";
+		line += this.idenGenero + ",";
+		line += this.situacionLaboral + ",";
+		
+		return line;
+		
+	}
 
 }

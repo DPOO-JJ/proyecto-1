@@ -21,7 +21,6 @@ public class Producto {
 		this.empacado = empacado;
 	}
 	
-	public Producto() {}
 	
 	boolean equals(Producto otroProducto) {
 		if (this.codigoBarras==otroProducto.getCodigoBarras()) {
