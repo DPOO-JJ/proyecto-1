@@ -1,6 +1,7 @@
 package processing;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,6 +15,11 @@ public class Compra {
 	ArrayList<Lote> lotes = inventario.getLotes();
 	int total = 0;
 	int puntos = 0;
+	int id_compra;
+	
+	public Compra() {
+		this.id_compra = (int) (new Date().getTime()/1000);
+	}
 	
 
 	public boolean makePurchase(int codigo, int peso) {
@@ -87,8 +93,9 @@ public class Compra {
 		return factura;
 	}
 	
-	public void guardarFactura(File archivo)
+	public void guardarFactura()
 	{
+		File archivo = new File("data/facturas/"+Integer.toString(this.id_compra)+".txt");
 		try { 
 		      if (archivo.createNewFile()) {
 		        FileWriter writer = new FileWriter(archivo);
@@ -108,5 +115,15 @@ public class Compra {
 		}
 		return;
 		
+	}
+
+
+	public int getId_compra() {
+		return id_compra;
+	}
+
+
+	public void setId_compra(int id_compra) {
+		this.id_compra = id_compra;
 	}
 }

@@ -68,9 +68,7 @@ public class AplicacionPOS {
 				
 			}
 			
-			Compra compra = new Compra();
-			
-			
+			pos.newCompra();
 				
 			Boolean ejecutando = true;
 			System.out.println("-- Inicio de proceso de compra--"+"\n Digite los códigos de los productos");
@@ -99,18 +97,20 @@ public class AplicacionPOS {
 				if (opt.equals("1"))
 				{
 					ejecutando = false;
-					File file = new File("data/UltimaFactura.txt");
-					compra.guardarFactura(file);
+					
+					pos.getCompra().guardarFactura();
 				}
 			}
 			
 			if (currentCliente != null)
 			{
-				currentCliente.setPuntos(compra.getPuntos());
+				//antes de setear puntos hacer un liveCSV con los datos viejos del cliente
+				currentCliente.setPuntos(currentCliente.getPuntos()+pos.getCompra().getPuntos());
+				//volver a hcer un liveCSV
+				//cambiarLineaArchivo("data/clientes.csv", liveCSVOld, liveCSVNew);
 				
-				System.out.println("Puntos para " + currentCliente.getApellidos() +" "+ compra.getPuntos());
+				System.out.println("Puntos para " + currentCliente.getApellidos() +" "+ pos.getCompra().getPuntos());
 			}
-		    
 			
 			
 		}

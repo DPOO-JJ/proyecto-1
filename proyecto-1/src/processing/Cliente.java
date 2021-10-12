@@ -15,7 +15,7 @@ public class Cliente {
 	public ArrayList<Compra> compras;
 	
 	
-	public Cliente(int cedula, String nombres, String apellidos, int edad, String idenGenero, String situacionLaboral) {
+	public Cliente(int cedula, String nombres, String apellidos, int edad, String idenGenero, String situacionLaboral, int puntos) {
 		super();
 		this.cedula = cedula;
 		this.nombres = nombres;
@@ -23,6 +23,7 @@ public class Cliente {
 		this.edad = edad;
 		this.idenGenero = idenGenero;
 		this.situacionLaboral = situacionLaboral;
+		this.puntos = puntos;
 	}
 	
 	

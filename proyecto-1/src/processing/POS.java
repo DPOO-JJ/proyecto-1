@@ -32,7 +32,8 @@ public class POS {
 		        		values[2], 
 		        		Integer.parseInt(values[3]), 
 		        		values[4],
-		        		values[5]);
+		        		values[5],
+		        		Integer.parseInt(values[6]));
 		        
 		        clientes.add(cliente);
 		        
@@ -67,14 +68,12 @@ public class POS {
 
 		int result = -1;
 		
-		Cliente cliente = new Cliente(cedula, nombres, apellidos, edad, idenGenero, situacionLaboral);
+		Cliente cliente = new Cliente(cedula, nombres, apellidos, edad, idenGenero, situacionLaboral, 0);
 		
 		clientes.add(cliente);
 		
-		
 		String toAdd = cedula+","+nombres+","+apellidos+","+edad+","+idenGenero+","+situacionLaboral+","+"0";
 		addLineToCSV("data/clientes.csv",toAdd);
-		
 		
 		return result;
 	}
@@ -126,6 +125,20 @@ public class POS {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+
+	public Compra getCompra() {
+		return compra;
+	}
+
+
+	public void setCompra(Compra compra) {
+		this.compra = compra;
+	}
+	
+	public void newCompra() {
+		this.compra = new Compra();
 	}
 
 }
