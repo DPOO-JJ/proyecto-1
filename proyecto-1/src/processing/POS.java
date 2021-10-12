@@ -13,12 +13,13 @@ import java.util.ArrayList;
 public class POS {
 	
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-	public Compra compra = new Compra();
 	public Inventario inventario = new Inventario();
+	public Compra compra = new Compra();
 	
 	
 	
 	public void cargarClientes() {
+		
 		
 		try (BufferedReader br = new BufferedReader(new FileReader("data/clientes.csv"))) {
 		    String line;
@@ -51,9 +52,10 @@ public class POS {
 	
 	public Boolean hacerCompra(int codigo, int peso, Cliente cliente)
 	{
+		
+		
 		if (compra.makePurchase(codigo, peso))
 			{
-				cambiarLineaArchivo("data/clientes.csv", cliente.lineCSV(), cliente.lineForUpdate() + compra.getPuntos());
 				return true;
 			}
 		else
@@ -61,6 +63,21 @@ public class POS {
 				return false;
 			}
 		
+		
+	}
+	
+	public Producto getProductByCode(int codigo)
+	{
+		
+		Producto retorno = null;
+		for (Producto producto: inventario.productos) 
+		{
+			if (producto.getCodigoBarras() == codigo)
+			{
+				retorno = producto;
+			}
+		}
+		return retorno;
 		
 	}
 	
@@ -97,7 +114,7 @@ public class POS {
 		}
 	}
 	
-	void cambiarLineaArchivo(String path, String oldFileLine, String newFileLine) {
+	public void cambiarLineaArchivo(String path, String oldFileLine, String newFileLine) {
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 		    String line;
 		    ArrayList<String> lines = new ArrayList<String>();
@@ -139,6 +156,18 @@ public class POS {
 	
 	public void newCompra() {
 		this.compra = new Compra();
+	}
+	
+	public void updatePoints(Cliente cliente)
+	{
+		String oldLine = cliente.lineCSV();
+
+		cliente.setPuntos(cliente.getPuntos()+getCompra().getPuntos());
+
+		String newLine = cliente.lineCSV();
+		
+		cambiarLineaArchivo("data/clientes.csv", oldLine, newLine);
+	
 	}
 
 }

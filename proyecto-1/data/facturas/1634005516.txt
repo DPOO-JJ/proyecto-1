@@ -1,0 +1,4 @@
+------ Factura de Compras ------
+
+Lechuga 1000
+Total: 1000

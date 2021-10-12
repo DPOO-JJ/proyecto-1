@@ -17,6 +17,7 @@ public class Compra {
 	int puntos = 0;
 	int id_compra;
 	
+	
 	public Compra() {
 		this.id_compra = (int) (new Date().getTime()/1000);
 	}
@@ -87,8 +88,9 @@ public class Compra {
 					precio = lote.getPrecioVenta();
 				}
 			}
-			factura += (producto.getNombre()+" "+ precio.toString());
+			factura += ("\n"+producto.getNombre()+" "+ precio.toString());
 		}
+		factura += ("\nTotal: " + getTotal());
 
 		return factura;
 	}
@@ -126,4 +128,5 @@ public class Compra {
 	public void setId_compra(int id_compra) {
 		this.id_compra = id_compra;
 	}
+
 }

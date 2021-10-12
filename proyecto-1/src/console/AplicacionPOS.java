@@ -6,6 +6,7 @@ import java.util.Scanner;
 import processing.Cliente;
 import processing.Compra;
 import processing.POS;
+import processing.Producto;
 
 
 
@@ -19,7 +20,6 @@ public class AplicacionPOS {
 		int option = 0;
 		
 		pos = new POS();
-		
 		
 		boolean condition = true;
 		while (condition) {
@@ -58,58 +58,86 @@ public class AplicacionPOS {
 			System.out.println("\nIngrese la cédula del cliente:");
 			
 			int cedula = scanner.nextInt();
+			Boolean found = false;
 			
-			for (Cliente cliente : pos.clientes) {
+			for (Cliente cliente : pos.clientes)
+			{
 				if (cliente.getCedula() == cedula)
 				{
-					System.out.println("\nCliente: " + cliente.getApellidos() + " " + cliente.getNombres());
 					currentCliente = cliente;
+					found = true;
 				}
 				
+			}
+			
+			if (found == false)
+			{
+				System.out.println("No se encontró el cliente.");
+			}
+			else
+			{
+				System.out.println("\nCliente: " + currentCliente.getApellidos() + " " + currentCliente.getNombres());
 			}
 			
 			pos.newCompra();
 				
 			Boolean ejecutando = true;
-			System.out.println("-- Inicio de proceso de compra--"+"\n Digite los códigos de los productos");
+			System.out.println("\n-- Inicio de proceso de compra--"+"\n Digite los códigos de los productos");
 			while (ejecutando)
 			{
-				System.out.println("Código");
+				System.out.println("Código: ");
 				int prod = scanner.nextInt();
-				System.out.println("Digite el peso del producto, si no aplica digite 0");
-				int peso = scanner.nextInt();
-				Boolean seHizo = pos.hacerCompra(prod, peso, currentCliente);
 				
-				if (seHizo)
+				Producto producto = pos.getProductByCode(prod);
+				
+				if (producto != null)
 				{
-					System.out.println("Producto agregado");
+					int peso = 0;
+					
+					if (producto.isEmpacado() == false)
+					{
+						System.out.println("Digite el peso del producto en gramos: ");
+						peso = scanner.nextInt();
+					}
+					
+					Boolean seHizo = pos.hacerCompra(prod, peso, currentCliente);
+					
+					if (seHizo)
+					{
+						System.out.println("Producto agregado");
+					}
+					else
+					{
+						System.out.println("Imposible agregar producto");
+					}
+					
+					System.out.println("Continuar? Digite cualquier tecla, de lo contrario digite 0");
+					@SuppressWarnings("resource")
+					Scanner scanner2 = new Scanner(System.in);
+					String opt = scanner2.nextLine();
+					
+					if (opt.equals("0"))
+					{
+						ejecutando = false;
+						pos.getCompra().guardarFactura();
+					}
+					
 				}
 				else
 				{
-					System.out.println("Imposible agregar producto");
+					System.out.println("Producto no identificado.");
 				}
 				
-				System.out.println("Continuar? Digite cualquier tecla, de lo contrario digite 1");
-				@SuppressWarnings("resource")
-				Scanner scanner2 = new Scanner(System.in);
-				String opt = scanner2.nextLine();
 				
-				if (opt.equals("1"))
-				{
-					ejecutando = false;
-					
-					pos.getCompra().guardarFactura();
-				}
 			}
 			
 			if (currentCliente != null)
 			{
-				//antes de setear puntos hacer un liveCSV con los datos viejos del cliente
-				currentCliente.setPuntos(currentCliente.getPuntos()+pos.getCompra().getPuntos());
-				//volver a hcer un liveCSV
-				//cambiarLineaArchivo("data/clientes.csv", liveCSVOld, liveCSVNew);
 				
-				System.out.println("Puntos para " + currentCliente.getApellidos() +" "+ pos.getCompra().getPuntos());
+				pos.updatePoints(currentCliente);
+				
+				System.out.println("Puntos acumulados en esta compra: " + pos.getCompra().getPuntos());
+				System.out.println("Puntos totales para " + currentCliente.getApellidos().toString() + ": " + currentCliente.puntos);
 			}
 			
 			
