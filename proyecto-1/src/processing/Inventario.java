@@ -1,10 +1,8 @@
 package processing;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,7 +159,7 @@ public class Inventario {
 			categorias.add(nuevaCategoria);
 			
 			String toAdd = nombreCategoria+","+superCategoria;
-			addLineToCSV("data/categorias.csv",toAdd);
+			FileManager.addLineToCSV("data/categorias.csv",toAdd);
 		}
 		
 		return result;
@@ -208,7 +206,7 @@ public class Inventario {
 			        }
 			        
 			        productos.add(nuevoProducto);
-					addLineToCSV("data/productos.csv",line);
+			        FileManager.addLineToCSV("data/productos.csv",line);
 		        }
 		        else if (loadingLotes) {
 		        	String[] values = line.split(",");
@@ -232,7 +230,7 @@ public class Inventario {
 			        String toSave = nuevoLote.toFileLine();
 			        
 			        lotes.add(nuevoLote);
-					addLineToCSV("data/lotes.csv",toSave);
+			        FileManager.addLineToCSV("data/lotes.csv",toSave);
 		        }
 		    }
 		    
@@ -244,25 +242,6 @@ public class Inventario {
 			result = 2;
 		}
 		return result;
-	}
-	
-	void addLineToCSV(String file, String line){
- 
-		FileWriter fstream;
-		try {
-			fstream = new FileWriter(file, true);
-			BufferedWriter out = new BufferedWriter(fstream);
-			 
-			out.newLine();
-			out.write(line);
-	 
-			//close buffer writer
-			out.close();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public int revisarExistencia(Producto productoSeleccionado) {
@@ -322,7 +301,7 @@ public class Inventario {
 				newLote.setLoteEliminado(true);
 				String newFileLine = newLote.toFileLine();
 				lotes.set(i,newLote);
-				this.cambiarLineaArchivo("data/lotes.csv",oldFileLine,newFileLine);
+				FileManager.cambiarLineaArchivo("data/lotes.csv",oldFileLine,newFileLine);
 				break;
 			}
 		}
@@ -378,41 +357,11 @@ public class Inventario {
 				Lote newLote = (Lote)tempArray.get(0);
 				String oldFileLine = (String)tempArray.get(1);
 				lotes.set(key,newLote);
-				this.cambiarLineaArchivo("data/lotes.csv",oldFileLine,newLote.toFileLine());
+				FileManager.cambiarLineaArchivo("data/lotes.csv",oldFileLine,newLote.toFileLine());
 			}
 		}
 		
 		return price;
-	}
-	
-	void cambiarLineaArchivo(String path, String oldFileLine, String newFileLine) {
-		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-		    String line;
-		    ArrayList<String> lines = new ArrayList<String>();
-		    while ((line = br.readLine()) != null) {
-		    	if (line.equals(oldFileLine)) {
-		    		line = newFileLine;
-		    	}
-		        lines.add(line);
-		    }
-		    
-		    FileWriter writer = new FileWriter(path); 
-		    for (int i=0;i<lines.size();i++) {
-		    	String toSave = lines.get(i);
-		    	if (i!=lines.size()-1) {
-		    		toSave+=System.lineSeparator();
-		    	}
-		    	writer.write(toSave);
-		    }
-		    writer.close();
-		    
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public ArrayList<Producto> getProductos() {

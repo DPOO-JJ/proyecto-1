@@ -1,22 +1,16 @@
 package processing;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
-
 
 public class POS {
 	
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 	public Inventario inventario = new Inventario();
 	public Compra compra = new Compra();
-	
-	
 	
 	public void cargarClientes() {
 		
@@ -26,7 +20,7 @@ public class POS {
 		    br.readLine();
 		    while ((line = br.readLine()) != null) {
 		        String[] values = line.split(",");
-
+		        
 		        Cliente cliente = new Cliente(
 		        		Integer.parseInt(values[0]), 
 		        		values[1], 
@@ -52,18 +46,14 @@ public class POS {
 	
 	public Boolean hacerCompra(int codigo, int peso, Cliente cliente)
 	{
-		
-		
 		if (compra.makePurchase(codigo, peso))
-			{
-				return true;
-			}
+		{
+			return true;
+		}
 		else
-			{
-				return false;
-			}
-		
-		
+		{
+			return false;
+		}
 	}
 	
 	public Producto getProductByCode(int codigo)
@@ -90,60 +80,10 @@ public class POS {
 		clientes.add(cliente);
 		
 		String toAdd = cedula+","+nombres+","+apellidos+","+edad+","+idenGenero+","+situacionLaboral+","+"0";
-		addLineToCSV("data/clientes.csv",toAdd);
+		FileManager.addLineToCSV("data/clientes.csv",toAdd);
 		
 		return result;
 	}
-
-	private void addLineToCSV(String file, String line){
- 
-		FileWriter fstream;
-		try {
-			fstream = new FileWriter(file, true);
-			BufferedWriter out = new BufferedWriter(fstream);
-			 
-			out.newLine();
-			out.write(line);
-	 
-			//close buffer writer
-			out.close();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public void cambiarLineaArchivo(String path, String oldFileLine, String newFileLine) {
-		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-		    String line;
-		    ArrayList<String> lines = new ArrayList<String>();
-		    while ((line = br.readLine()) != null) {
-		    	if (line.equals(oldFileLine)) {
-		    		line = newFileLine;
-		    	}
-		        lines.add(line);
-		    }
-		    
-		    FileWriter writer = new FileWriter(path); 
-		    for (int i=0;i<lines.size();i++) {
-		    	String toSave = lines.get(i);
-		    	if (i!=lines.size()-1) {
-		    		toSave+=System.lineSeparator();
-		    	}
-		    	writer.write(toSave);
-		    }
-		    writer.close();
-		    
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 
 	public Compra getCompra() {
 		return compra;
@@ -166,8 +106,28 @@ public class POS {
 
 		String newLine = cliente.lineCSV();
 		
-		cambiarLineaArchivo("data/clientes.csv", oldLine, newLine);
+		FileManager.cambiarLineaArchivo("data/clientes.csv", oldLine, newLine);
 	
+	}
+
+
+	public ArrayList<Cliente> getClientes() {
+		return clientes;
+	}
+
+
+	public void setClientes(ArrayList<Cliente> clientes) {
+		this.clientes = clientes;
+	}
+
+
+	public Inventario getInventario() {
+		return inventario;
+	}
+
+
+	public void setInventario(Inventario inventario) {
+		this.inventario = inventario;
 	}
 
 }

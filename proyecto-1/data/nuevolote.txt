@@ -3,4 +3,4 @@
 codigoBarras,nombre,numUnidadesMedida,unidadMedida,categoria,almacenamiento,empacado
 ---Lotes---
 fechaRecibido,fechaVencimiento,precioCompra,precioVenta,unidades,productoAsociado
-9/10/21,25/10/21,true,10,15,4
+9/10/21,25/10/21,20000,4000,15,1

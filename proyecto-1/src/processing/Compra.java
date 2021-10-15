@@ -2,9 +2,6 @@ package processing;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class Compra {
 	
@@ -97,26 +94,7 @@ public class Compra {
 	
 	public void guardarFactura()
 	{
-		File archivo = new File("data/facturas/"+Integer.toString(this.id_compra)+".txt");
-		try { 
-		      if (archivo.createNewFile()) {
-		        FileWriter writer = new FileWriter(archivo);
-		        writer.write(this.generarTextoFactura());
-		        writer.close();
-		      }
-		      else
-		      {
-		        System.out.println("El archivo ya existe.");
-		        return;
-		      }
-		}
-		catch (IOException e)
-		{
-		      System.out.println("Ocurrió un error.");
-		      e.printStackTrace();
-		}
-		return;
-		
+		FileManager.guardarArchivo("data/facturas/"+Integer.toString(this.id_compra)+".txt",this.generarTextoFactura());
 	}
 
 

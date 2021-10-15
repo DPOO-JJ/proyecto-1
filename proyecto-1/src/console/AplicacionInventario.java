@@ -58,6 +58,8 @@ public class AplicacionInventario {
 		    
 		    nombreArchivo = "data/nuevolote.txt";
 		    
+		    System.out.println(nombreArchivo);
+		    
 			int result = inventario.cargarNuevosLotes(nombreArchivo);
 			if (result==0) {
 				System.out.println("Lote de productos cargados exitosamente.");

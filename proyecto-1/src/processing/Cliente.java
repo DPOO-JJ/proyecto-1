@@ -82,21 +82,6 @@ public class Cliente {
 		line += this.puntos;
 		
 		return line;
-		
-	}
-	
-	public String lineForUpdate() 
-	{
-		String line = "";
-		line += this.cedula + ",";
-		line += this.nombres + ",";
-		line += this.apellidos + ",";
-		line += this.edad + ",";
-		line += this.idenGenero + ",";
-		line += this.situacionLaboral + ",";
-		
-		return line;
-		
 	}
 
 }

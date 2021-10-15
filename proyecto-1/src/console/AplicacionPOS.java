@@ -1,14 +1,9 @@
 package console;
 
-import java.io.File;
 import java.util.Scanner;
-
 import processing.Cliente;
-import processing.Compra;
 import processing.POS;
 import processing.Producto;
-
-
 
 public class AplicacionPOS {
 	
@@ -60,14 +55,13 @@ public class AplicacionPOS {
 			int cedula = scanner.nextInt();
 			Boolean found = false;
 			
-			for (Cliente cliente : pos.clientes)
+			for (Cliente cliente : pos.getClientes())
 			{
 				if (cliente.getCedula() == cedula)
 				{
 					currentCliente = cliente;
 					found = true;
 				}
-				
 			}
 			
 			if (found == false)
@@ -104,14 +98,14 @@ public class AplicacionPOS {
 					
 					if (seHizo)
 					{
-						System.out.println("Producto agregado");
+						System.out.println(producto.getNombre()+" agregado");
 					}
 					else
 					{
-						System.out.println("Imposible agregar producto");
+						System.out.println("Imposible agregar "+producto.getNombre());
 					}
 					
-					System.out.println("Continuar? Digite cualquier tecla, de lo contrario digite 0");
+					System.out.println("Para continuar digite cualquier tecla, de lo contrario digite 0");
 					@SuppressWarnings("resource")
 					Scanner scanner2 = new Scanner(System.in);
 					String opt = scanner2.nextLine();
@@ -127,8 +121,6 @@ public class AplicacionPOS {
 				{
 					System.out.println("Producto no identificado.");
 				}
-				
-				
 			}
 			
 			if (currentCliente != null)
@@ -153,6 +145,15 @@ public class AplicacionPOS {
 			System.out.println("Ingrese la cédula del cliente");
 			int cedula = Integer.parseInt(scanner.nextLine());
 			
+			for (Cliente cliente : pos.getClientes())
+			{
+				if (cliente.getCedula() == cedula)
+				{
+					System.out.println("La cédula ya está registrada.");
+					return;
+				}
+			}
+			
 			System.out.println("Ingrese los nombres del cliente");
 			String nombres = scanner.nextLine();
 			
@@ -176,7 +177,6 @@ public class AplicacionPOS {
 	
 	public static void main(String[] args)
 	{
-		
 		ejecutarAplicacion();
 	}
 	
