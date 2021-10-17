@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class FileManager {
 	
+	//crea un archivo que contendrá la info en 'texto'.
 	public static void guardarArchivo(String nombreArchivo, String texto)
 	{
 		File archivo = new File(nombreArchivo);
@@ -34,6 +35,7 @@ public class FileManager {
 		return;
 	}
 	
+	//añade una nueva linea a un archivo.
 	public static void addLineToCSV(String file, String line){
 		 
 		FileWriter fstream;
@@ -53,6 +55,7 @@ public class FileManager {
 		}
 	}
 	
+	//reemplaza una linea de un archivo por una nueva linea, dejando lo demás intacto.
 	public static void cambiarLineaArchivo(String path, String oldFileLine, String newFileLine) {
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 		    String line;

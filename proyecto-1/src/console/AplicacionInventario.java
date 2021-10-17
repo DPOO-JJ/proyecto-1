@@ -9,7 +9,7 @@ import processing.Inventario;
 import processing.Lote;
 import processing.Producto;
 
-public class AplicacionInventario {
+public class AplicacionInventario{
 	
 	static Inventario inventario = null;
 	

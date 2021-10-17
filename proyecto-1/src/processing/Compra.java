@@ -5,56 +5,47 @@ import java.util.Date;
 
 public class Compra {
 	
-	Inventario inventario = new Inventario();
+	Inventario inventario;
 	
 	ArrayList<Producto> productos = new ArrayList<Producto>();
-	ArrayList<Producto> disponibles = inventario.getProductos();
-	ArrayList<Lote> lotes = inventario.getLotes();
 	int total = 0;
 	int puntos = 0;
 	int id_compra;
 	
 	
-	public Compra() {
+	public Compra(Inventario inventario) {
 		this.id_compra = (int) (new Date().getTime()/1000);
+		this.inventario = inventario;
 	}
 	
-
-	public boolean makePurchase(int codigo, int peso) {
-		
-		for (Producto i : disponibles) {
-			if (i.getCodigoBarras() == codigo)
+	public boolean makePurchase(Producto producto, int peso) {
+				
+		if (producto.isEmpacado())
+		{
+			int venta = inventario.venderUnidad(producto, 1);
+			
+			if (venta != 0)
+			{
+				productos.add(producto);
+				total += venta;
+				this.puntos += venta/1000;
+				return true;
+			}
+		}
+		else
+		{
+			int venta = inventario.venderUnidad(producto, peso);
+			
+			if (venta != 0)
 			{
 				
-				if (i.isEmpacado())
-				{
-					int venta = inventario.venderUnidad(i, 1);
-					
-					if (venta != 0)
-					{
-						productos.add(i);
-						total += venta;
-						this.puntos += venta/1000;
-						return true;
-					}
-				}
-				else
-				{
-					int venta = inventario.venderUnidad(i, peso);
-					
-					if (venta != 0)
-					{
-						
-						productos.add(i);
-						total += venta;
-						this.puntos += venta/1000;
-						return true;
-					}
-				}	
+				productos.add(producto);
+				total += venta;
+				this.puntos += venta/1000;
+				return true;
 			}
-			
-
 		}
+
 		return false;
 	}
 
@@ -78,7 +69,7 @@ public class Compra {
 		String factura = "------ Factura de Compras ------\n";
 		for (Producto producto: productos)
 		{
-			for (Lote lote: lotes) 
+			for (Lote lote: inventario.getLotes()) 
 			{
 				if (lote.getProductoAsociado().equals(producto))
 				{

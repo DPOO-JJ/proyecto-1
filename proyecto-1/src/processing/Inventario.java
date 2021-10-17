@@ -18,7 +18,7 @@ public class Inventario {
 		this.cargarDatos();
 	}
 	
-	void cargarProductos() {
+	private void cargarProductos() {
 		try (BufferedReader br = new BufferedReader(new FileReader("data/productos.csv"))) {
 		    String line;
 		    br.readLine();
@@ -54,7 +54,7 @@ public class Inventario {
 		}
 	}
 	
-	void cargarLotes() {
+	private void cargarLotes() {
 		try (BufferedReader br = new BufferedReader(new FileReader("data/lotes.csv"))) {
 		    String line;
 		    br.readLine();
@@ -89,7 +89,7 @@ public class Inventario {
 		}
 	}
 	
-	void cargarCategorias() { //TODO NO FUNCIONA BIEN PARA SUB SUB SUB
+	private void cargarCategorias() { //TODO NO FUNCIONA BIEN PARA SUB SUB SUB
 		try (BufferedReader br = new BufferedReader(new FileReader("data/categorias.csv"))) {
 		    String line;
 		    br.readLine();
@@ -131,7 +131,7 @@ public class Inventario {
 		}
 	}
 	
-	void cargarDatos() {
+	public void cargarDatos() {
 		this.cargarCategorias();
 		this.cargarProductos();
 		this.cargarLotes();

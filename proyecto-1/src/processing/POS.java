@@ -9,12 +9,15 @@ import java.util.ArrayList;
 public class POS {
 	
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-	public Inventario inventario = new Inventario();
-	public Compra compra = new Compra();
+	public Inventario inventario;
+	public Compra compra;
+	
+	public POS(){
+		this.inventario = new Inventario();
+		this.cargarClientes();
+	}
 	
 	public void cargarClientes() {
-		
-		
 		try (BufferedReader br = new BufferedReader(new FileReader("data/clientes.csv"))) {
 		    String line;
 		    br.readLine();
@@ -44,9 +47,9 @@ public class POS {
 	}
 	
 	
-	public Boolean hacerCompra(int codigo, int peso, Cliente cliente)
+	public Boolean hacerCompra(Producto producto, int peso, Cliente cliente)
 	{
-		if (compra.makePurchase(codigo, peso))
+		if (compra.makePurchase(producto, peso))
 		{
 			return true;
 		}
@@ -60,7 +63,7 @@ public class POS {
 	{
 		
 		Producto retorno = null;
-		for (Producto producto: inventario.productos) 
+		for (Producto producto: inventario.getProductos()) 
 		{
 			if (producto.getCodigoBarras() == codigo)
 			{
@@ -95,7 +98,7 @@ public class POS {
 	}
 	
 	public void newCompra() {
-		this.compra = new Compra();
+		this.compra = new Compra(inventario);
 	}
 	
 	public void updatePoints(Cliente cliente)

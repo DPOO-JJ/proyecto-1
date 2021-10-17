@@ -5,8 +5,7 @@ import processing.Cliente;
 import processing.POS;
 import processing.Producto;
 
-public class AplicacionPOS {
-	
+public class AplicacionPOS{
 	
 	static POS pos = null;
 
@@ -29,8 +28,6 @@ public class AplicacionPOS {
 		    System.out.println("\nSeleccione una opción");
 	
 		    option = scanner.nextInt();
-		    
-		    pos.cargarClientes();
 		    
 		    ejecutarOpcion(option);
 		    
@@ -94,7 +91,7 @@ public class AplicacionPOS {
 						peso = scanner.nextInt();
 					}
 					
-					Boolean seHizo = pos.hacerCompra(prod, peso, currentCliente);
+					Boolean seHizo = pos.hacerCompra(producto, peso, currentCliente);
 					
 					if (seHizo)
 					{

@@ -1,7 +1,5 @@
 package processing;
 
-import java.util.ArrayList;
-
 public class Cliente {
 	
 	
@@ -12,8 +10,6 @@ public class Cliente {
 	private String idenGenero;
 	private String situacionLaboral; 
 	public int puntos;
-	public ArrayList<Compra> compras;
-	
 	
 	public Cliente(int cedula, String nombres, String apellidos, int edad, String idenGenero, String situacionLaboral, int puntos) {
 		super();
