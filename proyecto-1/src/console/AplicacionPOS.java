@@ -33,6 +33,7 @@ public class AplicacionPOS{
 		    
 		    if (option == 3)
 			{
+		    	System.out.println("Aplicación cerrada.");
 				condition = false;
 			}
 		}
@@ -73,7 +74,7 @@ public class AplicacionPOS{
 			pos.newCompra();
 				
 			Boolean ejecutando = true;
-			System.out.println("\n-- Inicio de proceso de compra--"+"\n Digite los códigos de los productos");
+			System.out.println("\n-- Inicio de proceso de compra--"+"\nDigite los códigos de los productos");
 			while (ejecutando)
 			{
 				System.out.println("Código: ");

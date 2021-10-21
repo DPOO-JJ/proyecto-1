@@ -40,6 +40,7 @@ public class AplicacionInventario{
 		    
 		    if (option == 6)
 		    {
+		    	System.out.println("Aplicación cerrada.");
 		    	condition = false;
 		    }
 		}
@@ -56,7 +57,7 @@ public class AplicacionInventario{
 
 		    String nombreArchivo = scanner.nextLine();
 		    
-		    nombreArchivo = "data/nuevolote.txt";
+		    //nombreArchivo = "data/nuevolote.txt";
 		    
 		    System.out.println(nombreArchivo);
 		    

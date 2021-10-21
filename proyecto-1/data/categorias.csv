@@ -2,7 +2,10 @@
 Aseo personal,null
 Panaderia,null
 Vegetal,null
+Congelados,null
+Carnes,null
 Higiene dental,Aseo personal
 Horneados,Panaderia
 Hortaliza,Vegetal
-jabones,null
+Helados,Congelados
+Pollo,Carnes

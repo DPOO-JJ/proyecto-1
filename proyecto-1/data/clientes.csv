@@ -1,4 +1,5 @@
 ﻿cedula,nombres,apellidos,edad,idenGenero,situacionLaboraL,puntos
-123456,Juan Diego,Yepes Parra,19,hombre,estudiante,19
-789012,Jesus Alberto,Jimenez Garizao,25,hombre,estudiante,6
-102120,ana maria,gomez diaz,30,Femenina,Desempleada,1
+123456,Juan Diego,Yepes Parra,19,Hombre,Estudiante,19
+789012,Jesus Alberto,Jimenez Garizao,25,Hombre,Estudiante,6
+102120,Ana Maria,Gomez Diaz,30,Femenina,Desempleada,1
+187253,José,Pardo,15,Hombre,Programador,5

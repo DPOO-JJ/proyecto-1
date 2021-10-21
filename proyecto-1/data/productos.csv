@@ -5,3 +5,6 @@
 4,Tomate,1,gramos,Hortaliza,s/o,false
 10,Pan tajado Carulla,500,gramos,Horneados,s/o,true
 12,Crema dental Carulla,155,gramos,Higiene dental,s/o,true
+15,Cebolla,1,gramos,Vegetal,s/o,false
+20,Helado,1000,gramos,Helados,congelados,true
+22,Pollo completo,500,gramos,Pollo,refrigerados,true
