@@ -1,4 +1,4 @@
-package console;
+package interfaz;
 
 import java.util.Scanner;
 import processing.Cliente;
