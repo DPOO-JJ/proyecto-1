@@ -1,4 +1,5 @@
 package interfaz;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -19,7 +20,7 @@ public class PanelFechaYHora extends JPanel {
     ClockLabel timeLable = new ClockLabel("time");
     ClockLabel dayLable = new ClockLabel("day");
  
-    setSize(300,150);
+    setPreferredSize(new Dimension(750, 125));
     setLayout(new GridLayout(3, 1));
  
     add(dateLable);
@@ -41,15 +42,15 @@ class ClockLabel extends JLabel implements ActionListener {
     switch (type) {
       case "date" : sdf = new SimpleDateFormat("  MMMM dd yyyy");
                     setFont(new Font("sans-serif", Font.PLAIN, 12));
-                    setHorizontalAlignment(SwingConstants.LEFT);
+                    setHorizontalAlignment(SwingConstants.CENTER);
                     break;
       case "time" : sdf = new SimpleDateFormat("hh:mm:ss a");
-                    setFont(new Font("sans-serif", Font.PLAIN, 40));
+                    setFont(new Font("sans-serif", Font.PLAIN, 30));
                     setHorizontalAlignment(SwingConstants.CENTER);
                     break;
       case "day"  : sdf = new SimpleDateFormat("EEEE  ");
                     setFont(new Font("sans-serif", Font.PLAIN, 16));
-                    setHorizontalAlignment(SwingConstants.RIGHT);
+                    setHorizontalAlignment(SwingConstants.CENTER);
                     break;
       default     : sdf = new SimpleDateFormat();
                     break;

@@ -16,6 +16,8 @@ public class VentanaInventario extends JFrame {
 		
 //		pConfig = new PanelConfig();
 //		add(pConfig, BorderLayout.NORTH);
+		PanelFechaYHora reloj = new PanelFechaYHora();
+		add(reloj, BorderLayout.NORTH);
 		
 		pInventario = new PanelInventario(this);
 		pInventario.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
