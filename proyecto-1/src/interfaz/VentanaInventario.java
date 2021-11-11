@@ -2,20 +2,25 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
-public class VentanaInventario extends JFrame {
+import processing.Categoria;
+import processing.Inventario;
+
+public class VentanaInventario extends JFrame implements PanelPopup {
 	
 	private PanelInventario pInventario;
+	private Inventario inventario;
 
 	public VentanaInventario(){
 		
-		setLayout(new BorderLayout());
+		inventario = new Inventario();
 		
-//		pConfig = new PanelConfig();
-//		add(pConfig, BorderLayout.NORTH);
+		setLayout(new BorderLayout());
+
 		PanelFechaYHora reloj = new PanelFechaYHora();
 		add(reloj, BorderLayout.NORTH);
 		
@@ -37,7 +42,7 @@ public class VentanaInventario extends JFrame {
 			System.out.println("Función cargar lote");
 		}
 		else if (opcion.equals(PanelInventario.ANADIR_CATEGORIA)) {
-			System.out.println("Función añadir categoria");
+			new VentanaCategoria(this);
 		}
 		else if (opcion.equals(PanelInventario.DETALLES_PRODUCTO)) {
 			System.out.println("Función detalles producto");	
@@ -49,6 +54,31 @@ public class VentanaInventario extends JFrame {
 			System.out.println("Función eliminar lote");
 		}
 		return;
+	}
+	
+	public void anadirCategoria(String nombreCategoria, String superCategoria) {
+		
+		System.out.println(nombreCategoria+" "+superCategoria);
+
+		int result = inventario.anadirCategoria(nombreCategoria, superCategoria);
+		if (result==0) {
+			new VentanaExitosa(this,"Añadir categoria","Categoría creada exitosamente.");
+		}
+		else if (result==-1) {
+			
+			String error = "<html>La supercategoría no ha sido registrada en el sistema, elija una de las siguientes:<br><br>";
+			for(Categoria categoria: inventario.getCategorias()) {
+				error+="-"+categoria.getNombre()+"<br>";
+			}
+			error+="</html>";
+			new VentanaError(this,"Añadir categoria",error);
+		}
+	}
+	
+	@Override
+	public void aceptar() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public static void main(String[] args) {
