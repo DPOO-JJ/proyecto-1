@@ -2,6 +2,7 @@ package interfaz;
 
 import java.awt.BorderLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
 import processing.POS;
@@ -27,6 +28,7 @@ public class VentanaSistemaPOS extends JFrame{
 		
 		// TODO Agregar panel POS
 		opciones = new PanelPOS(this);
+		opciones.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		add(opciones);
 		
 		pack();
