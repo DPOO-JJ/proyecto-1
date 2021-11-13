@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class VentanaCargarLote extends JFrame implements ActionListener{
+public class VentanaCargarLote extends JFrame implements ActionListener, PanelPopup{
 	
 	private JTextField nombreArchivo;
 	private VentanaInventario padre;
@@ -66,7 +66,20 @@ public class VentanaCargarLote extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.padre.cargarLote(getNombreArchivo());
+		new VentanaExitosa(this,"Cargar lote","¿Está seguro de que quiere cargar el archivo "+getNombreArchivo()+"?");
+	}
+
+	@Override
+	public void aceptar(String titulo, boolean aceptada) {
+		if (aceptada) {
+			this.padre.cargarLote(getNombreArchivo());
+		}
 		dispose();
+	}
+
+	@Override
+	public void error(String titulo) {
+		// TODO Auto-generated method stub
+		
 	}
 }

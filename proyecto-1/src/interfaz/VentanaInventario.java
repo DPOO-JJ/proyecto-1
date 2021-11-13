@@ -76,8 +76,18 @@ public class VentanaInventario extends JFrame implements PanelPopup {
 	}
 	
 	public void cargarLote(String nombreArchivo) {
-		System.out.println("Cargando lote");
+		
 		System.out.println(nombreArchivo);
+	    
+	    //nombreArchivo = "data/nuevolote.txt";
+	    
+		int result = inventario.cargarNuevosLotes(nombreArchivo);
+		if (result==0) {
+			new VentanaExitosa(this,"Cargar lote","Lote de productos cargados exitosamente.");
+		}
+		else if (result==1) {
+			new VentanaError(this,"Cargar lote","El archivo no existe.");
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -85,7 +95,7 @@ public class VentanaInventario extends JFrame implements PanelPopup {
 	}
 
 	@Override
-	public void aceptar(String titulo) {
+	public void aceptar(String titulo, boolean aceptada) {
 		// TODO Auto-generated method stub
 		
 	}

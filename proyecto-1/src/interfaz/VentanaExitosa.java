@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -55,12 +57,23 @@ public class VentanaExitosa extends JFrame implements ActionListener{
 		setResizable(false);
 		setVisible(true);
 		
+		addWindowListener(new WindowAdapter()
+		{
+			public void windowClosing(WindowEvent e)
+			{
+				padre.aceptar(titulo, false);
+			}
+		});
+		
+	}
+	
+	public void cerrar() {
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.padre.aceptar(titulo);
-		dispose();
-		//this.padre.anadirCategoria(getNombreCategoria(),getNombreSuperCategoria());		
+		this.padre.aceptar(titulo, true);
+		dispose();		
 	}
 }

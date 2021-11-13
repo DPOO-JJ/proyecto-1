@@ -2,6 +2,7 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,13 +48,16 @@ public class VentanaError extends JFrame implements ActionListener{
 		p.add(error);
 		
 		JLabel cat = new JLabel(aviso);
-		cat.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+		cat.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 		cat.setHorizontalAlignment(JLabel.LEFT);
 		
 		p.add(cat);
 		
-		panel.add(p, BorderLayout.CENTER);
+		panel.add(p, BorderLayout.WEST);
 		
+		p = new JPanel();
+		p.setBorder(BorderFactory.createEmptyBorder(0, 12, 0, 12));
+		panel.add(p, BorderLayout.CENTER);
 		
 		p.add(Box.createVerticalGlue());
 		
@@ -97,7 +101,6 @@ public class VentanaError extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.padre.error(titulo);
-		dispose();
-		//this.padre.anadirCategoria(getNombreCategoria(),getNombreSuperCategoria());		
+		dispose();	
 	}
 }
