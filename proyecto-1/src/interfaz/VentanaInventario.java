@@ -39,7 +39,7 @@ public class VentanaInventario extends JFrame implements PanelPopup {
 	
 	public void ejecutar(String opcion) {
 		if (opcion.equals(PanelInventario.CARGAR_LOTE)) {
-			System.out.println("Función cargar lote");
+			new VentanaCargarLote(this);
 		}
 		else if (opcion.equals(PanelInventario.ANADIR_CATEGORIA)) {
 			new VentanaCategoria(this);
@@ -73,6 +73,11 @@ public class VentanaInventario extends JFrame implements PanelPopup {
 			error+="</html>";
 			new VentanaError(this,"Añadir categoria",error);
 		}
+	}
+	
+	public void cargarLote(String nombreArchivo) {
+		System.out.println("Cargando lote");
+		System.out.println(nombreArchivo);
 	}
 	
 	public static void main(String[] args) {
