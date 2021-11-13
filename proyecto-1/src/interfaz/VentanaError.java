@@ -24,10 +24,12 @@ import javax.swing.JTextField;
 public class VentanaError extends JFrame implements ActionListener{
 	
 	private PanelPopup padre;
+	private String titulo;
 	
 	public VentanaError(PanelPopup padre, String titulo, String aviso) {
 		
 		this.padre = padre;
+		this.titulo = titulo;
 		
 		JPanel panel = new JPanel();
 		BorderLayout bl = new BorderLayout();
@@ -94,7 +96,7 @@ public class VentanaError extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.padre.aceptar();
+		this.padre.error(titulo);
 		dispose();
 		//this.padre.anadirCategoria(getNombreCategoria(),getNombreSuperCategoria());		
 	}

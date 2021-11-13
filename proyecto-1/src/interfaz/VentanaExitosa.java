@@ -16,10 +16,12 @@ import javax.swing.JTextField;
 public class VentanaExitosa extends JFrame implements ActionListener{
 	
 	private PanelPopup padre;
+	private String titulo;
 	
 	public VentanaExitosa(PanelPopup padre, String titulo, String aviso) {
 		
 		this.padre = padre;
+		this.titulo = titulo;
 		
 		JPanel panel = new JPanel();
 		GridLayout gl = new GridLayout(2,1);
@@ -57,7 +59,7 @@ public class VentanaExitosa extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.padre.aceptar();
+		this.padre.aceptar(titulo);
 		dispose();
 		//this.padre.anadirCategoria(getNombreCategoria(),getNombreSuperCategoria());		
 	}

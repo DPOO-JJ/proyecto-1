@@ -75,13 +75,19 @@ public class VentanaInventario extends JFrame implements PanelPopup {
 		}
 	}
 	
+	public static void main(String[] args) {
+		new VentanaInventario();
+	}
+
 	@Override
-	public void aceptar() {
+	public void aceptar(String titulo) {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	public static void main(String[] args) {
-		new VentanaInventario();
+
+	@Override
+	public void error(String titulo) {
+		// TODO Auto-generated method stub
+		
 	}
 }
