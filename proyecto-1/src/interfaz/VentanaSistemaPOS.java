@@ -5,11 +5,12 @@ import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
+import processing.Cliente;
 import processing.POS;
 
 
 @SuppressWarnings("serial")
-public class VentanaSistemaPOS extends JFrame{
+public class VentanaSistemaPOS extends JFrame implements PanelPopup{
 	
 	private PanelFechaYHora reloj;
 	private PanelPOS opciones;
@@ -26,7 +27,7 @@ public class VentanaSistemaPOS extends JFrame{
 		reloj = new PanelFechaYHora();
 		add(reloj, BorderLayout.NORTH);
 		
-		// TODO Agregar panel POS
+
 		opciones = new PanelPOS(this);
 		opciones.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		add(opciones);
@@ -40,21 +41,53 @@ public class VentanaSistemaPOS extends JFrame{
 	}
 	
 	public void ejecutar(String opcion) {
-		System.out.println(opcion);
 		
-		if (opcion == "Registrar un cliente")
+		if (opcion.equals("Registrar un cliente"))
 			new VentanaRegistroCliente(this);
+		else if (opcion.equals("Consultar un cliente")) {
+			new VentanaConsultaCliente(this);
+			
+		}
 		
 		
 	}
 	
 	public void anadirCliente(int cedula, String nombres, String apellidos, int edad, String idenGenero, String situacionLaboral) 
 	{
-		pos.anadirCliente(cedula,  nombres,  apellidos,  edad,  idenGenero,  situacionLaboral);
+		int retorno = pos.anadirCliente(cedula,  nombres,  apellidos,  edad,  idenGenero,  situacionLaboral);
+		if (retorno == -1) 
+		{
+			new VentanaExitosa(this,"Añadir cliente","Cliente agregado exitosamente.");
+		}
+		else if (retorno == -2)
+		{
+			new VentanaError(this,"Añadir cliente","La cédula ingresada ya se encuentra registrada.");
+		}
+	}
+	
+	public void getInfoCliente(int cedula)
+	{
+		Cliente cliente = pos.getClient(cedula);
+		return;
 	}
 	
 	public static void main(String[] args) {
 		new VentanaSistemaPOS();
 	}
+
+	@Override
+	public void aceptar(String titulo, boolean aceptada) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void error(String titulo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
 	
 }

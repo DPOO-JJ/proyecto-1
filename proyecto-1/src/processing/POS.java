@@ -78,12 +78,24 @@ public class POS {
 
 		int result = -1;
 		
-		Cliente cliente = new Cliente(cedula, nombres, apellidos, edad, idenGenero, situacionLaboral, 0);
+		for (Cliente cliente : getClientes())
+		{
+			if (cliente.getCedula() == cedula)
+			{
+				System.out.println("La cédula ya está registrada.");
+				result = -2;
+			}
+		}
 		
-		clientes.add(cliente);
-		
-		String toAdd = cedula+","+nombres+","+apellidos+","+edad+","+idenGenero+","+situacionLaboral+","+"0";
-		FileManager.addLineToCSV("data/clientes.csv",toAdd);
+		if (result == -1) 
+			{
+			Cliente cliente = new Cliente(cedula, nombres, apellidos, edad, idenGenero, situacionLaboral, 0);
+			
+			clientes.add(cliente);
+			
+			String toAdd = cedula+","+nombres+","+apellidos+","+edad+","+idenGenero+","+situacionLaboral+","+"0";
+			FileManager.addLineToCSV("data/clientes.csv",toAdd);
+			}
 		
 		return result;
 	}
@@ -133,4 +145,18 @@ public class POS {
 		this.inventario = inventario;
 	}
 
+	
+	public Cliente getClient(int cedulaCliente)
+	{
+		Cliente retorno = null;
+		
+		for (Cliente i: clientes) 
+		{
+			if (i.getCedula() == cedulaCliente)
+			{
+				retorno = i;
+			}
+		}
+		return retorno;
+	}
 }

@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class VentanaRegistroCliente extends JFrame implements ActionListener {
+public class VentanaRegistroCliente extends JFrame implements ActionListener, PanelPopup {
 	private JTextField cedula;
 	private JTextField nombres;
 	private JTextField apellidos;
@@ -89,20 +89,38 @@ public class VentanaRegistroCliente extends JFrame implements ActionListener {
 		setResizable(false);
 		setVisible(true);
 		
-		
-		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		padre.anadirCliente(
-				Integer.parseInt(cedula.getText()),
-				nombres.getText(), 
-				apellidos.getText(),  
-				Integer.parseInt(edad.getText()), 
-				pronombres.getText(), 
-				situacionLaboral.getText());
+		
+		try
+		{
+			int cedulA = Integer.parseInt(cedula.getText());
+			String nombrE = nombres.getText();
+			String apellidoS = apellidos.getText();
+			int edaD = Integer.parseInt(edad.getText());
+			String pronombreS = pronombres.getText();
+			String laboraL = situacionLaboral.getText();
+			padre.anadirCliente(cedulA,nombrE,apellidoS,edaD,pronombreS,laboraL);
+		}
+		catch (Exception e1)
+		{
+			new VentanaError(this, "Añadir Cliente", "Alguno de los campos es incorrecto");
+		}
 		dispose();
 	}
+
+	@Override
+	public void aceptar(String titulo, boolean aceptada) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void error(String titulo) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
