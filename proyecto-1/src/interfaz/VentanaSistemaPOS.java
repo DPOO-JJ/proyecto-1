@@ -68,7 +68,7 @@ public class VentanaSistemaPOS extends JFrame implements PanelPopup{
 	public void getInfoCliente(int cedula)
 	{
 		Cliente cliente = pos.getClient(cedula);
-		return;
+		new VentanaCliente(this, cliente);
 	}
 	
 	public static void main(String[] args) {

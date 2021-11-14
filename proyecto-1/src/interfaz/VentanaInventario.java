@@ -1,15 +1,12 @@
 package interfaz;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.util.Scanner;
-
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-
 import processing.Categoria;
 import processing.Inventario;
 
+@SuppressWarnings("serial")
 public class VentanaInventario extends JFrame implements PanelPopup {
 	
 	private PanelInventario pInventario;

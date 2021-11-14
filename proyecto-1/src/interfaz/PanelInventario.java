@@ -2,10 +2,9 @@ package interfaz;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class PanelInventario extends JPanel implements PanelOpciones{
 	
 	private VentanaInventario padre;

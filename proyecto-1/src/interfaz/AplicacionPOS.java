@@ -1,9 +1,12 @@
 package interfaz;
 
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import processing.Cliente;
+import processing.FileManager;
 import processing.POS;
 import processing.Producto;
+
 
 public class AplicacionPOS{
 	
@@ -41,7 +44,7 @@ public class AplicacionPOS{
 	
 	public static void ejecutarOpcion(int opcionSeleccionada)
 	{	
-		if (opcionSeleccionada == 1) //TODO TERMINAR Y AJUSTAR A VENTA POR UNIDAD Y POR GRAMAJE
+		if (opcionSeleccionada == 1)
 		{
 			@SuppressWarnings("resource")
 			Scanner scanner = new Scanner(System.in);
@@ -128,6 +131,10 @@ public class AplicacionPOS{
 				
 				System.out.println("Puntos acumulados en esta compra: " + pos.getCompra().getPuntos());
 				System.out.println("Puntos totales para " + currentCliente.getApellidos().toString() + ": " + currentCliente.puntos);
+				
+				String timeStamp = new SimpleDateFormat("yyyy.MM.dd").format(new java.util.Date());
+				String line = Integer.toString(currentCliente.getCedula()) + "," + Integer.toString(pos.getCompra().getTotal()) + "," + timeStamp;
+				FileManager.addLineToCSV("data/compras.csv", line);
 			}
 			
 			

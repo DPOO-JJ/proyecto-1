@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class VentanaConsultaCliente extends JFrame implements ActionListener, PanelPopup{
 	
 	private VentanaSistemaPOS padre;
