@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -67,9 +69,12 @@ public class VentanaCliente extends JFrame implements ActionListener, PanelPopup
 		add(panel, BorderLayout.NORTH);
 		
 		
+		
 		PanelGraficoCliente grafico = new PanelGraficoCliente(this, (Integer) cliente.getCedula());
 		grafico.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		add(grafico, BorderLayout.SOUTH);
+		
+		
 		
 		pack();
 		setTitle(cliente.getNombres() + ' ' + cliente.getApellidos());

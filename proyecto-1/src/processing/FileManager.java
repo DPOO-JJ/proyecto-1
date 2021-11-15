@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class FileManager {
 	
@@ -87,22 +86,30 @@ public class FileManager {
 		}
 	}
 	
-	public static HashMap<Integer,ArrayList<String>> cargarImagenes() {
-		HashMap<Integer,ArrayList<String>> hm = new HashMap<Integer,ArrayList<String>>();
-		try (BufferedReader br = new BufferedReader(new FileReader("data/imagenes.csv"))) {
-		    String line;
-		    br.readLine();
-		    while ((line = br.readLine()) != null) {
-		        
-		        String[] values = line.split(",");
-		        
-		        ArrayList<String> al = new ArrayList<String>();
-		        al.add(values[0]);
-		        al.add(values[1]);
-		        al.add(values[2]);
-		        
-		        hm.put(Integer.parseInt(values[0]),al);
-		        
+	public static ArrayList<ArrayList<String>> guardarInfoMes(String mes, String cedula){
+		
+		ArrayList<ArrayList<String>> retorno = new ArrayList<ArrayList<String>>();
+		
+		try (BufferedReader br = new BufferedReader(new FileReader("data/compras.csv")))
+		{
+			String line;
+			line = br.readLine();
+			line = br.readLine();
+		    while (line != null) {
+		    	
+		        String[] info = line.split(",");
+		        String a = info[2];
+		        String[] fecha = a.split("\\.");
+		        Boolean uno = fecha[1].equals(mes);
+		        Boolean dos = info[0].equals(cedula);
+		        if (fecha[1].equals(mes) && info[0].equals(cedula))
+		        {
+		        	ArrayList<String> tupla = new ArrayList<String>();
+		        	tupla.add(mes);
+		        	tupla.add(info[1]);
+		        	retorno.add(tupla);
+		        }
+		        line = br.readLine();
 		    }
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -111,7 +118,8 @@ public class FileManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return hm;
+		
+		return retorno;
 		
 	}
 }
