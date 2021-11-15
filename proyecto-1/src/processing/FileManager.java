@@ -85,4 +85,41 @@ public class FileManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public static ArrayList<ArrayList<String>> guardarInfoMes(String mes, String cedula){
+		
+		ArrayList<ArrayList<String>> retorno = new ArrayList<ArrayList<String>>();
+		
+		try (BufferedReader br = new BufferedReader(new FileReader("data/compras.csv")))
+		{
+			String line;
+			line = br.readLine();
+			line = br.readLine();
+		    while (line != null) {
+		    	
+		        String[] info = line.split(",");
+		        String a = info[2];
+		        String[] fecha = a.split("\\.");
+		        Boolean uno = fecha[1].equals(mes);
+		        Boolean dos = info[0].equals(cedula);
+		        if (fecha[1].equals(mes) && info[0].equals(cedula))
+		        {
+		        	ArrayList<String> tupla = new ArrayList<String>();
+		        	tupla.add(mes);
+		        	tupla.add(info[1]);
+		        	retorno.add(tupla);
+		        }
+		        line = br.readLine();
+		    }
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return retorno;
+		
+	}
 }
