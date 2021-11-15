@@ -4,10 +4,13 @@ Panaderia,null
 Vegetal,null
 Congelados,null
 Carnes,null
+Proteina,null
+Fruta,null
+Galgueria,null
+Granos,null
+Dulces,Galgueria
 Higiene dental,Aseo personal
 Horneados,Panaderia
 Hortaliza,Vegetal
 Helados,Congelados
 Pollo,Carnes
-lechuga,Vegetal
-Lechugota,Vegetal

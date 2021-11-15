@@ -8,3 +8,7 @@
 15,Cebolla,1,gramos,Vegetal,s/o,false
 20,Helado,1000,gramos,Helados,congelados,true
 22,Pollo completo,500,gramos,Pollo,refrigerados,true
+23,Huevos,1000,gramos,Proteina,s/o,true
+25,Fresa,500,gramos,Fruta,refrigerados,true
+31,Palomitas,250,gramos,Dulces,s/o,true
+33,Arroz,500,gramos,Granos,s/o,true

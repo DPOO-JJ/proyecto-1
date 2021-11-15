@@ -1,10 +1,15 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import processing.Categoria;
+import processing.FileManager;
 import processing.Inventario;
+import processing.Producto;
 
 @SuppressWarnings("serial")
 public class VentanaInventario extends JFrame implements PanelPopup {
@@ -42,7 +47,7 @@ public class VentanaInventario extends JFrame implements PanelPopup {
 			new VentanaCategoria(this);
 		}
 		else if (opcion.equals(PanelInventario.DETALLES_PRODUCTO)) {
-			System.out.println("Función detalles producto");	
+			new VentanaDetalles(this);
 		}
 		else if (opcion.equals(PanelInventario.CHEQUEAR_LOTES)) {
 			System.out.println("Función chequear lotes");
@@ -84,6 +89,44 @@ public class VentanaInventario extends JFrame implements PanelPopup {
 		}
 		else if (result==1) {
 			new VentanaError(this,"Cargar lote","El archivo no existe.");
+		}
+	}
+	
+	public void lanzarVentanaImagen(int idProducto) {
+		
+		HashMap<Integer,ArrayList<String>> hm = FileManager.cargarImagenes();
+		
+		for (ArrayList<String> dataProducto : hm.values()) {
+			if (Integer.parseInt(dataProducto.get(0))==idProducto) {
+				new VentanaCambiarImagen(this, dataProducto);
+				break;
+			}
+		}
+	}
+	
+	public void modificarImagen(ArrayList<String> dataProducto, String nombreImagen) {
+		System.out.println(nombreImagen+" "+dataProducto.get(0));
+	}
+
+	public void revisarDetallesProducto(int idProducto) {
+		
+		Producto productoSeleccionado = null;
+		
+		for(Producto producto: inventario.getProductos()) {
+			if(idProducto == producto.getCodigoBarras()){
+				productoSeleccionado = producto;
+				break;
+			}
+		}
+		
+		if (productoSeleccionado != null) {
+			HashMap<String,Integer> desempeno = inventario.revisarDesempeno(productoSeleccionado);
+		    int unidadesRestantes = inventario.revisarExistencia(productoSeleccionado);
+		    
+		    new VentanaProducto(productoSeleccionado, desempeno, unidadesRestantes);
+		}
+		else {
+			new VentanaError(this,"Revisar desempeño","No hay data de este producto.");
 		}
 	}
 	

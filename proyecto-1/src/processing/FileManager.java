@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FileManager {
 	
@@ -84,5 +85,33 @@ public class FileManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static HashMap<Integer,ArrayList<String>> cargarImagenes() {
+		HashMap<Integer,ArrayList<String>> hm = new HashMap<Integer,ArrayList<String>>();
+		try (BufferedReader br = new BufferedReader(new FileReader("data/imagenes.csv"))) {
+		    String line;
+		    br.readLine();
+		    while ((line = br.readLine()) != null) {
+		        
+		        String[] values = line.split(",");
+		        
+		        ArrayList<String> al = new ArrayList<String>();
+		        al.add(values[0]);
+		        al.add(values[1]);
+		        al.add(values[2]);
+		        
+		        hm.put(Integer.parseInt(values[0]),al);
+		        
+		    }
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return hm;
+		
 	}
 }
