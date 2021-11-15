@@ -66,6 +66,10 @@ public class VentanaConsultaCliente extends JFrame implements ActionListener, Pa
 		{
 			new VentanaError(this, "Consultar Cliente", "No se ha encontrado el cliente.");
 		}
+		finally {
+			dispose();
+		}
+		
 		
 	}
 

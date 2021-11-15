@@ -68,6 +68,7 @@ public class VentanaCliente extends JFrame implements ActionListener, PanelPopup
 		
 		
 		PanelGraficoCliente grafico = new PanelGraficoCliente(this, (Integer) cliente.getCedula());
+		grafico.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		add(grafico, BorderLayout.SOUTH);
 		
 		pack();
