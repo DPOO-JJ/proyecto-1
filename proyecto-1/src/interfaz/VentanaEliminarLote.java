@@ -38,7 +38,7 @@ public class VentanaEliminarLote extends JFrame implements ActionListener, Panel
 		panel.add(jlabel,BorderLayout.NORTH);
 		
 		//productos
-		pProductos = new PanelProductos(this);
+		pProductos = new PanelProductos(this, null);
 		pProductos.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		

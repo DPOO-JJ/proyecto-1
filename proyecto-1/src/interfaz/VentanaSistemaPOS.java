@@ -1,11 +1,15 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
 import processing.Cliente;
+import processing.Compra;
+import processing.FileManager;
 import processing.POS;
 import processing.Producto;
 
@@ -79,17 +83,63 @@ public class VentanaSistemaPOS extends JFrame implements PanelPopup{
 	}
 	
 
-	public void newCompra(int cedula) {
-		// TODO Auto-generated method stub
+	public void nuevaCompra(int cedula) {
 		
 		Cliente cliente = pos.getClient(cedula);
-		new VentanaCompra(this, cliente);
+		pos.newCompra();
 		
+		new VentanaAnadirProducto(this, cliente);
 	}
 	
-	public Boolean hacerCompra(int codigo, int peso, Cliente cliente) {
+	public void lanzarVentanaAñadirProducto(Cliente cliente) {
+		
+		new VentanaAnadirProducto(this, cliente);
+	}
+	
+	public int anadirProducto(int codigo, int peso, Cliente cliente) {
+		
+		int result = 0;
+		
 		Producto producto = pos.getProductByCode(codigo);
-		return pos.hacerCompra(producto, peso, cliente);
+		
+		if (producto == null) {
+			result = -1;
+		}
+		else {
+			result = (pos.hacerCompra(producto, peso, cliente)?0:-2);
+		}
+		
+		return result;
+	}
+	
+	public void mostrarCompra(Cliente cliente) {
+		ArrayList<Producto> productos = pos.getCompra().getProductos();
+		Compra compra = pos.getCompra();
+		
+		new VentanaMostrarCompra(this, cliente, compra, productos);
+	}
+	
+	public void finalizarCompra(Cliente cliente) {
+		pos.getCompra().guardarFactura();
+		
+		if (cliente != null)
+		{
+			pos.updatePoints(cliente);
+			
+			String timeStamp = new SimpleDateFormat("yyyy.MM.dd").format(new java.util.Date());
+			String line = Integer.toString(cliente.getCedula()) + "," + Integer.toString(pos.getCompra().getTotal()) + "," + timeStamp;
+			FileManager.addLineToCSV("data/compras.csv", line);
+			
+			String mensaje = "<html>¡Compra exitosa!<br>"
+					+"Puntos acumulados en esta compra: "+ pos.getCompra().getPuntos()+"<br>"
+					+"Puntos totales para "+cliente.getApellidos()+": "+cliente.puntos+"</html>";
+					
+			new VentanaExitosa(this,"Nueva compra",mensaje);
+		}
+		else {
+			new VentanaExitosa(this,"Nueva compra","¡Compra exitosa!");
+		}
+		
 	}
 	
 	public static void main(String[] args) {

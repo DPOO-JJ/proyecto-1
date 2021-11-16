@@ -48,7 +48,7 @@ public class VentanaNuevaCompra extends JFrame implements ActionListener, PanelP
 		add(panel);
 		
 		pack();
-		setTitle("Nueva Compra");
+		setTitle("Nueva compra");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null); // Centrar la ventana en la pantalla
 		setResizable(false);
@@ -67,13 +67,39 @@ public class VentanaNuevaCompra extends JFrame implements ActionListener, PanelP
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public String getCedula()
+	{
+		return cedula.getText();
+	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		padre.newCompra(Integer.parseInt(cedula.getText()));
-		dispose();
+		
+		String cedula = getCedula();
+		
+		if (cedula.length()>0) {
+			if (isNumeric(cedula)) {
+				padre.nuevaCompra(Integer.parseInt(cedula));
+				dispose();
+			}
+			else {
+				new VentanaError(this,"Nueva compra","Insertó algo que no es un número.");
+			}
+		}
+		else{
+			new VentanaError(this,"Nueva compra","La cédula está vacía.");
+		}
+	}
+	
+	public static boolean isNumeric(String str) { 
+		try { 
+			Double.parseDouble(str);  
+			return true;
+		} catch(NumberFormatException e){  
+			return false;  
+		}  
 	}
 
 }

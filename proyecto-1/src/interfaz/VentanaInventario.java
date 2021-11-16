@@ -158,7 +158,7 @@ public class VentanaInventario extends JFrame implements PanelPopup {
 		}
 	}
 	
-public void eliminarLote(ArrayList<Lote> lotesFiltrados, int lote) {
+	public void eliminarLote(ArrayList<Lote> lotesFiltrados, int lote) {
 		
 		Lote loteSeleccionado = lotesFiltrados.get(lote);
 	    inventario.eliminarLote(loteSeleccionado);

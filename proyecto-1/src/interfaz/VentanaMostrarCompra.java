@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,20 +14,26 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import processing.Cliente;
+import processing.Compra;
+import processing.Producto;
+
 @SuppressWarnings("serial")
-public class VentanaDetalles extends JFrame implements ActionListener, PanelOpciones{
+public class VentanaMostrarCompra extends JFrame implements ActionListener, PanelOpciones{
 	
-	private VentanaInventario padre;
+	private VentanaSistemaPOS padre;
 	private PanelProductos pProductos;
 	
 	private int productoSeleccionado;
+	private Cliente cliente;
 	
-	public static final String MODIFICAR_IMAGEN = "Modificar imagen";
-	public static final String REVISAR_DETALLES = "Revisar detalles";
+	public static final String ACEPTAR = "Aceptar";
+	public static final String VOLVER = "Volver";
 	
-	public VentanaDetalles(VentanaInventario padre) {
+	public VentanaMostrarCompra(VentanaSistemaPOS padre, Cliente cliente, Compra compra, ArrayList<Producto> productos) {
 		
 		this.padre = padre;
+		this.cliente = cliente;
 		
 		this.productoSeleccionado = 1;
 		
@@ -35,13 +42,13 @@ public class VentanaDetalles extends JFrame implements ActionListener, PanelOpci
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 100, 35, 100));
 		
 		//label
-		JLabel jlabel = new JLabel("Seleccione el producto");
-		jlabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-		jlabel.setHorizontalAlignment(JLabel.LEFT);
-		panel.add(jlabel,BorderLayout.NORTH);
+//		JLabel jlabel = new JLabel("Seleccione el producto");
+//		jlabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+//		jlabel.setHorizontalAlignment(JLabel.LEFT);
+//		panel.add(jlabel,BorderLayout.NORTH);
 		
 		//productos
-		pProductos = new PanelProductos(this, null);
+		pProductos = new PanelProductos(this, productos);
 		pProductos.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		
@@ -51,14 +58,23 @@ public class VentanaDetalles extends JFrame implements ActionListener, PanelOpci
 		JPanel p = new JPanel();
 		BorderLayout bl = new BorderLayout();
 		p.setLayout(bl);
+
+		JLabel jlabel = new JLabel("Total: "+compra.getTotal());
+		jlabel.setHorizontalAlignment(JLabel.LEFT);
+		panel.add(jlabel,BorderLayout.NORTH);
 		
-		JButton button = new JButton(MODIFICAR_IMAGEN);
-		button.setActionCommand(MODIFICAR_IMAGEN);
+		jlabel = new JLabel("Puntos para "+cliente.getApellidos()+": "+compra.getPuntos());
+		jlabel.setHorizontalAlignment(JLabel.LEFT);
+		panel.add(jlabel,BorderLayout.SOUTH);
+		
+		
+		JButton button = new JButton(ACEPTAR);
+		button.setActionCommand(ACEPTAR);
 		button.addActionListener(this);
 		p.add(button, BorderLayout.EAST);
 		
-		button = new JButton(REVISAR_DETALLES);
-		button.setActionCommand(REVISAR_DETALLES);
+		button = new JButton(VOLVER);
+		button.setActionCommand(VOLVER);
 		button.addActionListener(this);
 		p.add(button, BorderLayout.WEST);
 		
@@ -68,7 +84,7 @@ public class VentanaDetalles extends JFrame implements ActionListener, PanelOpci
 		
 		pack();
 		
-		setTitle("Detalles producto");
+		setTitle("Carrito de compras");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null); // Centrar la ventana en la pantalla
 		setResizable(false);
@@ -79,11 +95,13 @@ public class VentanaDetalles extends JFrame implements ActionListener, PanelOpci
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String boton = e.getActionCommand();
-		if(boton.equals(MODIFICAR_IMAGEN)) {
-			this.padre.lanzarVentanaImagen(productoSeleccionado);
+		
+		if (boton.equals(ACEPTAR))
+		{
+			this.padre.finalizarCompra(cliente);
 		}
-		else if(boton.equals(REVISAR_DETALLES)) {
-			this.padre.revisarDetallesProducto(productoSeleccionado);
+		else if (boton.equals(VOLVER)) {
+			this.padre.lanzarVentanaAñadirProducto(cliente);
 		}
 		dispose();
 	}
