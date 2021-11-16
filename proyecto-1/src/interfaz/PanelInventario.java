@@ -12,7 +12,6 @@ public class PanelInventario extends JPanel implements PanelOpciones{
 	public static final String CARGAR_LOTE = "Cargar lote";
 	public static final String ANADIR_CATEGORIA = "Añadir categoria";
 	public static final String DETALLES_PRODUCTO = "Detalles producto";
-	public static final String CHEQUEAR_LOTES = "Chequear lotes";
 	public static final String ELIMINAR_LOTE = "Eliminar lote";
 
 	public PanelInventario(VentanaInventario padre) {
@@ -32,9 +31,6 @@ public class PanelInventario extends JPanel implements PanelOpciones{
 		
 		MenuButton producto = new MenuButton(this, DETALLES_PRODUCTO, "tag.jpeg");
 		add(producto);
-		
-		MenuButton chequear = new MenuButton(this, CHEQUEAR_LOTES, "mglass.jpeg");
-		add(chequear);
 		
 		MenuButton eliminar = new MenuButton(this, ELIMINAR_LOTE, "x.jpeg");
 		add(eliminar);

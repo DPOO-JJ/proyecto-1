@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -54,6 +55,9 @@ public class ProductoButton extends JPanel implements ActionListener{
 	private static ImageIcon cargarImagen(String nombreArchivo)
 	{
 		ImageIcon icon = new ImageIcon(nombreArchivo);
+		if (!new File(icon.toString()).exists()) {
+			icon = new ImageIcon("./data/productos/question-mark.png");
+		}
 		Image imagen = icon.getImage().getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH);
 		ImageIcon ajustada = new ImageIcon(imagen);
 		return ajustada;

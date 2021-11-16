@@ -14,17 +14,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class VentanaDetalles extends JFrame implements ActionListener, PanelOpciones{
+public class VentanaEliminarLote extends JFrame implements ActionListener, PanelOpciones{
 	
 	private VentanaInventario padre;
 	private PanelProductos pProductos;
 	
 	private int productoSeleccionado;
 	
-	public static final String MODIFICAR_IMAGEN = "Modificar imagen";
-	public static final String REVISAR_DETALLES = "Revisar detalles";
-	
-	public VentanaDetalles(VentanaInventario padre) {
+	public VentanaEliminarLote(VentanaInventario padre) {
 		
 		this.padre = padre;
 		
@@ -52,15 +49,9 @@ public class VentanaDetalles extends JFrame implements ActionListener, PanelOpci
 		BorderLayout bl = new BorderLayout();
 		p.setLayout(bl);
 		
-		JButton button = new JButton(MODIFICAR_IMAGEN);
-		button.setActionCommand(MODIFICAR_IMAGEN);
+		JButton button = new JButton("Aceptar");
 		button.addActionListener(this);
 		p.add(button, BorderLayout.EAST);
-		
-		button = new JButton(REVISAR_DETALLES);
-		button.setActionCommand(REVISAR_DETALLES);
-		button.addActionListener(this);
-		p.add(button, BorderLayout.WEST);
 		
 		panel.add(p,BorderLayout.SOUTH);
 		
@@ -68,7 +59,7 @@ public class VentanaDetalles extends JFrame implements ActionListener, PanelOpci
 		
 		pack();
 		
-		setTitle("Detalles producto");
+		setTitle("Eliminar lote");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null); // Centrar la ventana en la pantalla
 		setResizable(false);
@@ -78,13 +69,7 @@ public class VentanaDetalles extends JFrame implements ActionListener, PanelOpci
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String boton = e.getActionCommand();
-		if(boton.equals(MODIFICAR_IMAGEN)) {
-			this.padre.lanzarVentanaImagen(productoSeleccionado);
-		}
-		else if(boton.equals(REVISAR_DETALLES)) {
-			this.padre.revisarDetallesProducto(productoSeleccionado);
-		}
+		this.padre.lanzarVentanaEliminar(productoSeleccionado);
 		dispose();
 	}
 

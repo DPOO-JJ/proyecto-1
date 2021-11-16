@@ -280,6 +280,18 @@ public class Inventario {
 		return desempeno;
 	}
 	
+	public int cambiarImagen(ArrayList<String> dataProducto, String nombreImagen) {
+		
+		String id = dataProducto.get(0);
+		String nombre = dataProducto.get(1);
+		String imagePath = dataProducto.get(2);
+		String oldFileLine = id+","+nombre+","+imagePath;
+		String newFileLine = id+","+nombre+","+nombreImagen;
+		
+		return FileManager.cambiarLineaArchivo("data/imagenes.csv",oldFileLine,newFileLine);
+		
+	}
+	
 	public ArrayList<Lote> obtenerLotesProducto(Producto productoSeleccionado) {
 		
 		ArrayList<Lote> lotesFiltrados = new ArrayList<Lote>();

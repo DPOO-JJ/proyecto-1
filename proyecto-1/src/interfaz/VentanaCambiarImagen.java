@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -69,7 +71,25 @@ public class VentanaCambiarImagen extends JFrame implements ActionListener, Pane
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		new VentanaExitosa(this,"Modificar imagen","¿Está seguro de que quiere cambiar la imagen de "+dataProducto.get(1)+"?");
+		String imagePath = getNombreImagen();
+
+		if (imagePath.endsWith(".png") || imagePath.endsWith(".jpg") || imagePath.endsWith(".jpeg")) {
+			
+			
+			File f = new File("./data/productos/"+imagePath);
+			if (f.exists()) {
+				new VentanaExitosa(this,"Modificar imagen","¿Está seguro de que quiere cambiar la imagen de "+dataProducto.get(1)+"?");
+			}
+			else {
+				new VentanaExitosa(this,"Modificar imagen","¿Está seguro de que quiere cambiar la imagen de "+dataProducto.get(1)+" a pesar de que esta no se encuentre en el directorio?");
+			}
+		}
+		else if (imagePath.equals("")){
+			new VentanaError(this,"Modificar imagen","Cadena de texto vacía.");
+		}
+		else {
+			new VentanaError(this,"Modificar imagen","La imagen tiene que ser de formato .png, .jpg o .jpeg");
+		}
 	}
 
 	@Override

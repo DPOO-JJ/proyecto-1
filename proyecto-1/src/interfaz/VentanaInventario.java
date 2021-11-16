@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import processing.Categoria;
 import processing.FileManager;
 import processing.Inventario;
+import processing.Lote;
 import processing.Producto;
 
 @SuppressWarnings("serial")
@@ -49,11 +50,8 @@ public class VentanaInventario extends JFrame implements PanelPopup {
 		else if (opcion.equals(PanelInventario.DETALLES_PRODUCTO)) {
 			new VentanaDetalles(this);
 		}
-		else if (opcion.equals(PanelInventario.CHEQUEAR_LOTES)) {
-			System.out.println("Función chequear lotes");
-		}
 		else if (opcion.equals(PanelInventario.ELIMINAR_LOTE)) {
-			System.out.println("Función eliminar lote");
+			new VentanaEliminarLote(this);
 		}
 		return;
 	}
@@ -106,6 +104,14 @@ public class VentanaInventario extends JFrame implements PanelPopup {
 	
 	public void modificarImagen(ArrayList<String> dataProducto, String nombreImagen) {
 		System.out.println(nombreImagen+" "+dataProducto.get(0));
+		
+		int result = inventario.cambiarImagen(dataProducto, nombreImagen);
+		if (result==0) {
+			new VentanaExitosa(this,"Cambiar imagen","Cambio exitoso.");
+		}
+		else if (result==1) {
+			new VentanaError(this,"Modificar imagen","Archivo no encontrado.");
+		}
 	}
 
 	public void revisarDetallesProducto(int idProducto) {
@@ -126,8 +132,37 @@ public class VentanaInventario extends JFrame implements PanelPopup {
 		    new VentanaProducto(productoSeleccionado, desempeno, unidadesRestantes);
 		}
 		else {
-			new VentanaError(this,"Revisar desempeño","No hay data de este producto.");
+			new VentanaError(this,"Revisar desempeño","No hay data de este producto entre los lotes.");
 		}
+	}
+	
+	public void lanzarVentanaEliminar(int idProducto) {
+		
+		Producto productoSeleccionado = null;
+		
+		for(Producto producto: inventario.getProductos()) {
+			if(idProducto == producto.getCodigoBarras()){
+				productoSeleccionado = producto;
+				break;
+			}
+		}
+		
+		if (productoSeleccionado != null) {
+			
+		    ArrayList<Lote> lotesFiltrados = inventario.obtenerLotesProducto(productoSeleccionado);
+		    
+		    new VentanaLotes(this, lotesFiltrados);
+		}
+		else {
+			new VentanaError(this,"Eliminar lote","No hay data de este producto entre los lotes.");
+		}
+	}
+	
+public void eliminarLote(ArrayList<Lote> lotesFiltrados, int lote) {
+		
+		Lote loteSeleccionado = lotesFiltrados.get(lote);
+	    inventario.eliminarLote(loteSeleccionado);
+	    new VentanaExitosa(this,"Eliminar lote","Lote eliminado satisfactoriamente.");
 	}
 	
 	public static void main(String[] args) {

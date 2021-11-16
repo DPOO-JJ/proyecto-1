@@ -57,7 +57,7 @@ public class FileManager {
 	}
 	
 	//reemplaza una linea de un archivo por una nueva linea, dejando lo demás intacto.
-	public static void cambiarLineaArchivo(String path, String oldFileLine, String newFileLine) {
+	public static int cambiarLineaArchivo(String path, String oldFileLine, String newFileLine) {
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 		    String line;
 		    ArrayList<String> lines = new ArrayList<String>();
@@ -77,13 +77,16 @@ public class FileManager {
 		    	writer.write(toSave);
 		    }
 		    writer.close();
+		    return 0;
 		    
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return -1;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return -2;
 		}
 	}
 	
