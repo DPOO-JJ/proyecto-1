@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import processing.Cliente;
 import processing.POS;
+import processing.Producto;
 
 
 @SuppressWarnings("serial")
@@ -43,12 +44,18 @@ public class VentanaSistemaPOS extends JFrame implements PanelPopup{
 	public void ejecutar(String opcion) {
 		
 		if (opcion.equals("Registrar un cliente"))
+		{
 			new VentanaRegistroCliente(this);
-		else if (opcion.equals("Consultar un cliente")) {
-			new VentanaConsultaCliente(this);
+		}
+		else if (opcion.equals("Consultar un cliente")) 
+		{
+			new VentanaConsultaCliente(this);	
+		}
+		else if (opcion.equals("Hacer compra")) 
+		{
+			new VentanaNuevaCompra(this);
 			
 		}
-		
 		
 	}
 	
@@ -71,6 +78,20 @@ public class VentanaSistemaPOS extends JFrame implements PanelPopup{
 		new VentanaCliente(this, cliente);
 	}
 	
+
+	public void newCompra(int cedula) {
+		// TODO Auto-generated method stub
+		
+		Cliente cliente = pos.getClient(cedula);
+		new VentanaCompra(this, cliente);
+		
+	}
+	
+	public Boolean hacerCompra(int codigo, int peso, Cliente cliente) {
+		Producto producto = pos.getProductByCode(codigo);
+		return pos.hacerCompra(producto, peso, cliente);
+	}
+	
 	public static void main(String[] args) {
 		new VentanaSistemaPOS();
 	}
@@ -86,8 +107,6 @@ public class VentanaSistemaPOS extends JFrame implements PanelPopup{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
 
 	
 }

@@ -13,12 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class VentanaConsultaCliente extends JFrame implements ActionListener, PanelPopup{
+public class VentanaNuevaCompra extends JFrame implements ActionListener, PanelPopup{
 	
 	private VentanaSistemaPOS padre;
 	private JTextField cedula;
 
-	public VentanaConsultaCliente(VentanaSistemaPOS padre) {
+	public VentanaNuevaCompra(VentanaSistemaPOS padre)
+	{
 		this.padre = padre;
 		
 		JPanel panel = new JPanel();
@@ -47,30 +48,13 @@ public class VentanaConsultaCliente extends JFrame implements ActionListener, Pa
 		add(panel);
 		
 		pack();
-		setTitle("Consultar Cliente");
+		setTitle("Nueva Compra");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null); // Centrar la ventana en la pantalla
 		setResizable(false);
 		setVisible(true);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		try
-		{
-			padre.getInfoCliente(Integer.parseInt(cedula.getText()));
-		}
-		catch (Exception e1)
-		{
-			new VentanaError(this, "Consultar Cliente", "No se ha encontrado el cliente.");
-		}
-		finally {
-			dispose();
-		}
-		
-		
-	}
 
 	@Override
 	public void aceptar(String titulo, boolean aceptada) {
@@ -84,6 +68,12 @@ public class VentanaConsultaCliente extends JFrame implements ActionListener, Pa
 		
 	}
 
-	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		padre.newCompra(Integer.parseInt(cedula.getText()));
+		dispose();
+	}
 
 }
