@@ -54,29 +54,35 @@ public class VentanaMostrarCompra extends JFrame implements ActionListener, Pane
 		
 		panel.add(pProductos, BorderLayout.CENTER);
 		
-		//botones
-		JPanel p = new JPanel();
+		//Datos
 		BorderLayout bl = new BorderLayout();
+		JPanel p = new JPanel();
 		p.setLayout(bl);
-
-		JLabel jlabel = new JLabel("Total: "+compra.getTotal());
-		jlabel.setHorizontalAlignment(JLabel.LEFT);
-		panel.add(jlabel,BorderLayout.NORTH);
 		
-		jlabel = new JLabel("Puntos para "+cliente.getApellidos()+": "+compra.getPuntos());
+		JLabel jlabel = new JLabel("<html><B>Total:</B> "+compra.getTotal()+"</html>");
 		jlabel.setHorizontalAlignment(JLabel.LEFT);
-		panel.add(jlabel,BorderLayout.SOUTH);
+		p.add(jlabel,BorderLayout.NORTH);
 		
+		jlabel = new JLabel("<html><B>Puntos para "+cliente.getApellidos()+":</B> "+compra.getPuntos()+"</html>");
+		jlabel.setHorizontalAlignment(JLabel.LEFT);
+		p.add(jlabel,BorderLayout.WEST);
+		
+		//botones
+		JPanel pp = new JPanel();
+		bl = new BorderLayout();
+		pp.setLayout(bl);
 		
 		JButton button = new JButton(ACEPTAR);
 		button.setActionCommand(ACEPTAR);
 		button.addActionListener(this);
-		p.add(button, BorderLayout.EAST);
+		pp.add(button, BorderLayout.EAST);
 		
 		button = new JButton(VOLVER);
 		button.setActionCommand(VOLVER);
 		button.addActionListener(this);
-		p.add(button, BorderLayout.WEST);
+		pp.add(button, BorderLayout.WEST);
+		
+		p.add(pp,BorderLayout.EAST);
 		
 		panel.add(p,BorderLayout.SOUTH);
 		
