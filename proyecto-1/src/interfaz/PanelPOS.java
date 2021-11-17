@@ -8,13 +8,13 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class PanelPOS extends JPanel implements PanelOpciones{
 	
-	private VentanaSistemaPOS padre;
+	private AplicacionSistemaPOS padre;
 	
 	public static final String HACER_COMPRA = "Hacer compra";
 	public static final String REGISTRO_CLIENTE = "Registrar un cliente";
 	public static final String CONSULTA_CLIENTE = "Consultar un cliente";
 
-	public PanelPOS(VentanaSistemaPOS padre) {
+	public PanelPOS(AplicacionSistemaPOS padre) {
 		this.padre = padre;
 		GridLayout layout = new GridLayout(1,3);
 		layout.setHgap(20);

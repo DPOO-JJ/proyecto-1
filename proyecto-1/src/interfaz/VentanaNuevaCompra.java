@@ -15,16 +15,16 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class VentanaNuevaCompra extends JFrame implements ActionListener, PanelPopup{
 	
-	private VentanaSistemaPOS padre;
+	private AplicacionSistemaPOS padre;
 	private JTextField cedula;
 
-	public VentanaNuevaCompra(VentanaSistemaPOS padre)
+	public VentanaNuevaCompra(AplicacionSistemaPOS padre)
 	{
 		this.padre = padre;
 		
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(5,1));
-		panel.setBorder(BorderFactory.createEmptyBorder(20, 100, 0, 100));
+		panel.setLayout(new GridLayout(3,1));
+		panel.setBorder(BorderFactory.createEmptyBorder(20, 100, 35, 100));
 		
 		JLabel cat = new JLabel("Ingrese la cédula del cliente: ");
 		cat.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
@@ -41,7 +41,6 @@ public class VentanaNuevaCompra extends JFrame implements ActionListener, PanelP
 		
 		JButton aceptar = new JButton("Aceptar");
 		aceptar.addActionListener(this);
-		aceptar.setSize(30,15);
 		p.add(aceptar, BorderLayout.EAST);
 		panel.add(p);
 		
@@ -89,7 +88,7 @@ public class VentanaNuevaCompra extends JFrame implements ActionListener, PanelP
 			}
 		}
 		else{
-			new VentanaError(this,"Nueva compra","La cédula está vacía.");
+			new VentanaError(this,"Nueva compra","El campo está vacío.");
 		}
 	}
 	

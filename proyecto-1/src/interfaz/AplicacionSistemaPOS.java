@@ -15,14 +15,14 @@ import processing.Producto;
 
 
 @SuppressWarnings("serial")
-public class VentanaSistemaPOS extends JFrame implements PanelPopup{
+public class AplicacionSistemaPOS extends JFrame implements PanelPopup{
 	
 	private PanelFechaYHora reloj;
 	private PanelPOS opciones;
 	static POS pos = null;
 
 
-	public VentanaSistemaPOS() {
+	public AplicacionSistemaPOS() {
 		
 		setLayout(new BorderLayout());
 		
@@ -58,9 +58,7 @@ public class VentanaSistemaPOS extends JFrame implements PanelPopup{
 		else if (opcion.equals("Hacer compra")) 
 		{
 			new VentanaNuevaCompra(this);
-			
 		}
-		
 	}
 	
 	public void anadirCliente(int cedula, String nombres, String apellidos, int edad, String idenGenero, String situacionLaboral) 
@@ -112,11 +110,19 @@ public class VentanaSistemaPOS extends JFrame implements PanelPopup{
 		return result;
 	}
 	
-	public void mostrarCompra(Cliente cliente) {
+	public int mostrarCompra(Cliente cliente) {
 		ArrayList<Producto> productos = pos.getCompra().getProductos();
 		Compra compra = pos.getCompra();
 		
-		new VentanaMostrarCompra(this, cliente, compra, productos);
+		if(compra.getTotal()!=0){
+			new VentanaMostrarCompra(this, cliente, compra, productos);
+			return 0;
+		}
+		else {
+			//si no se ha agregado ningún producto al carrito
+			new VentanaError(this,"Compra","El carrito de compra está vacío.");
+			return -1;
+		}
 	}
 	
 	public void finalizarCompra(Cliente cliente) {
@@ -143,7 +149,7 @@ public class VentanaSistemaPOS extends JFrame implements PanelPopup{
 	}
 	
 	public static void main(String[] args) {
-		new VentanaSistemaPOS();
+		new AplicacionSistemaPOS();
 	}
 
 	@Override

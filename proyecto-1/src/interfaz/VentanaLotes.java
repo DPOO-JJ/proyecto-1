@@ -22,13 +22,13 @@ import processing.Lote;
 @SuppressWarnings("serial")
 public class VentanaLotes extends JFrame implements ActionListener, PanelPopup{
 	
-	private VentanaInventario padre;
+	private AplicacionInventario padre;
 	private PanelProductos pProductos;
 	
 	ArrayList<Lote> lotesFiltrados;
 	JList<String> lotes;
 	
-	public VentanaLotes(VentanaInventario padre, ArrayList<Lote> lotesFiltrados) {
+	public VentanaLotes(AplicacionInventario padre, ArrayList<Lote> lotesFiltrados) {
 		
 		this.padre = padre;
 		this.lotesFiltrados = lotesFiltrados;

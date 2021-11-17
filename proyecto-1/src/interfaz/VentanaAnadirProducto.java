@@ -17,16 +17,18 @@ import processing.Cliente;
 @SuppressWarnings("serial")
 public class VentanaAnadirProducto extends JFrame implements ActionListener, PanelPopup{
 	
-	private VentanaSistemaPOS padre;
+	private AplicacionSistemaPOS padre;
 	private JTextField codigo;
 	private JTextField peso;
 	private Cliente cliente;
 	private JLabel mensaje;
 	
+	private Color verde = new Color(0, 51, 0);
+	
 	public static final String AGREGAR = "Agregar";
 	public static final String FINALIZAR = "Finalizar";
 
-	public VentanaAnadirProducto (VentanaSistemaPOS padre, Cliente cliente) 
+	public VentanaAnadirProducto (AplicacionSistemaPOS padre, Cliente cliente) 
 	{
 		this.padre = padre;
 		this.cliente = cliente;
@@ -34,20 +36,24 @@ public class VentanaAnadirProducto extends JFrame implements ActionListener, Pan
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(6,1));
-		panel.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
+		panel.setBorder(BorderFactory.createEmptyBorder(20, 100, 35, 100));
 		
 		mensaje = new JLabel("Producto agregado.");
-		mensaje.setForeground(Color.green);
+		mensaje.setForeground(verde);
 		mensaje.setVisible(false);
 		panel.add(mensaje);
 		
 		JLabel txt = new JLabel("Ingrese el código del producto:");
+		txt.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+		txt.setHorizontalAlignment(JLabel.LEFT);
 		panel.add(txt);
 		
 		codigo = new JTextField();
 		panel.add(codigo);
 		
 		JLabel txt2 = new JLabel("Ingrese la cantidad. Si es por peso digite el gramaje:");
+		txt2.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+		txt2.setHorizontalAlignment(JLabel.LEFT);
 		panel.add(txt2);
 		
 		peso = new JTextField();
@@ -120,7 +126,9 @@ public class VentanaAnadirProducto extends JFrame implements ActionListener, Pan
 					
 					if (result==0)
 					{
-						mensaje.setForeground(Color.green);
+						this.peso.setText("");
+						this.codigo.setText("");
+						mensaje.setForeground(verde);
 						mensaje.setText("Producto agregado.");
 					}
 					else if (result ==-1)
@@ -144,8 +152,10 @@ public class VentanaAnadirProducto extends JFrame implements ActionListener, Pan
 		}
 		else if(boton.equals(FINALIZAR))
 		{
-			padre.mostrarCompra(this.cliente);
-			dispose();
+			int result = padre.mostrarCompra(this.cliente);
+			if (result == 0) {
+				dispose();
+			}
 		}
 		
 	}

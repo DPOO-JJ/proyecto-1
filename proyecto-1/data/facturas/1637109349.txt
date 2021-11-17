@@ -1,0 +1,9 @@
+------ Factura de Compras ------
+
+Crema dental Colgate 3000
+Crema dental Colgate 3000
+Helado 4000
+Pollo completo 4000
+Crema dental Colgate 3000
+Crema dental Colgate 3000
+Total: 20000

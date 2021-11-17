@@ -15,10 +15,10 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class VentanaConsultaCliente extends JFrame implements ActionListener, PanelPopup{
 	
-	private VentanaSistemaPOS padre;
+	private AplicacionSistemaPOS padre;
 	private JTextField cedula;
 
-	public VentanaConsultaCliente(VentanaSistemaPOS padre) {
+	public VentanaConsultaCliente(AplicacionSistemaPOS padre) {
 		this.padre = padre;
 		
 		JPanel panel = new JPanel();

@@ -17,9 +17,9 @@ public class VentanaCategoria extends JFrame implements ActionListener{
 	
 	private JTextField nombreCategoria;
 	private JTextField nombreSuperCategoria;
-	private VentanaInventario padre;
+	private AplicacionInventario padre;
 	
-	public VentanaCategoria(VentanaInventario padre) {
+	public VentanaCategoria(AplicacionInventario padre) {
 		
 		this.padre = padre;
 		
@@ -50,7 +50,7 @@ public class VentanaCategoria extends JFrame implements ActionListener{
 		
 		JButton aceptar = new JButton("Aceptar");
 		aceptar.addActionListener(this);
-		aceptar.setSize(30,15);
+		//aceptar.setSize(30,15);
 		p.add(aceptar, BorderLayout.EAST);
 		panel.add(p);
 		

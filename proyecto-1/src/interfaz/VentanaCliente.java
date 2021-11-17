@@ -18,9 +18,9 @@ import processing.Cliente;
 @SuppressWarnings("serial")
 public class VentanaCliente extends JFrame implements ActionListener, PanelPopup {
 
-	private VentanaSistemaPOS padre;
+	private AplicacionSistemaPOS padre;
 
-	public VentanaCliente(VentanaSistemaPOS padre, Cliente cliente)
+	public VentanaCliente(AplicacionSistemaPOS padre, Cliente cliente)
 	{
 		this.padre = padre;
 		

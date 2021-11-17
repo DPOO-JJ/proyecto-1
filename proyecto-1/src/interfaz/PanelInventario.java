@@ -7,14 +7,14 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class PanelInventario extends JPanel implements PanelOpciones{
 	
-	private VentanaInventario padre;
+	private AplicacionInventario padre;
 	
 	public static final String CARGAR_LOTE = "Cargar lote";
 	public static final String ANADIR_CATEGORIA = "Añadir categoria";
 	public static final String DETALLES_PRODUCTO = "Detalles producto";
 	public static final String ELIMINAR_LOTE = "Eliminar lote";
 
-	public PanelInventario(VentanaInventario padre) {
+	public PanelInventario(AplicacionInventario padre) {
 		this.padre = padre;
 		
 		GridLayout layout = new GridLayout(2,3);

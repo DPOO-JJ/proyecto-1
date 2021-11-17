@@ -21,10 +21,10 @@ import processing.Producto;
 public class VentanaCambiarImagen extends JFrame implements ActionListener, PanelPopup{
 	
 	private JTextField nombreImagen;
-	private VentanaInventario padre;
+	private AplicacionInventario padre;
 	private ArrayList<String> dataProducto;
 	
-	public VentanaCambiarImagen(VentanaInventario padre, ArrayList<String> dataProducto) {
+	public VentanaCambiarImagen(AplicacionInventario padre, ArrayList<String> dataProducto) {
 		
 		this.padre = padre;
 		this.dataProducto = dataProducto;

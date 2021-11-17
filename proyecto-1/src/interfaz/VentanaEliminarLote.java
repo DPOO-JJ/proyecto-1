@@ -16,12 +16,12 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class VentanaEliminarLote extends JFrame implements ActionListener, PanelOpciones{
 	
-	private VentanaInventario padre;
+	private AplicacionInventario padre;
 	private PanelProductos pProductos;
 	
 	private int productoSeleccionado;
 	
-	public VentanaEliminarLote(VentanaInventario padre) {
+	public VentanaEliminarLote(AplicacionInventario padre) {
 		
 		this.padre = padre;
 		

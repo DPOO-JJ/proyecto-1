@@ -1,188 +1,183 @@
 package interfaz;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import processing.Categoria;
+import processing.FileManager;
 import processing.Inventario;
 import processing.Lote;
 import processing.Producto;
 
-public class AplicacionInventario{
+@SuppressWarnings("serial")
+public class AplicacionInventario extends JFrame implements PanelPopup {
 	
-	static Inventario inventario = null;
-	
-	public static void ejecutarAplicacion()
-	{
-		int option = 0;
+	private PanelInventario pInventario;
+	private Inventario inventario;
+
+	public AplicacionInventario(){
 		
 		inventario = new Inventario();
 		
-		boolean condition = true;
-		while (condition) {
-			System.out.println("------------------------------------------------");
-			System.out.println("1. Cargar nuevo lote de productos\n"
-					+ "2. Añadir categorías al sistema\n"
-					+ "3. Revisar desempeño de un producto\n"
-					+ "4. Chequear existencia de producto\n"
-					+ "5. Eliminar lote de producto del inventario\n"
-					+ "6. Salir de la aplicación");
+		setLayout(new BorderLayout());
+
+		PanelFechaYHora reloj = new PanelFechaYHora();
+		add(reloj, BorderLayout.NORTH);
+		
+		pInventario = new PanelInventario(this);
+		pInventario.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		add(pInventario, BorderLayout.CENTER);
+		
+		pack();
+		
+		setTitle("Inventario");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationRelativeTo(null); // Centrar la ventana en la pantalla
+		setResizable(true);
+		setVisible(true);
+	}
+	
+	public void ejecutar(String opcion) {
+		if (opcion.equals(PanelInventario.CARGAR_LOTE)) {
+			new VentanaCargarLote(this);
+		}
+		else if (opcion.equals(PanelInventario.ANADIR_CATEGORIA)) {
+			new VentanaCategoria(this);
+		}
+		else if (opcion.equals(PanelInventario.DETALLES_PRODUCTO)) {
+			new VentanaDetalles(this);
+		}
+		else if (opcion.equals(PanelInventario.ELIMINAR_LOTE)) {
+			new VentanaEliminarLote(this);
+		}
+		return;
+	}
+	
+	public void anadirCategoria(String nombreCategoria, String superCategoria) {
+		
+		System.out.println(nombreCategoria+" "+superCategoria);
+
+		int result = inventario.anadirCategoria(nombreCategoria, superCategoria);
+		if (result==0) {
+			new VentanaExitosa(this,"Añadir categoria","Categoría creada exitosamente.");
+		}
+		else if (result==-1) {
 			
-			@SuppressWarnings("resource")
-			Scanner scanner = new Scanner(System.in);
-	
-		    System.out.println("\nSeleccione una opción");
-	
-		    option = scanner.nextInt();
-		    
-		    ejecutarOpcion(option);
-		    
-		    if (option == 6)
-		    {
-		    	System.out.println("Aplicación cerrada.");
-		    	condition = false;
-		    }
+			String error = "<html>La supercategoría no ha sido registrada en el sistema, elija una de las siguientes:<br><br>";
+			for(Categoria categoria: inventario.getCategorias()) {
+				error+="-"+categoria.getNombre()+"<br>";
+			}
+			error+="</html>";
+			new VentanaError(this,"Añadir categoria",error);
 		}
 	}
 	
-	public static void ejecutarOpcion(int opcionSeleccionada)
-	{	
-		if (opcionSeleccionada == 1)
-		{
-			@SuppressWarnings("resource")
-			Scanner scanner = new Scanner(System.in);  
-
-		    System.out.println("\nIngrese el nombre del archivo:");
-
-		    String nombreArchivo = scanner.nextLine();
-		    
-		    //nombreArchivo = "data/nuevolote.txt";
-		    
-		    System.out.println(nombreArchivo);
-		    
-			int result = inventario.cargarNuevosLotes(nombreArchivo);
-			if (result==0) {
-				System.out.println("Lote de productos cargados exitosamente.");
-			}
-			else if (result==1) {
-				System.out.println("El archivo no existe.");
+	public void cargarLote(String nombreArchivo) {
+		
+		System.out.println(nombreArchivo);
+	    
+	    //nombreArchivo = "data/nuevolote.txt";
+	    
+		int result = inventario.cargarNuevosLotes(nombreArchivo);
+		if (result==0) {
+			new VentanaExitosa(this,"Cargar lote","Lote de productos cargados exitosamente.");
+		}
+		else if (result==1) {
+			new VentanaError(this,"Cargar lote","El archivo no existe.");
+		}
+	}
+	
+	public void lanzarVentanaImagen(int idProducto) {
+		
+		HashMap<Integer,ArrayList<String>> hm = FileManager.cargarImagenes();
+		
+		for (ArrayList<String> dataProducto : hm.values()) {
+			if (Integer.parseInt(dataProducto.get(0))==idProducto) {
+				new VentanaCambiarImagen(this, dataProducto);
+				break;
 			}
 		}
-		else if (opcionSeleccionada == 2)
-		{
-			@SuppressWarnings("resource")
-			Scanner scanner = new Scanner(System.in);  
-
-		    System.out.println("\nIngrese el nombre de la categoria:");
-
-		    String nombreCategoria = scanner.nextLine();
-		    
-		    System.out.println("Ingrese la super categoria de su categoria (si no tiene use null):");
-
-		    String superCategoria = scanner.nextLine();
-			
-			int result = inventario.anadirCategoria(nombreCategoria, superCategoria);
-			if (result==0) {
-				System.out.println("Categoría creada exitosamente.");
-			}
-			else if (result==-1) {
-				System.out.println("La supercategoría no ha sido registrada en el sistema, elija una de las siguientes:");
-				for(Categoria categoria: inventario.getCategorias()) {
-					System.out.println("-"+categoria.getNombre());
-				}
-			}
+	}
+	
+	public void modificarImagen(ArrayList<String> dataProducto, String nombreImagen) {
+		System.out.println(nombreImagen+" "+dataProducto.get(0));
+		
+		int result = inventario.cambiarImagen(dataProducto, nombreImagen);
+		if (result==0) {
+			new VentanaExitosa(this,"Cambiar imagen","Cambio exitoso.");
 		}
-		else if (opcionSeleccionada == 3)
-		{
-			@SuppressWarnings("resource")
-			Scanner scanner = new Scanner(System.in);  
-
-		    System.out.println("\nSeleccione el producto a revisar desempeño:");
-		    
-		    int i = 0;
-		    
-		    for(Producto producto: inventario.getProductos()) {
-				System.out.println((i+1)+". "+producto.getNombre());
-				i++;
-			}
-		    
-		    Producto productoSeleccionado = inventario.getProductos().get(scanner.nextInt()-1);
-
-		    HashMap<String,Integer> desempeno = inventario.revisarDesempeno(productoSeleccionado);
-		    System.out.println(productoSeleccionado.getNombre()+" ha generado:");
-		    System.out.println("Ganancias: "+desempeno.get("ganancias"));
-		    System.out.println("Perdidas: "+desempeno.get("perdidas"));
+		else if (result==1) {
+			new VentanaError(this,"Modificar imagen","Archivo no encontrado.");
 		}
-		else if (opcionSeleccionada == 4)
-		{
-			@SuppressWarnings("resource")
-			Scanner scanner = new Scanner(System.in);  
+	}
 
-		    System.out.println("\nSeleccione el producto a revisar:");
-		    
-		    int i = 0;
-		    
-		    for(Producto producto: inventario.getProductos()) {
-				System.out.println((i+1)+". "+producto.getNombre());
-				i++;
+	public void revisarDetallesProducto(int idProducto) {
+		
+		Producto productoSeleccionado = null;
+		
+		for(Producto producto: inventario.getProductos()) {
+			if(idProducto == producto.getCodigoBarras()){
+				productoSeleccionado = producto;
+				break;
 			}
-		    
-		    Producto productoSeleccionado = inventario.getProductos().get(scanner.nextInt()-1);
-
-		    int unidadesRestantes = inventario.revisarExistencia(productoSeleccionado);
-		    System.out.println("Quedan "+unidadesRestantes+" unidades de "+productoSeleccionado.getNombre()+".");
-		}
-		else if (opcionSeleccionada == 5)
-		{
-			@SuppressWarnings("resource")
-			Scanner scanner = new Scanner(System.in);  
-
-		    System.out.println("\nSeleccione el producto del lote a eliminar:");
-		    
-		    int i = 0;
-		    
-		    for(Producto producto: inventario.getProductos()) {
-				System.out.println((i+1)+". "+producto.getNombre());
-				i++;
-			}
-		    
-		    Producto productoSeleccionado = inventario.getProductos().get(scanner.nextInt()-1);
-		    ArrayList<Lote> lotesFiltrados = inventario.obtenerLotesProducto(productoSeleccionado);
-		    
-		    System.out.println("\nLotes de "+productoSeleccionado.getNombre()+" en el inventario:");
-		    
-		    System.out.println("Fecha recibido \t| Fecha de Vencimiento \t| Precio de Compra \t|"
-		    		+ " Precio de Venta \t| Unidades originales \t|"
-		    		+ " Unidades restantes \t| ¿El lote fue eliminado? \t| Producto del lote");
-		    
-		    i = 0;
-		    
-		    for(Lote lote: lotesFiltrados) {
-				System.out.println((i+1)+". "+lote.toString());
-				i++;
-			}
-		    
-		    System.out.println("\nSeleccione el lote a eliminar (escriba no si no desea eliminar algún lote)");
-		    
-		    scanner = new Scanner(System.in);
-		    
-		    String eleccion = scanner.nextLine();
-		    if(eleccion.toLowerCase().equals("no")) {
-		    	System.out.println("\nNingún lote fue eliminado.");
-		    	return;
-		    }
-
-		    Lote loteSeleccionado = lotesFiltrados.get(Integer.parseInt(eleccion)-1);
-		    inventario.eliminarLote(loteSeleccionado);
-		    System.out.println("\nLote eliminado satisfactoriamente.");
 		}
 		
+		if (productoSeleccionado != null) {
+			HashMap<String,Integer> desempeno = inventario.revisarDesempeno(productoSeleccionado);
+		    int unidadesRestantes = inventario.revisarExistencia(productoSeleccionado);
+		    
+		    new VentanaProducto(productoSeleccionado, desempeno, unidadesRestantes);
+		}
+		else {
+			new VentanaError(this,"Revisar desempeño","No hay data de este producto entre los lotes.");
+		}
 	}
 	
-	public static void main(String[] args)
-	{
-		ejecutarAplicacion();
+	public void lanzarVentanaEliminar(int idProducto) {
+		
+		Producto productoSeleccionado = null;
+		
+		for(Producto producto: inventario.getProductos()) {
+			if(idProducto == producto.getCodigoBarras()){
+				productoSeleccionado = producto;
+				break;
+			}
+		}
+		
+		if (productoSeleccionado != null) {
+			
+		    ArrayList<Lote> lotesFiltrados = inventario.obtenerLotesProducto(productoSeleccionado);
+		    
+		    new VentanaLotes(this, lotesFiltrados);
+		}
+		else {
+			new VentanaError(this,"Eliminar lote","No hay data de este producto entre los lotes.");
+		}
+	}
+	
+	public void eliminarLote(ArrayList<Lote> lotesFiltrados, int lote) {
+		
+		Lote loteSeleccionado = lotesFiltrados.get(lote);
+	    inventario.eliminarLote(loteSeleccionado);
+	    new VentanaExitosa(this,"Eliminar lote","Lote eliminado satisfactoriamente.");
+	}
+	
+	public static void main(String[] args) {
+		new AplicacionInventario();
 	}
 
+	@Override
+	public void aceptar(String titulo, boolean aceptada) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void error(String titulo) {
+		// TODO Auto-generated method stub
+		
+	}
 }

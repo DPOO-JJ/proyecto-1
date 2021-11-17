@@ -22,9 +22,9 @@ public class VentanaRegistroCliente extends JFrame implements ActionListener, Pa
 	private JTextField edad;
 	private JTextField pronombres;
 	private JTextField situacionLaboral;
-	private VentanaSistemaPOS padre;
+	private AplicacionSistemaPOS padre;
 	
-	public VentanaRegistroCliente(VentanaSistemaPOS padre){
+	public VentanaRegistroCliente(AplicacionSistemaPOS padre){
 		this.padre = padre;
 		
 		JPanel panel = new JPanel();

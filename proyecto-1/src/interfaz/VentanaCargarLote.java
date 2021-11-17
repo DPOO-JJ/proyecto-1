@@ -15,9 +15,9 @@ import javax.swing.JTextField;
 public class VentanaCargarLote extends JFrame implements ActionListener, PanelPopup{
 	
 	private JTextField nombreArchivo;
-	private VentanaInventario padre;
+	private AplicacionInventario padre;
 	
-	public VentanaCargarLote(VentanaInventario padre) {
+	public VentanaCargarLote(AplicacionInventario padre) {
 		
 		this.padre = padre;
 		

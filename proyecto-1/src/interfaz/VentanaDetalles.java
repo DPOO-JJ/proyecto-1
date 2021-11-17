@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class VentanaDetalles extends JFrame implements ActionListener, PanelOpciones{
 	
-	private VentanaInventario padre;
+	private AplicacionInventario padre;
 	private PanelProductos pProductos;
 	
 	private int productoSeleccionado;
@@ -24,7 +24,7 @@ public class VentanaDetalles extends JFrame implements ActionListener, PanelOpci
 	public static final String MODIFICAR_IMAGEN = "Modificar imagen";
 	public static final String REVISAR_DETALLES = "Revisar detalles";
 	
-	public VentanaDetalles(VentanaInventario padre) {
+	public VentanaDetalles(AplicacionInventario padre) {
 		
 		this.padre = padre;
 		

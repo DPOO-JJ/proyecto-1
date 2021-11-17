@@ -21,7 +21,7 @@ import processing.Producto;
 @SuppressWarnings("serial")
 public class VentanaMostrarCompra extends JFrame implements ActionListener, PanelOpciones{
 	
-	private VentanaSistemaPOS padre;
+	private AplicacionSistemaPOS padre;
 	private PanelProductos pProductos;
 	
 	private int productoSeleccionado;
@@ -30,7 +30,7 @@ public class VentanaMostrarCompra extends JFrame implements ActionListener, Pane
 	public static final String ACEPTAR = "Aceptar";
 	public static final String VOLVER = "Volver";
 	
-	public VentanaMostrarCompra(VentanaSistemaPOS padre, Cliente cliente, Compra compra, ArrayList<Producto> productos) {
+	public VentanaMostrarCompra(AplicacionSistemaPOS padre, Cliente cliente, Compra compra, ArrayList<Producto> productos) {
 		
 		this.padre = padre;
 		this.cliente = cliente;
@@ -40,12 +40,6 @@ public class VentanaMostrarCompra extends JFrame implements ActionListener, Pane
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 100, 35, 100));
-		
-		//label
-//		JLabel jlabel = new JLabel("Seleccione el producto");
-//		jlabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-//		jlabel.setHorizontalAlignment(JLabel.LEFT);
-//		panel.add(jlabel,BorderLayout.NORTH);
 		
 		//productos
 		pProductos = new PanelProductos(this, productos);
