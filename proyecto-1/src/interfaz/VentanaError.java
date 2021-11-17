@@ -21,10 +21,10 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class VentanaError extends JFrame implements ActionListener{
 	
-	private PanelPopup padre;
+	private IPopup padre;
 	private String titulo;
 	
-	public VentanaError(PanelPopup padre, String titulo, String aviso) {
+	public VentanaError(IPopup padre, String titulo, String aviso) {
 		
 		this.padre = padre;
 		this.titulo = titulo;

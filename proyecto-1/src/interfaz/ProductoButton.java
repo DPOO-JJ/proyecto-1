@@ -2,7 +2,6 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,9 +18,9 @@ import javax.swing.border.Border;
 @SuppressWarnings("serial")
 public class ProductoButton extends JPanel implements ActionListener{
 
-	private PanelOpciones padre;
+	private IOpciones padre;
 
-	public ProductoButton(PanelOpciones padre, ArrayList<String> dataProducto) {
+	public ProductoButton(IOpciones padre, ArrayList<String> dataProducto) {
 		this.padre = padre;
 		
 		setLayout(new BorderLayout());

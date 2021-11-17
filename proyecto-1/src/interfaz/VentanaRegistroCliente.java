@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class VentanaRegistroCliente extends JFrame implements ActionListener, PanelPopup {
+public class VentanaRegistroCliente extends JFrame implements ActionListener, IPopup {
 	private JTextField cedula;
 	private JTextField nombres;
 	private JTextField apellidos;
@@ -106,7 +106,7 @@ public class VentanaRegistroCliente extends JFrame implements ActionListener, Pa
 		}
 		catch (Exception e1)
 		{
-			new VentanaError(this, "Añadir Cliente", "Alguno de los campos es incorrecto");
+			new VentanaError(this, "Añadir Cliente", "Alguno de los campos es incorrecto.");
 		}
 		dispose();
 	}

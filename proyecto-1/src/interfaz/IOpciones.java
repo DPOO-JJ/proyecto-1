@@ -1,5 +1,5 @@
 package interfaz;
 
-public interface PanelOpciones {
+public interface IOpciones {
 	public void ejecutarOpcion(String opcion);
 }

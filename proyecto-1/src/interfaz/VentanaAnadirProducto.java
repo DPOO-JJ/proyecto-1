@@ -15,7 +15,7 @@ import processing.Cliente;
 
 
 @SuppressWarnings("serial")
-public class VentanaAnadirProducto extends JFrame implements ActionListener, PanelPopup{
+public class VentanaAnadirProducto extends JFrame implements ActionListener, IPopup{
 	
 	private AplicacionSistemaPOS padre;
 	private JTextField codigo;

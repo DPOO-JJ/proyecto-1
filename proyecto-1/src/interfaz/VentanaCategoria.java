@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class VentanaCategoria extends JFrame implements ActionListener{
+public class VentanaCategoria extends JFrame implements ActionListener, IPopup{
 	
 	private JTextField nombreCategoria;
 	private JTextField nombreSuperCategoria;
@@ -35,7 +35,7 @@ public class VentanaCategoria extends JFrame implements ActionListener{
 		nombreCategoria = new JTextField();
 		panel.add(nombreCategoria);
 		
-		JLabel superCat = new JLabel("Ingrese el nombre de la súper categoría a la que pertenece: ");
+		JLabel superCat = new JLabel("Ingrese el nombre de la súper categoría a la que pertenece (escriba null si no tiene): ");
 		superCat.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 		superCat.setHorizontalAlignment(JLabel.LEFT);
 		panel.add(superCat);
@@ -78,7 +78,28 @@ public class VentanaCategoria extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.padre.anadirCategoria(getNombreCategoria(),getNombreSuperCategoria());
-		dispose();
+		String nombreCategoria = getNombreCategoria();
+		String nombreSuperCat = getNombreSuperCategoria();
+		
+		if (nombreCategoria.equals("") || nombreSuperCat.equals("")){
+			new VentanaError(this,"Añadir categoría","Alguno de los campos está vacío");
+		}
+		else {
+			this.padre.anadirCategoria(nombreCategoria,nombreSuperCat);
+			dispose();
+		}
+		
+	}
+
+	@Override
+	public void aceptar(String titulo, boolean aceptada) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void error(String titulo) {
+		// TODO Auto-generated method stub
+		
 	}
 }

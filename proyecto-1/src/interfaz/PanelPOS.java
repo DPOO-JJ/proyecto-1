@@ -6,7 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class PanelPOS extends JPanel implements PanelOpciones{
+public class PanelPOS extends JPanel implements IOpciones{
 	
 	private AplicacionSistemaPOS padre;
 	

@@ -13,7 +13,7 @@ import processing.Lote;
 import processing.Producto;
 
 @SuppressWarnings("serial")
-public class AplicacionInventario extends JFrame implements PanelPopup {
+public class AplicacionInventario extends JFrame implements IPopup {
 	
 	private PanelInventario pInventario;
 	private Inventario inventario;
@@ -147,11 +147,18 @@ public class AplicacionInventario extends JFrame implements PanelPopup {
 			}
 		}
 		
+		System.out.println(idProducto);
+		
 		if (productoSeleccionado != null) {
 			
 		    ArrayList<Lote> lotesFiltrados = inventario.obtenerLotesProducto(productoSeleccionado);
 		    
-		    new VentanaLotes(this, lotesFiltrados);
+		    if (lotesFiltrados.size()==0) {
+		    	new VentanaError(this,"Eliminar lote","No hay lotes de este producto.");
+		    }
+		    else {
+		    	new VentanaLotes(this, lotesFiltrados);
+		    }
 		}
 		else {
 			new VentanaError(this,"Eliminar lote","No hay data de este producto entre los lotes.");

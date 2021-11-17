@@ -5,7 +5,7 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class PanelInventario extends JPanel implements PanelOpciones{
+public class PanelInventario extends JPanel implements IOpciones{
 	
 	private AplicacionInventario padre;
 	

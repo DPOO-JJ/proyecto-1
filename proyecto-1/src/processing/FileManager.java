@@ -90,9 +90,9 @@ public class FileManager {
 		}
 	}
 	
-	public static ArrayList<ArrayList<String>> guardarInfoMes(String mes, String cedula){
+	public static HashMap<Integer,Integer> guardarInfoMes(String mes, String cedula){
 		
-		ArrayList<ArrayList<String>> retorno = new ArrayList<ArrayList<String>>();
+		HashMap<Integer,Integer> retorno = new HashMap<Integer,Integer>();
 		
 		try (BufferedReader br = new BufferedReader(new FileReader("data/compras.csv")))
 		{
@@ -104,14 +104,18 @@ public class FileManager {
 		        String[] info = line.split(",");
 		        String a = info[2];
 		        String[] fecha = a.split("\\.");
-		        Boolean uno = fecha[1].equals(mes);
-		        Boolean dos = info[0].equals(cedula);
 		        if (fecha[1].equals(mes) && info[0].equals(cedula))
-		        {
-		        	ArrayList<String> tupla = new ArrayList<String>();
-		        	tupla.add(mes);
-		        	tupla.add(info[1]);
-		        	retorno.add(tupla);
+		        {		        	
+		        	int dia = Integer.parseInt(fecha[2]);
+		        	
+		        	if(retorno.containsKey(dia)){
+		        		int total = retorno.get(dia);
+		        		total+=Integer.parseInt(info[1]);
+		        		retorno.put(dia,total);
+		        	}
+		        	else {
+		        		retorno.put(dia,Integer.parseInt(info[1]));
+		        	}
 		        }
 		        line = br.readLine();
 		    }

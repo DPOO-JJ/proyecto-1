@@ -1,7 +1,6 @@
 package interfaz;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,19 +10,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
 import processing.Cliente;
 import processing.Compra;
 import processing.Producto;
 
 @SuppressWarnings("serial")
-public class VentanaMostrarCompra extends JFrame implements ActionListener, PanelOpciones{
+public class VentanaMostrarCompra extends JFrame implements ActionListener, IOpciones{
 	
 	private AplicacionSistemaPOS padre;
 	private PanelProductos pProductos;
 	
+	@SuppressWarnings("unused")
 	private int productoSeleccionado;
 	private Cliente cliente;
 	
@@ -57,7 +55,13 @@ public class VentanaMostrarCompra extends JFrame implements ActionListener, Pane
 		jlabel.setHorizontalAlignment(JLabel.LEFT);
 		p.add(jlabel,BorderLayout.NORTH);
 		
-		jlabel = new JLabel("<html><B>Puntos para "+cliente.getApellidos()+":</B> "+compra.getPuntos()+"</html>");
+		if (cliente != null) {
+			jlabel = new JLabel("<html><B>Puntos para "+cliente.getApellidos()+":</B> "+compra.getPuntos()+"</html>");
+		}
+		else {
+			jlabel = new JLabel("<html><B>Cliente no registrado</B></html>");
+		}
+		
 		jlabel.setHorizontalAlignment(JLabel.LEFT);
 		p.add(jlabel,BorderLayout.WEST);
 		

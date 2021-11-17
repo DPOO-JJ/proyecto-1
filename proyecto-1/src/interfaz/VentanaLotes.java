@@ -1,7 +1,6 @@
 package interfaz;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,15 +14,13 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
 import processing.Lote;
 
 @SuppressWarnings("serial")
-public class VentanaLotes extends JFrame implements ActionListener, PanelPopup{
+public class VentanaLotes extends JFrame implements ActionListener, IPopup{
 	
 	private AplicacionInventario padre;
-	private PanelProductos pProductos;
 	
 	ArrayList<Lote> lotesFiltrados;
 	JList<String> lotes;
@@ -37,14 +34,6 @@ public class VentanaLotes extends JFrame implements ActionListener, PanelPopup{
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 100, 35, 100));
-		
-		//label
-//		JLabel jlabel = new JLabel("Fecha recibido \t| Fecha de Vencimiento \t| Precio de Compra \t|"
-//	    		+ " Precio de Venta \t| Unidades originales \t|"
-//	    		+ " Unidades restantes \t| ¿El lote fue eliminado? \t| Producto del lote");
-//		jlabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-//		jlabel.setHorizontalAlignment(JLabel.LEFT);
-//		panel.add(jlabel,BorderLayout.NORTH);
 		
 		//lista
 		

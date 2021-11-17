@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -16,13 +14,11 @@ import javax.swing.JPanel;
 import processing.Cliente;
 
 @SuppressWarnings("serial")
-public class VentanaCliente extends JFrame implements ActionListener, PanelPopup {
+public class VentanaCliente extends JFrame implements ActionListener, IPopup {
 
-	private AplicacionSistemaPOS padre;
 
 	public VentanaCliente(AplicacionSistemaPOS padre, Cliente cliente)
 	{
-		this.padre = padre;
 		
 		setLayout(new BorderLayout());
 		

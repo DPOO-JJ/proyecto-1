@@ -16,10 +16,10 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class VentanaExitosa extends JFrame implements ActionListener{
 	
-	private PanelPopup padre;
+	private IPopup padre;
 	private String titulo;
 	
-	public VentanaExitosa(PanelPopup padre, String titulo, String aviso) {
+	public VentanaExitosa(IPopup padre, String titulo, String aviso) {
 		
 		this.padre = padre;
 		this.titulo = titulo;

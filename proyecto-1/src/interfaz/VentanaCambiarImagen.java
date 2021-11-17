@@ -8,17 +8,14 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import processing.Producto;
-
 @SuppressWarnings("serial")
-public class VentanaCambiarImagen extends JFrame implements ActionListener, PanelPopup{
+public class VentanaCambiarImagen extends JFrame implements ActionListener, IPopup{
 	
 	private JTextField nombreImagen;
 	private AplicacionInventario padre;

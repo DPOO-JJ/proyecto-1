@@ -25,13 +25,13 @@ public class VentanaProducto extends JFrame {
 		JLabel ganancias = new JLabel("Ganancias:");
 		panel.add(ganancias);
 		
-		ganancias = new JLabel(String.valueOf(desempeno.get("ganancias")));
+		ganancias = new JLabel(String.valueOf(desempeno.get("ganancias"))+" pesos");
 		panel.add(ganancias);
 		
 		JLabel perdidas = new JLabel("Perdidas:");
 		panel.add(perdidas);
 		
-		perdidas = new JLabel(String.valueOf(desempeno.get("perdidas")));
+		perdidas = new JLabel(String.valueOf(desempeno.get("perdidas"))+" pesos");
 		panel.add(perdidas);
 		
 		JLabel unidades = new JLabel("Unidades restantes:    ");

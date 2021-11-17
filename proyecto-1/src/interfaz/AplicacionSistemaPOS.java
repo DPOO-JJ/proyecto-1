@@ -15,7 +15,7 @@ import processing.Producto;
 
 
 @SuppressWarnings("serial")
-public class AplicacionSistemaPOS extends JFrame implements PanelPopup{
+public class AplicacionSistemaPOS extends JFrame implements IPopup{
 	
 	private PanelFechaYHora reloj;
 	private PanelPOS opciones;

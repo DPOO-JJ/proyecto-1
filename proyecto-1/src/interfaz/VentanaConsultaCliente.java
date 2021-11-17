@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class VentanaConsultaCliente extends JFrame implements ActionListener, PanelPopup{
+public class VentanaConsultaCliente extends JFrame implements ActionListener, IPopup{
 	
 	private AplicacionSistemaPOS padre;
 	private JTextField cedula;

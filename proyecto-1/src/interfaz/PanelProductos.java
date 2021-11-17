@@ -12,11 +12,11 @@ import processing.FileManager;
 import processing.Producto;
 
 @SuppressWarnings("serial")
-public class PanelProductos extends JPanel implements PanelOpciones{
+public class PanelProductos extends JPanel implements IOpciones{
 	
-	private PanelOpciones padre;
+	private IOpciones padre;
 
-	public PanelProductos(PanelOpciones padre, ArrayList<Producto> productos) {
+	public PanelProductos(IOpciones padre, ArrayList<Producto> productos) {
 		this.padre = padre;
 		
 		GridLayout layout = new GridLayout(4,4);

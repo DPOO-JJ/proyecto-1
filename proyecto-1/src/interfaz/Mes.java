@@ -6,7 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,19 +17,8 @@ import javax.swing.border.Border;
 @SuppressWarnings("serial")
 public class Mes extends JPanel implements ActionListener {
 	
-	private PanelGraficoCliente padre;
 
-	public Mes(PanelGraficoCliente padre, String mes, Integer dias, ArrayList<ArrayList<String>> comprasOcurrencias) {
-		this.padre = padre;
-		
-		//TODO COLOREs
-		
-		Color verde1 = new Color(153, 255, 0);
-		Color verde2 = new Color(183, 255, 74);
-		Color verde3 = new Color(211, 255, 145);
-		Color verde4 = new Color(228, 255, 189);
-		Color verde5 = new Color(242, 255, 224);
-		
+	public Mes(PanelGraficoCliente padre, String mes, Integer dias, HashMap<Integer,Integer> dataCompras) {
 		
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(120, 120));
@@ -43,38 +33,31 @@ public class Mes extends JPanel implements ActionListener {
 		 
 		p.setLayout(meses);
 		
+		double maximo = 0;
+		double minimo = Double.POSITIVE_INFINITY;
 		
+		for (int totalDia : dataCompras.values()) {
+			if (totalDia>maximo) {
+				maximo=totalDia;
+			}
+			if (totalDia<minimo) {
+				minimo=totalDia;
+			}
+		}
 		
 		for (int i = 0;i<dias;i++) {
 			JButton button = new JButton();
-			button.setToolTipText(Integer.toString(i+1));
+			int dia = i+1;
+			button.setToolTipText(Integer.toString(dia));
 			button.setBackground(Color.WHITE);
-			for (int j = 0;j<comprasOcurrencias.size();j++)
-			{
-				if (i == Integer.parseInt(comprasOcurrencias.get(j).get(0)))
-				{
-					if (Integer.parseInt(comprasOcurrencias.get(j).get(1))>100000)
-					{
-						button.setBackground(verde1);
-					}
-					else if (Integer.parseInt(comprasOcurrencias.get(j).get(1))>75000)
-					{
-						button.setBackground(verde2);
-					}
-					else if (Integer.parseInt(comprasOcurrencias.get(j).get(1))>50000)
-					{
-						button.setBackground(verde3);
-					}
-					else if (Integer.parseInt(comprasOcurrencias.get(j).get(1))>25000)
-					{
-						button.setBackground(verde4);
-					}
-					else
-					{
-						button.setBackground(verde5);
-					}
-				}
-			}
+			
+			
+			if(dataCompras.containsKey(dia)){
+        		int totalDia = dataCompras.get(dia);
+        		double porcentaje = map(totalDia,minimo,maximo,0,1);
+        		button.setBackground(new Color(0, (int)(193 - (115*porcentaje)), (int)(255 - (152*porcentaje))));
+        	}
+			
 			button.setBorder(BorderFactory.createLineBorder(Color.black, 1,true));
 			button.setOpaque(true);
 			p.add(button);
@@ -86,6 +69,11 @@ public class Mes extends JPanel implements ActionListener {
 		Border blackline = BorderFactory.createLineBorder(Color.black, 1, true);
 		
 		setBorder(blackline);
+	}
+	
+	double map(double x, double in_min, double in_max, double out_min, double out_max)
+	{
+	  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 	}
 	
 	

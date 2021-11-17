@@ -16,9 +16,9 @@ import javax.swing.border.Border;
 @SuppressWarnings("serial")
 public class MenuButton extends JPanel implements ActionListener{
 
-	private PanelOpciones padre;
+	private IOpciones padre;
 
-	public MenuButton(PanelOpciones padre, String label, String image) {
+	public MenuButton(IOpciones padre, String label, String image) {
 		this.padre = padre;
 		
 		setLayout(new BorderLayout());

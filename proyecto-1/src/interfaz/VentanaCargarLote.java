@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class VentanaCargarLote extends JFrame implements ActionListener, PanelPopup{
+public class VentanaCargarLote extends JFrame implements ActionListener, IPopup{
 	
 	private JTextField nombreArchivo;
 	private AplicacionInventario padre;
