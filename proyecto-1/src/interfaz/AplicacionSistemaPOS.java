@@ -125,20 +125,40 @@ public class AplicacionSistemaPOS extends JFrame implements IPopup{
 		}
 	}
 	
-	public void finalizarCompra(Cliente cliente) {
-		pos.getCompra().guardarFactura();
+	public void finalizarCompra(Cliente cliente, int puntos) {
 		
-		if (cliente != null)
+		if (puntos == 0 && cliente != null)
 		{
 			pos.updatePoints(cliente);
+		}
+		else if (cliente != null)
+		{
+			int total = pos.getCompra().getTotal();
+			int dscPuntos = puntos * 15;
+			if (total < dscPuntos)
+			{
+				puntos = 0;
+			}
+			cliente.puntos -= puntos;
+			pos.updatePoints(cliente);
+			
+		}
+		
+		pos.getCompra().guardarFactura(puntos);
+		
+		if (cliente != null) // TODO Agregar opción de pagar con puntos, descontarle los puntos al cliente
+		{
+			
 			
 			String timeStamp = new SimpleDateFormat("yyyy.MM.dd").format(new java.util.Date());
 			String line = Integer.toString(cliente.getCedula()) + "," + Integer.toString(pos.getCompra().getTotal()) + "," + timeStamp;
 			FileManager.addLineToCSV("data/compras.csv", line);
 			
-			String mensaje = "<html>¡Compra exitosa!<br>"
+			String mensaje = "<html>¡Compra exitosa!<br>" 
+					+"Puntos utilizados en esta compra:" + puntos + "<br>"
 					+"Puntos acumulados en esta compra: "+ pos.getCompra().getPuntos()+"<br>"
 					+"Puntos totales para "+cliente.getApellidos()+": "+cliente.puntos+"</html>";
+					
 					
 			new VentanaExitosa(this,"Nueva compra",mensaje);
 		}

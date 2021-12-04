@@ -61,7 +61,7 @@ public class Compra {
 		return productos;
 	}
 	
-	private String generarTextoFactura()
+	private String generarTextoFactura(int puntos) // TODO Agregar restricción con puntos
 	{
 		Integer precio = 0;
 		
@@ -79,13 +79,15 @@ public class Compra {
 			factura += ("\n"+producto.getNombre()+" "+ precio.toString());
 		}
 		factura += ("\nTotal: " + getTotal());
+		factura += ("\nPuntos utilizados: " + puntos);
+		
 
 		return factura;
 	}
 	
-	public void guardarFactura()
+	public void guardarFactura(int puntos)
 	{
-		FileManager.guardarArchivo("data/facturas/"+Integer.toString(this.id_compra)+".txt",this.generarTextoFactura());
+		FileManager.guardarArchivo("data/facturas/"+Integer.toString(this.id_compra)+".txt",this.generarTextoFactura(puntos));
 	}
 
 

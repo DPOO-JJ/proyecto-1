@@ -1,6 +1,0 @@
------- Factura de Compras ------
-
-Lechuga 1000
-Crema dental Colgate 3000
-Crema dental Colgate 3000
-Total: 7000

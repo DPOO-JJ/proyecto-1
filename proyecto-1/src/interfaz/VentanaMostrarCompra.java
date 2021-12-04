@@ -1,6 +1,7 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import processing.Cliente;
 import processing.Compra;
@@ -24,6 +26,7 @@ public class VentanaMostrarCompra extends JFrame implements ActionListener, IOpc
 	@SuppressWarnings("unused")
 	private int productoSeleccionado;
 	private Cliente cliente;
+	public JTextField pts;
 	
 	public static final String ACEPTAR = "Aceptar";
 	public static final String VOLVER = "Volver";
@@ -80,9 +83,21 @@ public class VentanaMostrarCompra extends JFrame implements ActionListener, IOpc
 		button.addActionListener(this);
 		pp.add(button, BorderLayout.WEST);
 		
+		JPanel panelPuntos = new JPanel();
+		
+		JLabel cuantosPuntos = new JLabel("Puntos para utilizar en esta compra:");
+		pts = new JTextField("0");
+		pts.setPreferredSize(new Dimension(120, 30));
+		
+		panelPuntos.add(cuantosPuntos);
+		panelPuntos.add(pts);
+
+		pp.add(panelPuntos, BorderLayout.NORTH);
+		
 		p.add(pp,BorderLayout.EAST);
 		
 		panel.add(p,BorderLayout.SOUTH);
+		
 		
 		add(panel);
 		
@@ -90,7 +105,7 @@ public class VentanaMostrarCompra extends JFrame implements ActionListener, IOpc
 		
 		setTitle("Carrito de compras");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null); // Centrar la ventana en la pantalla
+		setLocationRelativeTo(null); 
 		setResizable(false);
 		setVisible(true);
 		
@@ -102,7 +117,21 @@ public class VentanaMostrarCompra extends JFrame implements ActionListener, IOpc
 		
 		if (boton.equals(ACEPTAR))
 		{
-			this.padre.finalizarCompra(cliente);
+			//TODO Agregar la opción de método de pago con puntos
+			try {
+				this.padre.finalizarCompra(cliente, Integer.parseInt(pts.getText()));
+			}
+			catch (NumberFormatException e1)
+			{
+				new VentanaError(padre, "Error", "El número de puntos es incorrecto");
+				e1.printStackTrace();
+			}
+			catch (Exception e2)
+			{
+				new VentanaError(padre, "Error", "");
+				e2.printStackTrace();
+			}
+			
 		}
 		else if (boton.equals(VOLVER)) {
 			this.padre.lanzarVentanaAñadirProducto(cliente);

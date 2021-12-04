@@ -1,4 +1,0 @@
------- Factura de Compras ------
-
-Pollo completo 4000
-Total: 4000
