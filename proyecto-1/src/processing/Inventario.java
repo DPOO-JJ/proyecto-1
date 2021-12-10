@@ -163,26 +163,8 @@ public class Inventario {
 		this.cargarProductos();
 		this.cargarLotes();
 		this.cargarHistoriaProductos();
-		
-//		for(Producto producto: productos) {
-//        	if (producto.getCodigoBarras()==1){
-//        		
-////        		producto.getHistorial().getDatos().forEach(
-////        	            (key, value)
-////        	                -> System.out.println(key + " = " + value));
-//        		
-//        		producto.getHistorial().actualizarCantidad(1);
-//        		ArrayList cosas = producto.getHistorial().obtenerUltimaFecha();
-//        		System.out.println("la última es: ");
-//        		System.out.println(cosas.get(0));
-//        		System.out.println(cosas.get(1));
-//        		
-//        		break;
-//        	}
-//        }
-		
 	}
-	
+
 	public int anadirCategoria(String nombreCategoria, String superCategoria) {
 
 		int result = -1;
