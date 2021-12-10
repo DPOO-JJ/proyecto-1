@@ -113,13 +113,15 @@ public class POS {
 		this.compra = new Compra(inventario);
 	}
 	
-	public void updatePoints(Cliente cliente)
+	public void updatePoints(Cliente cliente, int viejosPuntos, int nuevosPuntos)
 	{
-		String oldLine = cliente.lineCSV();
+		String oldLine = cliente.lineCSV()+viejosPuntos;
+		System.out.println(oldLine);
 
-		cliente.setPuntos(cliente.getPuntos()+getCompra().getPuntos());
+		cliente.setPuntos(nuevosPuntos);
 
-		String newLine = cliente.lineCSV();
+		String newLine = cliente.lineCSV()+nuevosPuntos;
+		System.out.println(newLine);
 		
 		FileManager.cambiarLineaArchivo("data/clientes.csv", oldLine, newLine);
 	

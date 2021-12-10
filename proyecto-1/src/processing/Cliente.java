@@ -75,7 +75,7 @@ public class Cliente {
 		line += this.edad + ",";
 		line += this.idenGenero + ",";
 		line += this.situacionLaboral + ",";
-		line += this.puntos;
+		//line += this.puntos;
 		
 		return line;
 	}

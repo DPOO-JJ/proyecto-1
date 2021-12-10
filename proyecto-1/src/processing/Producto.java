@@ -1,5 +1,7 @@
 package processing;
 
+import java.util.HashMap;
+
 public class Producto {
 	
 	private int codigoBarras;
@@ -9,6 +11,7 @@ public class Producto {
 	private Categoria categoria;
 	private String almacenamiento;
 	private boolean empacado;
+	private Historico historial;
 	
 	public Producto(int codigoBarras, String nombre, int numUnidadesMedida, String unidadMedida,
 			String almacenamiento, boolean empacado) {
@@ -19,8 +22,8 @@ public class Producto {
 		this.unidadMedida = unidadMedida;
 		this.almacenamiento = almacenamiento;
 		this.empacado = empacado;
+		this.historial = new Historico(codigoBarras);
 	}
-	
 	
 	boolean equals(Producto otroProducto) {
 		if (this.codigoBarras==otroProducto.getCodigoBarras()) {
@@ -45,44 +48,60 @@ public class Producto {
 	public int getCodigoBarras() {
 		return codigoBarras;
 	}
+	
 	public void setCodigoBarras(int codigoBarras) {
 		this.codigoBarras = codigoBarras;
 	}
+	
 	public String getNombre() {
 		return nombre;
 	}
+	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	
 	public int getNumUnidadesMedida() {
 		return numUnidadesMedida;
 	}
+	
 	public void setNumUnidadesMedida(int numUnidadesMedida) {
 		this.numUnidadesMedida = numUnidadesMedida;
 	}
+	
 	public String getUnidadMedida() {
 		return unidadMedida;
 	}
+	
 	public void setUnidadMedida(String unidadMedida) {
 		this.unidadMedida = unidadMedida;
 	}
+	
 	public Categoria getCategoria() {
 		return categoria;
 	}
+	
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+	
 	public String getAlmacenamiento() {
 		return almacenamiento;
 	}
+	
 	public void setAlmacenamiento(String almacenamiento) {
 		this.almacenamiento = almacenamiento;
 	}
+	
 	public boolean isEmpacado() {
 		return empacado;
 	}
+	
 	public void setEmpacado(boolean empacado) {
 		this.empacado = empacado;
 	}
-
+	
+	public Historico getHistorial() {
+		return historial;
+	}
 }

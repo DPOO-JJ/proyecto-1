@@ -18,7 +18,7 @@ import processing.Compra;
 import processing.Producto;
 
 @SuppressWarnings("serial")
-public class VentanaMostrarCompra extends JFrame implements ActionListener, IOpciones{
+public class VentanaMostrarCompra extends JFrame implements ActionListener, IOpciones, IPopup{
 	
 	private AplicacionSistemaPOS padre;
 	private PanelProductos pProductos;
@@ -59,7 +59,7 @@ public class VentanaMostrarCompra extends JFrame implements ActionListener, IOpc
 		p.add(jlabel,BorderLayout.NORTH);
 		
 		if (cliente != null) {
-			jlabel = new JLabel("<html><B>Puntos para "+cliente.getApellidos()+":</B> "+compra.getPuntos()+"</html>");
+			jlabel = new JLabel("<html><B>Puntos para "+cliente.getApellidos()+":</B> "+cliente.getPuntos()+"</html>");
 		}
 		else {
 			jlabel = new JLabel("<html><B>Cliente no registrado</B></html>");
@@ -117,30 +117,45 @@ public class VentanaMostrarCompra extends JFrame implements ActionListener, IOpc
 		
 		if (boton.equals(ACEPTAR))
 		{
-			//TODO Agregar la opción de método de pago con puntos
 			try {
-				this.padre.finalizarCompra(cliente, Integer.parseInt(pts.getText()));
+				int puntosAUsar = Integer.parseInt(pts.getText());
+				if (cliente == null || cliente.puntos-puntosAUsar>=0) {
+					this.padre.finalizarCompra(cliente,puntosAUsar );
+					dispose();
+				}
+				else {
+					new VentanaError(this, "Carrito de compras", "No tiene suficientes puntos para completar esta compra");
+				}
 			}
 			catch (NumberFormatException e1)
 			{
-				new VentanaError(padre, "Error", "El número de puntos es incorrecto");
-				e1.printStackTrace();
+				new VentanaError(this, "Carrito de compras", "Los puntos no son un número");
 			}
 			catch (Exception e2)
 			{
-				new VentanaError(padre, "Error", "");
-				e2.printStackTrace();
+				new VentanaError(this, "Carrito de compras", e2.getMessage());
 			}
-			
 		}
 		else if (boton.equals(VOLVER)) {
 			this.padre.lanzarVentanaAñadirProducto(cliente);
+			dispose();
 		}
-		dispose();
 	}
 
 	@Override
 	public void ejecutarOpcion(String opcion) {
 		this.productoSeleccionado = Integer.parseInt(opcion);
+	}
+
+	@Override
+	public void aceptar(String titulo, boolean aceptada) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void error(String titulo) {
+		// TODO Auto-generated method stub
+		
 	}
 }

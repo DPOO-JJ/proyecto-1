@@ -19,31 +19,15 @@ public class Compra {
 	}
 	
 	public boolean makePurchase(Producto producto, int peso) {
-				
-		if (producto.isEmpacado())
+		
+		int venta = inventario.venderUnidad(producto, peso);
+		
+		if (venta != 0)
 		{
-			int venta = inventario.venderUnidad(producto, 1);
-			
-			if (venta != 0)
-			{
-				productos.add(producto);
-				total += venta;
-				this.puntos += venta/1000;
-				return true;
-			}
-		}
-		else
-		{
-			int venta = inventario.venderUnidad(producto, peso);
-			
-			if (venta != 0)
-			{
-				
-				productos.add(producto);
-				total += venta;
-				this.puntos += venta/1000;
-				return true;
-			}
+			productos.add(producto);
+			total += venta;
+			this.puntos += venta/1000;
+			return true;
 		}
 
 		return false;
@@ -61,7 +45,7 @@ public class Compra {
 		return productos;
 	}
 	
-	private String generarTextoFactura(int puntos) // TODO Agregar restricción con puntos
+	private String generarTextoFactura(ArrayList<Integer> puntos) // TODO Agregar restricción con puntos
 	{
 		Integer precio = 0;
 		
@@ -79,15 +63,20 @@ public class Compra {
 			factura += ("\n"+producto.getNombre()+" "+ precio.toString());
 		}
 		factura += ("\nTotal: " + getTotal());
-		factura += ("\nPuntos utilizados: " + puntos);
 		
-
+		if (puntos.size()>1) {
+			factura += "\nPuntos del cliente antes de la compra: " + puntos.get(0);
+			factura += "\nPuntos utilizados en esta compra: " + puntos.get(1);
+			factura += "\nPuntos acumulados en esta compra: "+ puntos.get(2);
+			factura += "\nPuntos totales disponibles: "+puntos.get(3);
+		}
+		
 		return factura;
 	}
 	
-	public void guardarFactura(int puntos)
+	public void guardarFactura(ArrayList<Integer> puntosList)
 	{
-		FileManager.guardarArchivo("data/facturas/"+Integer.toString(this.id_compra)+".txt",this.generarTextoFactura(puntos));
+		FileManager.guardarArchivo("data/facturas/"+Integer.toString(this.id_compra)+".txt",this.generarTextoFactura(puntosList));
 	}
 
 

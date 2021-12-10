@@ -54,6 +54,33 @@ public class Inventario {
 		}
 	}
 	
+	private void cargarHistoriaProductos() {
+		try (BufferedReader br = new BufferedReader(new FileReader("data/histproductos.csv"))) {
+		    String line;
+		    br.readLine();
+		    while ((line = br.readLine()) != null) {
+		        String[] values = line.split(",");
+
+		        String fecha = values[0];
+		        int codigoProducto = Integer.parseInt(values[1]);
+		        int cantidad = Integer.parseInt(values[2]);
+		        		
+		        for(Producto producto: productos) {
+		        	if (producto.getCodigoBarras()==codigoProducto){
+		        		producto.getHistorial().cargarDato(fecha, cantidad);
+		        		break;
+		        	}
+		        }
+		    }
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	private void cargarLotes() {
 		try (BufferedReader br = new BufferedReader(new FileReader("data/lotes.csv"))) {
 		    String line;
@@ -135,6 +162,25 @@ public class Inventario {
 		this.cargarCategorias();
 		this.cargarProductos();
 		this.cargarLotes();
+		this.cargarHistoriaProductos();
+		
+//		for(Producto producto: productos) {
+//        	if (producto.getCodigoBarras()==1){
+//        		
+////        		producto.getHistorial().getDatos().forEach(
+////        	            (key, value)
+////        	                -> System.out.println(key + " = " + value));
+//        		
+//        		producto.getHistorial().actualizarCantidad(1);
+//        		ArrayList cosas = producto.getHistorial().obtenerUltimaFecha();
+//        		System.out.println("la última es: ");
+//        		System.out.println(cosas.get(0));
+//        		System.out.println(cosas.get(1));
+//        		
+//        		break;
+//        	}
+//        }
+		
 	}
 	
 	public int anadirCategoria(String nombreCategoria, String superCategoria) {
@@ -210,19 +256,24 @@ public class Inventario {
 		        }
 		        else if (loadingLotes) {
 		        	String[] values = line.split(",");
+		        	
+		        	int numUnidades= Integer.parseInt(values[4]);
 
 			        Lote nuevoLote = new Lote(
 			        		values[0],
 			        		values[1],
 			        		Integer.parseInt(values[2]),
 			        		Integer.parseInt(values[3]),
-			        		Integer.parseInt(values[4]),
+			        		numUnidades,
 			        		false,
-			        		Integer.parseInt(values[4]));
+			        		numUnidades);
 			        
 			        for(Producto producto: productos) {
 			        	if (producto.getCodigoBarras()==Integer.parseInt(values[5])){
 			        		nuevoLote.setProductoAsociado(producto);
+			        		
+			        		//las añado al historial
+			        		producto.getHistorial().actualizarCantidad(numUnidades);
 			        		break;
 			        	}
 			        }
@@ -314,6 +365,9 @@ public class Inventario {
 				String newFileLine = newLote.toFileLine();
 				lotes.set(i,newLote);
 				FileManager.cambiarLineaArchivo("data/lotes.csv",oldFileLine,newFileLine);
+				//las elimino del historial
+				int unidadesRestantes = loteAEliminar.getUnidadesRestantes();
+				loteAEliminar.getProductoAsociado().getHistorial().actualizarCantidad(-unidadesRestantes);
 				break;
 			}
 		}
@@ -371,6 +425,9 @@ public class Inventario {
 				lotes.set(key,newLote);
 				FileManager.cambiarLineaArchivo("data/lotes.csv",oldFileLine,newLote.toFileLine());
 			}
+			
+			//las elimino del historial
+			productoAVender.getHistorial().actualizarCantidad(-unidadesAVender);
 		}
 		
 		return price;

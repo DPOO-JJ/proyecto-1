@@ -1,0 +1,4 @@
+------ Factura de Compras ------
+
+Crema dental Colgate 3000
+Total: 5000

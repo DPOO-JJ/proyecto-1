@@ -28,10 +28,8 @@ public class AplicacionSistemaPOS extends JFrame implements IPopup{
 		
 		pos = new POS();
 		
-
 		reloj = new PanelFechaYHora();
 		add(reloj, BorderLayout.NORTH);
-		
 
 		opciones = new PanelPOS(this);
 		opciones.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -125,46 +123,54 @@ public class AplicacionSistemaPOS extends JFrame implements IPopup{
 		}
 	}
 	
-	public void finalizarCompra(Cliente cliente, int puntos) {
+	@SuppressWarnings("unused")
+	public void finalizarCompra(Cliente cliente, int puntos) throws Exception {
 		
-		if (puntos == 0 && cliente != null)
+		//pos 0 es puntos iniciales, 1 puntos usados en la compra, 2 puntos de la compra, 3 puntos totales
+		ArrayList<Integer> puntosList = new ArrayList<Integer>();
+		
+		if (cliente != null)
 		{
-			pos.updatePoints(cliente);
-		}
-		else if (cliente != null)
-		{
-			int total = pos.getCompra().getTotal();
-			int dscPuntos = puntos * 15;
-			if (total < dscPuntos)
-			{
-				puntos = 0;
+			int puntosCliente = cliente.puntos;
+			puntosList.add(puntosCliente);
+			
+			if (puntos == 0) {
+				
+				pos.updatePoints(cliente,puntosCliente,puntosCliente+pos.getCompra().getPuntos());
 			}
-			cliente.puntos -= puntos;
-			pos.updatePoints(cliente);
-			
-		}
-		
-		pos.getCompra().guardarFactura(puntos);
-		
-		if (cliente != null) // TODO Agregar opción de pagar con puntos, descontarle los puntos al cliente
-		{
-			
+			else {
+				int total = pos.getCompra().getTotal();
+				int dscPuntos = puntos * 15;
+				if (total < dscPuntos)
+				{
+					puntos = 0;
+				}
+				cliente.puntos -= puntos;
+				pos.updatePoints(cliente,puntosCliente,cliente.puntos+pos.getCompra().getPuntos());
+			}
 			
 			String timeStamp = new SimpleDateFormat("yyyy.MM.dd").format(new java.util.Date());
 			String line = Integer.toString(cliente.getCedula()) + "," + Integer.toString(pos.getCompra().getTotal()) + "," + timeStamp;
 			FileManager.addLineToCSV("data/compras.csv", line);
 			
 			String mensaje = "<html>¡Compra exitosa!<br>" 
+					+"Puntos del cliente antes de la compra:" + puntosList.get(0) + "<br>"
 					+"Puntos utilizados en esta compra:" + puntos + "<br>"
 					+"Puntos acumulados en esta compra: "+ pos.getCompra().getPuntos()+"<br>"
 					+"Puntos totales para "+cliente.getApellidos()+": "+cliente.puntos+"</html>";
-					
-					
+			
+			puntosList.add(puntos);
+			puntosList.add(pos.getCompra().getPuntos());
+			puntosList.add(cliente.puntos);
+			
 			new VentanaExitosa(this,"Nueva compra",mensaje);
 		}
 		else {
 			new VentanaExitosa(this,"Nueva compra","¡Compra exitosa!");
 		}
+		
+		//se guarda factura factura
+		pos.getCompra().guardarFactura(puntosList);
 		
 	}
 	

@@ -1,5 +1,4 @@
 ------ Factura de Compras ------
 
 Crema dental Colgate 3000
-Total: 3000
-Puntos utilizados: 10
+Total: 5000
