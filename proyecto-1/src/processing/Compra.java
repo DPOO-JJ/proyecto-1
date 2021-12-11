@@ -23,17 +23,38 @@ public class Compra {
 		this.descuento = 0;
 	}
 	
+	public void anadirCombo(Combo combo) {
+		int[] productosCombo = combo.getIdProductos();
+		boolean estanTodos = true;
+		for(int idProductos: productosCombo) {
+			if(!totalItems.containsKey(idProductos)) {
+				estanTodos = false;
+				break;
+			}
+		}
+		
+		if(estanTodos) {
+			float dDescuento = combo.getDescuento();
+			for(int idProductos: productosCombo) {
+				int totalHastaAhora = totalPrecio.get(idProductos);
+				totalPrecio.put(idProductos, (int)(totalHastaAhora*(1-dDescuento)));
+			}
+			sDescuentos += ("\nDescuento al "+combo.getNombreCombo()+" por "+(dDescuento*100)+"%");
+		}
+		
+	}
+	
 	public void anadirMultiplicador(Producto producto, PuntosExtra puntosExtra) {
 		this.multiplicador = puntosExtra.getMultiplicador();
 		sDescuentos += ("\nSe añadio un multiplicador x"+multiplicador+" por "+producto.getNombre());
 	}
 	
 	public void anadirDescuento(Producto producto, Descuento desc) {
-		float descuento = desc.getDescuento();
+		float dDescuento = desc.getDescuento();
 		int codigoBarras = producto.getCodigoBarras();
 		int totalHastaAhora = totalPrecio.get(codigoBarras);
-		totalPrecio.put(codigoBarras, (int)(totalHastaAhora*(1-descuento)));
-		sDescuentos += ("\nDescuento a "+producto.getNombre()+" del "+(descuento*100)+"%");
+		totalPrecio.put(codigoBarras, (int)(totalHastaAhora*(1-dDescuento)));
+		sDescuentos += ("\nDescuento a "+producto.getNombre()+" del "+(dDescuento*100)+"%");
 	}
 	
 	public void anadirRegalo(Producto producto, Regalo regalo) {

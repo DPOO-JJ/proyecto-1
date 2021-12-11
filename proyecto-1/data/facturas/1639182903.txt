@@ -1,0 +1,18 @@
+--------- Factura de Compras ---------
+
+ Unid |      Producto      | Precio
+   1  |Crema dental Colgate|  4512
+   1  |Crema dental Carulla|  475
+
+--------------------------------------
+Total: 4987$
+Descuento en puntos: 0$
+--------------------------------------
+Descuento al Combo Limpia por 5.0%
+Descuento a Crema dental Colgate del 5.0%
+Se añadio un multiplicador x2 por Crema dental Colgate
+--------------------------------------
+Puntos del cliente antes de la compra: 123
+Puntos utilizados en esta compra: 0
+Puntos acumulados en esta compra: 10
+Puntos totales disponibles: 133

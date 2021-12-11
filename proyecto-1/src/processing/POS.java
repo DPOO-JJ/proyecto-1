@@ -295,15 +295,16 @@ public class POS {
 							compra.anadirRegalo(producto,regalo);
 						}
 					}
-					else if (tipoPromocion.equals(COMBO)) {
-						
-					}
 					else if (tipoPromocion.equals(PUNTOS)) {
 						PuntosExtra puntos = (PuntosExtra)promocion;
 						if (codigoProducto==puntos.getIdProducto()) {
 							compra.anadirMultiplicador(producto,puntos);
 						}
 					}
+				}
+				if (tipoPromocion.equals(COMBO)) {
+					Combo combo = (Combo)promocion;
+					compra.anadirCombo(combo);
 				}
 			}
 		}
