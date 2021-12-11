@@ -313,12 +313,10 @@ public class POS {
 	public void updatePoints(Cliente cliente, int viejosPuntos, int nuevosPuntos)
 	{
 		String oldLine = cliente.lineCSV()+viejosPuntos;
-		System.out.println(oldLine);
 
 		cliente.setPuntos(nuevosPuntos);
 
 		String newLine = cliente.lineCSV()+nuevosPuntos;
-		System.out.println(newLine);
 		
 		FileManager.cambiarLineaArchivo("data/clientes.csv", oldLine, newLine);
 	
