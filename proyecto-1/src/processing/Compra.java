@@ -15,11 +15,17 @@ public class Compra {
 	int id_compra;
 	public int descuento;
 	String sDescuentos = "";
+	int multiplicador = 1;
 	
 	public Compra(Inventario inventario) {
 		this.id_compra = (int) (new Date().getTime()/1000);
 		this.inventario = inventario;
 		this.descuento = 0;
+	}
+	
+	public void anadirMultiplicador(Producto producto, PuntosExtra puntosExtra) {
+		this.multiplicador = puntosExtra.getMultiplicador();
+		sDescuentos += ("\nSe añadio un multiplicador x"+multiplicador+" por "+producto.getNombre());
 	}
 	
 	public void anadirDescuento(Producto producto, Descuento desc) {
@@ -34,11 +40,13 @@ public class Compra {
 		int unidadesExtras = 0;
 		int codigoBarras = producto.getCodigoBarras();
 		int itemsHastaAhora = totalItems.get(codigoBarras);
+		
+		//sólo si tiene la cantidad requerida de unidades se añaden las unidades extras
 		if(itemsHastaAhora>=regalo.getCantidadRequerida()) {
 			unidadesExtras = regalo.getUnidadesRegalo();
+			totalItems.put(codigoBarras, itemsHastaAhora + unidadesExtras);
+			sDescuentos += ("\nRecibes "+unidadesExtras+(unidadesExtras==1?"unidad extra de ":" unidades extras de ")+producto.getNombre());
 		}
-		totalItems.put(codigoBarras, itemsHastaAhora + unidadesExtras);
-		sDescuentos += ("\nRecibes "+unidadesExtras+(unidadesExtras==1?"unidad extra de ":" unidades extras de ")+producto.getNombre());
 	}
 	
 	public boolean venderProducto(Producto producto, int peso) {
@@ -82,7 +90,7 @@ public class Compra {
 	}
 
 	public int getPuntos() {
-		return puntos;
+		return puntos*multiplicador;
 	}
 
 	public ArrayList<Producto> getProductos() {

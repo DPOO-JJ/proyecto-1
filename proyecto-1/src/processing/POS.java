@@ -93,7 +93,8 @@ public class POS {
 				PuntosExtra puntosExtra = new PuntosExtra(PUNTOS,
 		        		fechaInicial,
 		        		fechaFinal,
-		        		Integer.parseInt(values[2]));
+		        		Integer.parseInt(values[2]),
+		        		Integer.parseInt(values[3]));
 		        
 		        promociones.add(puntosExtra);
 		        
@@ -298,7 +299,10 @@ public class POS {
 						
 					}
 					else if (tipoPromocion.equals(PUNTOS)) {
-						
+						PuntosExtra puntos = (PuntosExtra)promocion;
+						if (codigoProducto==puntos.getIdProducto()) {
+							compra.anadirMultiplicador(producto,puntos);
+						}
 					}
 				}
 			}
