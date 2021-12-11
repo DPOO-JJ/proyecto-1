@@ -1,0 +1,16 @@
+--------- Factura de Compras ---------
+
+ Unid |      Producto      | Precio
+   1  |Crema dental Colgate|  4750
+
+--------------------------------------
+Total: 4750$
+Descuento en puntos: 0$
+--------------------------------------
+Descuento a Crema dental Colgate del 5.0%
+Se añadio un multiplicador x2 por Crema dental Colgate
+--------------------------------------
+Puntos del cliente antes de la compra: 133
+Puntos utilizados en esta compra: 0
+Puntos acumulados en esta compra: 10
+Puntos totales disponibles: 143

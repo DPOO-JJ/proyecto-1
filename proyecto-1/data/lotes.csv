@@ -1,5 +1,5 @@
 ﻿fechaRecibido,fechaVencimiento,precioCompra,precioVenta,unidades,productoAsociado,loteEliminado,unidadesRestantes
-5/12/20,1/02/21,50000,5000,40,1,false,27
+5/12/20,1/02/21,50000,5000,40,1,false,26
 5/12/20,30/02/21,16000,1000,20,3,false,9
 5/12/20,25/01/21,4500,400,15,4,true,10
 5/12/20,01/01/21,16000,4000,15,22,true,2

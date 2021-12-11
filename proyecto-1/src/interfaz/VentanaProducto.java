@@ -1,8 +1,15 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.TreeMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -46,8 +53,32 @@ public class VentanaProducto extends JFrame {
 		gondola = new JLabel(String.valueOf(producto.getAlmacenamiento()));
 		panel.add(gondola);
 		
-		
 		add(panel, BorderLayout.CENTER);
+		
+		if (producto.getHistorial().getDatos().size()>0) {
+			PanelGraficoProducto grafica = new PanelGraficoProducto();
+			
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yy");
+			
+			Random random = new Random();
+		    float r = random.nextFloat();
+		    float g = random.nextFloat();
+		    float b = random.nextFloat();
+		    Color randomColor = new Color(r, g, b);
+		    
+		    //se ordena el mapa
+		    Map<Date, Integer> treeMap = new TreeMap<Date, Integer>(producto.getHistorial().getDatos());
+			
+			for (Map.Entry<Date, Integer> entry : treeMap.entrySet()) {
+				String sFecha = formatter.format(entry.getKey());
+				int cantidad = entry.getValue();
+				grafica.anadirColumna(sFecha, cantidad, randomColor);
+			}
+
+	        grafica.layoutHistogram();
+			
+			add(grafica, BorderLayout.SOUTH);
+		}
 		
 		pack();
 		setTitle(producto.getNombre());

@@ -78,11 +78,11 @@ public class VentanaDetalles extends JFrame implements ActionListener, IOpciones
 		String boton = e.getActionCommand();
 		if(boton.equals(MODIFICAR_IMAGEN)) {
 			this.padre.lanzarVentanaImagen(productoSeleccionado);
+			dispose();
 		}
 		else if(boton.equals(REVISAR_DETALLES)) {
 			this.padre.revisarDetallesProducto(productoSeleccionado);
 		}
-		dispose();
 	}
 
 	@Override
