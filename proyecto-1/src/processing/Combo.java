@@ -9,9 +9,9 @@ public class Combo extends Promocion{
 	private float descuento;
 	private int[] idProductos;
 	
-	public Combo(Date fechaInicial, Date fechaFinal, int idCombo, String nombreCombo, float descuento,
+	public Combo(String tipoPromocion, Date fechaInicial, Date fechaFinal, int idCombo, String nombreCombo, float descuento,
 			String idProductos) {
-		super(fechaInicial, fechaFinal);
+		super(tipoPromocion, fechaInicial, fechaFinal);
 		this.idCombo = idCombo;
 		this.nombreCombo = nombreCombo;
 		this.descuento = descuento;

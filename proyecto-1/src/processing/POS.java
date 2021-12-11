@@ -12,6 +12,11 @@ import java.util.Date;
 
 public class POS {
 	
+	public static String DESCUENTO = "DESCUENTO";
+	public static String REGALO = "REGALO";
+	public static String COMBO = "COMBO";
+	public static String PUNTOS = "PUNTOS";
+	
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 	public ArrayList<Promocion> promociones = new ArrayList<Promocion>();
 	public Inventario inventario;
@@ -48,7 +53,7 @@ public class POS {
 					e.printStackTrace();
 				}
 		        
-				Regalo regalo = new Regalo(
+				Regalo regalo = new Regalo(REGALO,
 		        		fechaInicial,
 		        		fechaFinal,
 		        		Integer.parseInt(values[2]),
@@ -85,7 +90,7 @@ public class POS {
 					e.printStackTrace();
 				}
 		        
-				PuntosExtra puntosExtra = new PuntosExtra(
+				PuntosExtra puntosExtra = new PuntosExtra(PUNTOS,
 		        		fechaInicial,
 		        		fechaFinal,
 		        		Integer.parseInt(values[2]));
@@ -120,7 +125,7 @@ public class POS {
 					e.printStackTrace();
 				}
 		        
-				Descuento descuento = new Descuento(
+				Descuento descuento = new Descuento(DESCUENTO,
 		        		fechaInicial,
 		        		fechaFinal,
 		        		Integer.parseInt(values[2]),
@@ -156,7 +161,7 @@ public class POS {
 					e.printStackTrace();
 				}
 		        
-		        Combo combo = new Combo(
+		        Combo combo = new Combo(COMBO,
 		        		fechaInicial,
 		        		fechaFinal,
 		        		Integer.parseInt(values[2]),
@@ -207,7 +212,7 @@ public class POS {
 	
 	public Boolean hacerCompra(Producto producto, int peso, Cliente cliente)
 	{
-		if (compra.makePurchase(producto, peso))
+		if (compra.venderProducto(producto, peso))
 		{
 			return true;
 		}
@@ -269,6 +274,35 @@ public class POS {
 	
 	public void newCompra() {
 		this.compra = new Compra(inventario);
+	}
+	
+	public void aplicarPromociones() {
+		for (Promocion promocion: promociones) {
+			if (promocion.estaVigente()) {
+				String tipoPromocion = promocion.getTipoPromocion();
+				for(Producto producto: compra.getProductos()) {
+					int codigoProducto = producto.getCodigoBarras();
+					if (tipoPromocion.equals(DESCUENTO)) {
+						Descuento descuento = (Descuento)promocion;
+						if (codigoProducto==descuento.getIdProducto()) {
+							compra.anadirDescuento(producto,descuento);
+						}
+					}
+					else if (tipoPromocion.equals(REGALO)) {
+						Regalo regalo = (Regalo)promocion;
+						if (codigoProducto==regalo.getIdProducto()) {
+							compra.anadirRegalo(producto,regalo);
+						}
+					}
+					else if (tipoPromocion.equals(COMBO)) {
+						
+					}
+					else if (tipoPromocion.equals(PUNTOS)) {
+						
+					}
+				}
+			}
+		}
 	}
 	
 	public void updatePoints(Cliente cliente, int viejosPuntos, int nuevosPuntos)

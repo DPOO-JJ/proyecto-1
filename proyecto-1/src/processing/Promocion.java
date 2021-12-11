@@ -6,8 +6,10 @@ public abstract class Promocion {
 
 	public Date fechaInicial;
 	public Date fechaFinal;
+	public String tipoPromocion;
 	
-	public Promocion(Date fechaInicial, Date fechaFinal) {
+	public Promocion(String tipoPromocion, Date fechaInicial, Date fechaFinal) {
+		this.tipoPromocion = tipoPromocion;
 		this.fechaInicial = fechaInicial;
 		this.fechaFinal = fechaFinal;
 	}
@@ -32,6 +34,14 @@ public abstract class Promocion {
 			result = true;
 		}
 		return result;
+	}
+
+	public String getTipoPromocion() {
+		return tipoPromocion;
+	}
+
+	public void setTipoPromocion(String tipoPromocion) {
+		this.tipoPromocion = tipoPromocion;
 	}
 	
 }

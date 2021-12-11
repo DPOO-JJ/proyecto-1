@@ -8,8 +8,8 @@ public class Regalo extends Promocion{
 	private int cantidadRequerida;
 	private int unidadesRegalo;
 	
-	public Regalo(Date fechaInicial, Date fechaFinal, int idProducto, int cantidadRequerida, int unidadesRegalo) {
-		super(fechaInicial, fechaFinal);
+	public Regalo(String tipoPromocion, Date fechaInicial, Date fechaFinal, int idProducto, int cantidadRequerida, int unidadesRegalo) {
+		super(tipoPromocion, fechaInicial, fechaFinal);
 		this.idProducto = idProducto;
 		this.cantidadRequerida = cantidadRequerida;
 		this.unidadesRegalo = unidadesRegalo;

@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class PuntosExtra extends Promocion{
 
-	public PuntosExtra(Date fechaInicial, Date fechaFinal, int idProducto) {
-		super(fechaInicial, fechaFinal);
+	public PuntosExtra(String tipoPromocion, Date fechaInicial, Date fechaFinal, int idProducto) {
+		super(tipoPromocion, fechaInicial, fechaFinal);
 		this.idProducto = idProducto;
 	}
 

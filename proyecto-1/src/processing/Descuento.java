@@ -7,8 +7,8 @@ public class Descuento extends Promocion{
 	private int idProducto;
 	private float descuento;
 	
-	public Descuento(Date fechaInicial, Date fechaFinal, int idProducto, float descuento) {
-		super(fechaInicial, fechaFinal);
+	public Descuento(String tipoPromocion, Date fechaInicial, Date fechaFinal, int idProducto, float descuento) {
+		super(tipoPromocion, fechaInicial, fechaFinal);
 		this.idProducto = idProducto;
 		this.descuento = descuento;
 	}

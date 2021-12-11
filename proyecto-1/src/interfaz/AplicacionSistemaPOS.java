@@ -129,6 +129,9 @@ public class AplicacionSistemaPOS extends JFrame implements IPopup{
 		//pos 0 es puntos iniciales, 1 puntos usados en la compra, 2 puntos de la compra, 3 puntos totales
 		ArrayList<Integer> puntosList = new ArrayList<Integer>();
 		
+		//AQUI SE APLICAN LAS PROMOCIONES
+		pos.aplicarPromociones();
+		
 		if (cliente != null)
 		{
 			int puntosCliente = cliente.puntos;
@@ -139,12 +142,7 @@ public class AplicacionSistemaPOS extends JFrame implements IPopup{
 				pos.updatePoints(cliente,puntosCliente,puntosCliente+pos.getCompra().getPuntos());
 			}
 			else {
-				int total = pos.getCompra().getTotal();
-				int dscPuntos = puntos * 15;
-				if (total < dscPuntos)
-				{
-					puntos = 0;
-				}
+				pos.getCompra().descuento = puntos * 15;
 				cliente.puntos -= puntos;
 				pos.updatePoints(cliente,puntosCliente,cliente.puntos+pos.getCompra().getPuntos());
 			}
